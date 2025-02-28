@@ -1,0 +1,337 @@
+@import "base/all";
+@import "responsive/users";
+
+.page-main {
+    margin-top: 0px;
+}
+
+.page-content {
+    padding: 16px;
+    padding-top:32px;
+}
+
+.partner-container {
+    width: 100%;
+    height: .5em;
+    min-height: 1px;
+    max-height: 6px;
+}
+
+.traffic-light {
+    width: 2em;
+}
+
+// hides functionality, which is not given, if js is disabled
+.jsonly {
+    display: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.disabled {
+    cursor: not-allowed;
+    color: #7a7a7a !important;
+}
+
+thead td  {
+    font-weight: bold;
+}
+
+.sub-menu {
+    z-index: 10;
+}
+
+#dbis-logo {
+    max-height: 2rem;
+    height: 2rem;
+}
+
+/* Language Switcher */
+.language {
+    display: flex;
+    align-items: center;
+}
+
+.button.language {
+    margin-left: 0.75rem;
+    font-size: 0.6rem;
+    font-weight: bold;
+    padding: 4px;
+    color: white;
+    background: #4f5253;
+    border-radius: 20px;
+    border: none;
+}
+
+.button.language:hover {
+    background: #717578;
+    border: none;
+}
+/* Language Switcher END */
+
+.dropdown img {
+    height: 2em;
+    width: auto;
+    vertical-align: middle;
+}
+
+.dropdown button {
+    background: none;
+    border: none;
+}
+
+.dropdown .icon {
+    vertical-align: middle;
+}
+
+.dropdown .dropdown-menu, .dropdown .dropdown-menu * {
+    z-index: 100;
+}
+
+.dropdown .dropdown-items {
+    max-height: 25em;
+    overflow-y: auto;
+}
+
+.dropdown .dropdown-content a.dropdown-item {
+    max-width: 25em;
+    white-space: normal;
+}
+
+.dropdown .dropdown-content p.city {
+    padding-left: 0.5em;
+    font-size: 0.9em;
+}
+
+ul.breadcrumbs {
+    list-style: none;
+}
+
+ul.breadcrumbs li {
+  display: inline;
+}
+
+ul.breadcrumbs li+li:before {
+  padding: 5px;
+  content: "/\00a0";
+  opacity: 50%;
+}
+
+.table.is-borderless td, .table.is-borderless th {
+    border:0;
+}
+
+// This overrides some of the bulma-minireset settings for html inputs
+.raw-content p, .raw-content ul{
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+}
+
+.raw-content ul {
+    list-style: disc;
+    list-style-position: inside;
+}
+
+.access-help {
+    display:none;
+}
+.toggle-text {
+    display: none;
+}
+
+.text-toggler-button span.symbol-arrow {
+    margin-left: 0.2em;
+}
+
+.tags .tag {
+    overflow: hidden;
+}
+
+.tags .tag span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.button.has-text-left {
+    justify-content: flex-start;
+
+}
+
+.button.has-text-right {
+    justify-content: flex-end;
+}
+
+.resource-access .js-modal-trigger {
+    height: auto;
+    padding: 0;
+    display: inline;
+}
+
+.button {
+    height: auto;
+    white-space: normal;
+}
+
+button.filter-activator {
+    border-radius: 0px;
+    border: none;
+    border-bottom: 1px solid $grey-light;
+    font-weight: bold;
+}
+
+button.filter-activator .symbol-arrow{
+    font-size: 12px;
+}
+
+.filter-content {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.org-chooser {
+    button.is-inline--not-start-page {
+        display: flex !important;
+        align-items: center;
+    }
+
+    .icon-text-institution {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 .6em;
+
+        img {
+
+        }
+
+        span {
+            padding-top: .2em;
+        }
+    }
+}
+
+.offline-searchable-multiselect, .dropdown-list {
+    max-height:200px;
+    overflow: scroll;
+    border: 1px solid $grey-light;
+    border-top: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.dropdown-value, .offline-searchable-multiselect li:not(:last-child) {
+    border-bottom: 1px solid whitesmoke;
+}
+
+.dropdown-value .button {
+    border: none;
+    box-shadow: none;
+}
+
+.filter-body .search-field, .dropdown-list-search {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+button.has-no-decoration {
+    border: none;
+    padding: 0px;
+}
+
+select.is-fullwidth {
+    width: 100%;
+}
+
+.dropdown.is-fullwidth {
+display: flex;
+}
+
+.dropdown .dropdown-menu, .dropdown .dropdown-menu * {
+    z-index: 100;
+}
+
+.dropdown.is-fullwidth * {
+    width: 100%;
+}
+
+.dropdown.is-fullwidth button span {
+    overflow: hidden;
+}
+
+.dropdown.is-fullwidth a {
+    white-space: normal;
+    display:flex;
+    overflow: hidden;
+}
+
+.dropdown.is-fullwidth button {
+    text-align: left;
+}
+
+.offline-searchable-multiselect, .dropdown-list {
+    max-height:200px;
+    overflow: scroll;
+    border: 1px solid $grey-light;
+    border-top: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.dropdown-value, .offline-searchable-multiselect li:not(:last-child) {
+    border-bottom: 1px solid whitesmoke;
+}
+
+.dropdown-value .button {
+    border: none;
+    box-shadow: none;
+}
+
+.search-field, .dropdown-list-search {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+// Icons
+.fas, .svg-inline--fa {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.text-toggler-button span.symbol-arrow {
+    margin-left: 0.2em;
+}
+
+.resource-access .js-modal-trigger .fa-info-circle {
+    margin-left: 0.5em;
+    display: inline;
+    vertical-align: middle;
+}
+
+/* Special styles for filters on search page */
+.box button.filter-activator {
+    border: none;
+}
+
+.advanced-search-form .column {
+    padding-left: 0;
+}
+
+/* Make loading work on search page elements */
+.search-loading-element.is-loading {
+  opacity: 0.3;
+  transition: opacity 0.5s;
+}
+
+.search-container-start {
+    margin-top: -2.5rem; 
+    width: 65%;
+}
+
+.footer {
+    .has-text-grey {
+        color: rgb(74, 74, 74) !important;
+    }
+}

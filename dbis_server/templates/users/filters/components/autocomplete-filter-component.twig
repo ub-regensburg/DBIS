@@ -1,0 +1,43 @@
+{#
+Autocomplete Filter Component
+
+Twig component for providing online autocomplete functionality.
+
+Arguments:
+- str namespace:        description for the autocomplete. Will be added to ids, names etc.
+- obj[] selectedItems:  entries currently selected for the filter (need fields "id" and "title")
+
+This component works for js and noscript environments
+#}
+
+{# JS-dependent code #}
+<input name="{{ namespace }}-search" 
+       class="search input jsonly dropdown-list-search"
+       placeholder="{{ i18n.lbl_search }}"
+       autocomplete="off"
+       {% if namespace == "keyword" %}  
+            aria-label="{{ i18n.aria_search_keyword }}"
+        {% elseif namespace == "publisher" %}
+            aria-label="{{ i18n.aria_search_publisher }}"
+       {% endif %}
+       />
+<div class="dropdown-list jsonly hidden p-2">
+    <ul>
+
+    </ul>
+</div>
+
+{% if not no_apply %}
+    <button class="button is-outlined is-fullwidth mt-4">
+        {{ i18n.apply_filter }}
+    </button>
+{% endif %}
+
+
+<template id="template-dropdown-entry" class="dropdown-entry">
+    <li class="pt-1 pb-1 dropdown-value">
+        <button class="button is-fullwidth has-text-left"
+                type="button">
+        </button>
+    </li>
+</template>

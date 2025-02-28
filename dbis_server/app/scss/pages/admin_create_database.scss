@@ -1,0 +1,35 @@
+.keyword-list {
+  .field-label {
+    text-align: left;
+    flex-grow: 0;
+  }
+}
+
+.h-edit-resource {
+  .column.is-45 {
+    width: 45%;
+    flex: none;
+  }
+
+  .columns:last-child {
+    // Override "margin-bottom: -0.75rem;"
+    margin-bottom: calc(1.5rem - 0.75rem);
+  }
+}
+
+.resource-id {
+  cursor: pointer;
+}
+
+.chosen-container-multi {
+  min-height: 2.5em !important;
+  font-size: 1rem;
+  font-family: "Mulish", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
+  background-color: #fff !important;
+  border-color: #dbdbdb !important;
+  border-radius: 4px !important;
+}
+
+#subjects-block, #type-block {
+  position: relative;
+}

@@ -1,0 +1,64 @@
+<div id="access-form-filter" 
+    class="select is-multiple">
+
+    <input class="input jsonly search-field"
+           placeholder="{{ i18n.lbl_search }}" aria-label="{{ i18n.aria_search_access_forms }}" />
+    
+    <select name="filter-access-forms[]" 
+        id="filter-access-forms" 
+        class="is-small is-fullwidth"
+        multiple aria-label="{{ i18n.aria_select_access_forms }}">
+
+        {% for access_form in access_forms %}
+        {% for filtered_access_form in filtered_access_forms %}
+            {% if access_form.key == filtered_access_form.title %}
+                {# Check if access_form.key exists in the forms_sorted array #}
+                {% set is_sorted = false %}
+                {% set sorted_doc_count = 0 %}
+                {% for sorted_form in forms_sorted %}
+                    {% if sorted_form.key == access_form.key %}
+                        {% set is_sorted = true %}
+                        {% set sorted_doc_count = sorted_form.doc_count %}
+                    {% endif %}
+                {% endfor %}
+
+                <option value="{{ access_form.key }}" selected="true" {% if not is_sorted %}disabled{% endif %}>
+                    {{ access_form.key }}
+                    {% if access_form.doc_count %} <span>({{ sorted_doc_count }}<!--/{{ access_form.doc_count }}-->)</span> {% endif %}
+                </option>
+            {% endif %}
+        {% endfor %}
+        {% endfor %}
+
+        {% for access_form in access_tforms %}
+            {% set is_selected = false %}
+            {% for filtered_access_form in filtered_access_forms %}
+                {% if access_form.key == filtered_access_form.title %}
+                    {% set is_selected = true %}
+                {% endif %}
+            {% endfor %}
+            {% if not is_selected  %}        
+                {% set is_sorted = false %}
+                {% set sorted_doc_count = 0 %}
+                {% for sorted_form in forms_sorted %}
+                    {% if sorted_form.key == access_form.key %}
+                        {% set is_sorted = true %}
+                        {% set sorted_doc_count = sorted_form.doc_count %}
+                    {% endif %}
+                {% endfor %}
+
+                <option value="{{ access_form.key }}" {% if not is_sorted %}disabled{% endif %}>
+                    {{ access_form.key }}
+                    {% if access_form.doc_count %} <span>({{ sorted_doc_count }}<!--/{{ access_form.doc_count }}-->)</span> {% endif %}
+                </option>
+            {% endif %}
+        {% endfor %}
+        
+    </select>
+    
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

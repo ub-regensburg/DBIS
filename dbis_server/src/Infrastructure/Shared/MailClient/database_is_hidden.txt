@@ -1,0 +1,14 @@
+Die Datenbank "{databaseTitle}" ID: {databaseId} wurde in ALLEN DBIS-Sichten ausgeblendet.  
+
+Bitte beachten Sie, dass diese Änderung über Nacht indexiert wird und ab ca. 7 Uhr des Folgetages such- und sichtbar wird.
+
+Bibliotheken mit Bestand sollten ihre Lizenz löschen, wenn diese Ausblendung als richtig erachtet wird. 
+
+_________________________________________
+
+
+The database "{databaseTitle}" ID: {databaseId} has been hidden in ALL DBIS views.   
+
+Please note that this change will be indexed overnight and will be searchable and visible from approx. 7 a.m. the following day. 
+
+Libraries with holdings should delete their license if this hiding is considered correct. 

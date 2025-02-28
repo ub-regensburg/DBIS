@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>DBIS - OpenAPI</title>
+    {% block css %}
+        {% webpack_entry_css 'openapi' %}
+    {% endblock %}
+</head>
+
+<body>
+<main class="section">
+    <section class="section">
+        <!-- just a placeholder for content block -->
+        {% block content %}
+            <div id="open-api"></div>
+        {% endblock %}
+        <!-- end placeholder -->
+    </section>
+</main>
+
+{% block footer %}
+    <footer class="footer has-text-grey">
+
+    </footer>
+{% endblock %}
+{% block js %}
+    {% webpack_entry_js 'openapi' %}
+{% endblock %}
+</body>
+</html>

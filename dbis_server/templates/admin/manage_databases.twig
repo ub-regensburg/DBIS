@@ -1,0 +1,189 @@
+{% embed "admin/base.twig" with { page: 'manage_databases' } %}
+    {% block content %}
+        <section aria-labelledby="h-manage-resources">
+            <form class="field"
+                  id="query-form"
+                  action=""
+                  method="get">
+                <ul class="breadcrumbs mb-1 is-size-7">
+                    <li><a href="../..">{{ i18n.breadcrumb_admin }}</a></li>
+                    <li><a href="..">{{ i18n.breadcrumb_search_resources}}</a></li>
+                    <li>{{ i18n.breadcrumb_resources_results }}</li>
+                </ul>
+                <h1 id="h-manage-resources"
+                    class="title is-1">{{ i18n.lbl_menu_nav_superadministration_manage_res }}</h1>
+                <div class="">
+                        {% for additional_field in additional_fields %}
+                            <input type="hidden" name="bool[]" value="{{ additional_field.bool }}">
+                            <input type="hidden" name="field[]" value="{{ additional_field.field }}">
+                            <input type="hidden" name="search[]" value="{{ additional_field.search }}">
+                        {% endfor %}
+                            <input name="q"
+                            type="hidden"
+                            value="{{ q }}">
+                        <input type="checkbox"
+                            name="availability-filter-free"
+                            {{ filters.availability.free ? "checked" }} hidden>
+                        <input type="checkbox"
+                            name="availability-filter-local"
+                                {{ filters.availability.local ? "checked" }} hidden>
+                        <input type="checkbox"
+                            name="availability-filter-none"
+                            {{ filters.availability.none or none ? "checked" }} hidden>
+                        {% for filtered_country in filters.countries %}
+                                <input type="hidden" value="{{ filtered_country }}" name="filter-countries[]" />
+                        {% endfor %}
+                        {% for filtered_keyword in filters.keywords %}
+                                <input type="hidden" value="{{ filtered_keyword.title }}" name="filter-keywords[]" />
+                        {% endfor %}
+                        {% for resource_type in filters['resource-types'] %}
+                                <input type="hidden" value="{{ resource_type }}" name="filter-resource-types[]" />
+                        {% endfor %}
+                        {% for subject in filters.all_subjects %}
+                                <input type="hidden" value="{{ subject.title }}" name="filter-subjects[]" />
+                        {% endfor %}
+                        {% for accessForm in filters['access-forms'] %}
+                                <input type="hidden" value="{{ accessForm }}" name="filter-access-forms[]" />
+                        {% endfor %}
+                        {% for accessLabel in filters['access-labels'] %}
+                                <input type="hidden" value="{{ accessLabel }}" name="filter-access-labels[]" />
+                        {% endfor %}
+                        {% for licenseForm in filters['license-forms'] %}
+                                <input type="hidden" value="{{ licenseForm }}" name="filter-license-forms[]" />
+                        {% endfor %}
+                        {% for licenseType in filters['license-types'] %}
+                                <input type="hidden" value="{{ licenseType }}" name="filter-license-types[]" />
+                        {% endfor %}
+                        {% for publicationForm in filters['publication-forms'] %}
+                                <input type="hidden" value="{{ publicationForm }}" name="filter-publication-forms[]" />
+                        {% endfor %}
+                        <input class="is-hidden" 
+                            value="{{ filters['entry-date']['start'] }}"
+                            type="date"
+                            hidden
+                            name="filter-entry-date-start">
+                        <input type="checkbox"
+                            name="show-hidden-entries"
+                            {{ filters['show-hidden-entries'] ? "checked" }} hidden>
+                    <div class="is-flex is-flex-direction-row is-flex-wrap-nowrap  mt-1 mb-2">
+                        <p class="is-flex is-align-items-center mr-2">
+                            <label class="label">{{ total_nr }} {{ i18n.lbl_results_found }}</label>
+                        </p>
+                        {% if organizationId %}
+                            <p>
+                                <a class="button" href="{{ '/admin/manage/' ~ organizationId ~ '/resources/?' ~ query_string }}">
+                                {{ i18n.refine_search }}
+                                </a>
+                            </p>
+                            {% if resources|length > 0 %}
+                                <p class="ml-2">
+                                    <button class="button" name="csvoutput" value="1">CSV-Export</button>
+                                </p>
+                            {% endif %}
+                        {% else %}
+                            <p>
+                                <a class="button" href="/admin/manage/resources/?{{ query_string }}">{{ i18n.refine_search }}
+                                </a>
+                            </p>
+                        {% endif %}
+                        <div class="field is-grouped is-pulled-right level ml-4">
+                            <label for="pagination_size level-item">{{ i18n.lbl_results_per_page }}:</label>
+                            <div class="select ml-2 level-item is-small">
+                                <select name="ps" id="pagination_size" class="button">
+                                    <option value="25"
+                                            {% if pagination_size == 25 %}
+                                                selected
+                                            {% endif %}>25</option>
+                                    <option value="50"
+                                            {% if pagination_size == 50 %}
+                                                selected
+                                            {% endif %}>50</option>
+                                    <option value="100"
+                                            {% if pagination_size == 100 %}
+                                                selected
+                                            {% endif %}>100</option>
+                                    <option value="250"
+                                            {% if pagination_size == 250 %}
+                                                selected
+                                            {% endif %}>250</option>
+                                    <option value="{{ total_nr }}"
+                                            {% if pagination_size == total_nr %}
+                                                selected
+                                            {% endif %}">{{ i18n.lbl_all }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table is-hoverable org-table is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th>
+                                {{ i18n.lbl_license_for }}
+                            </th>                            
+                            <th>
+                                {{ i18n.lbl_resource_title }}
+                            </th>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                {% if isAdmin or isSuperAdmin %}{{ i18n.lbl_edit }}{% else %}{{ i18n.lbl_show }}{% endif %}
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% if resources|length < 1 %}
+                            <tr><td colspan="2">{{ i18n.msg_no_results }}</td></tr>
+                        {% endif %}
+
+                        {% for resource in resources %}
+                            {% if organization.ubrId is defined and organization.ubrId %}
+                                {% set resourceUrl = url_for('manageResourceWithinOrganization', { 'ubrId': organization.ubrId, 'id': resource.resource_id }) %}
+                            {% else %}
+                                {% set resourceUrl = url_for('manageResource', { 'id': resource.resource_id }) %}
+                            {% endif %}
+                            <tr>
+                                <td class="pt-4 pb-4">
+                                        <span class="traffic-light-container"><img class="traffic-light" style="max-width: 48px;" src="/img/icons/ampel_{{ resource.traffic_light }}.svg" alt=""></span>
+                                </td>
+                                    <td class="pt-4 pb-4">
+                                        <a class="has-text-primary" href="{{ resourceUrl }}">
+                                         {{ resource.resource_title }}</a>
+                                    </td>
+                                <td class="pt-4 pb-4">
+                                    <span class="tag is-light">{{ resource.resource_id }}</span>
+                                </td>
+                                    <td class="pt-4 pb-4">
+                                        <span class="icon-text">
+                                            <span class="icon has-text-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </span>
+                                            <a href="{{ resourceUrl }}"
+                                                                class="has-text-primary">
+                                                                {{ i18n.lbl_edit_metadata}}
+                                            </a>
+                                        </span>
+                                        <span class="icon-text pl-2">
+                                            <span class="icon has-text-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </span>
+                                            <a href="{{ resourceUrl }}licenses/"
+                                            class="has-text-primary">
+                                                                {{ i18n.lbl_edit_license}}
+                                            </a>
+                                        </span>
+                                    </td>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="columns">
+                    <div class="column mt-4">
+                        {{ include('/shared/pagination.twig', {size: 'is-small', alignment: 'is-centered', only_pages: false}) }}
+                    </div>
+                </div>
+            </form>
+        </section>
+    {% endblock %}
+{% endembed %}

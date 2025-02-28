@@ -1,0 +1,14 @@
+<div id="publication-form-filter" 
+    class="">
+    {% for publicationForm in publicationForms %}
+        <div class="control">
+            <label class="checkbox">
+                <input type="checkbox"
+                    class="mr-2"
+                    name="filter-publication-forms[]"
+                    value="{{ publicationForm.title }}" {% if publicationForm.title in selectedPublicationForms %}checked="true"{% endif %}>
+                {{ publicationForm.title }}
+            </label>
+        </div>
+    {% endfor %}
+</div>

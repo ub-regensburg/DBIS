@@ -1,0 +1,75 @@
+{% embed "admin/base.twig" %}
+    {%  block content %}
+	{%  if lang=='de' %}
+		<h1 class="title is-1">DBIS-Profil</h1>
+	{% else %}
+		<h1 class="title is-1">DBIS Profile</h1>
+	{% endif %}
+	{%  if lang=='de' %}
+	<div class="container">
+            <h2 class="title is-2">Beschreibung der Aufnahmekriterien für Datenbanken in DBIS</h2>
+ 	       <div class="content">
+                <p><b>In das DBIS eingetragen werden:</b></p>
+                <p><strong>Datenbanken</strong>, deren Inhalte über eine <strong>Suchfunktionalität</strong> gezielt durchsucht werden können und die folgenden <strong>weiteren formellen Kriterien</strong> entsprechen:</p> 
+		<ul>
+                        <li><strong>Umfang:</strong><br/> 
+			Die Datenbank weist eine umfangreiche Datenmenge auf. Ein genauer Wert ist nicht festgelegt, Zweifelsfälle müssen jedoch fachlich begründet werden.</li>
+                        <li><strong>Nachhaltigkeit:</strong><br/> 
+			Es ist gewährleistet, dass die Datenbank dem Nutzerkreis langfristig zur Verfügung steht. Davon ist bei Angeboten, die von Privatpersonen erstellt wurden, in der Regel nicht auszugehen.</li>
+                        <li><strong>Dauerhafte Aktualisierung:</strong><br/> 
+			Die Datenbank wird laufend gepflegt und aktualisiert. Eine Ausnahme bilden explizit als abgeschlossen gekennzeichnete Datenbanken.</li>
+                        <li><strong>Wissenschaftlichkeit:</strong><br/> 
+			Die Datenbank dient vorrangig wissenschaftlichen Zwecken oder könnte für die Wissenschaft eine relevante Datenquelle darstellen.</li>
+                        <li><strong>Seriosität:</strong><br/> 
+			Die Datenbank enthält präzise Informationen über ihre Inhalte und ihren Hersteller bzw. Betreiber.</li>
+                    </ul>
+                <p><b>Nicht in das DBIS aufgenommen werden:</b></p>
+                <ul>
+                    <li><strong>Literaturlisten in Form von statischen PDF- oder HTML-Dokumenten:</strong><br/>
+            	    Ausnahmen sind im Einzelfall aus fachlichen Gründen möglich, wenn alle anderen Kriterien erfüllt sind.</li>
+                    
+                    <li><strong>Elektronische Zeitschriften:</strong><br/>
+                    Elektronische Zeitschriften werden ausnahmslos in der <a href="https://ezb.ur.de/" target="_blank">Elektronischen Zeitschriftenbibliothek (EZB)</a> nachgewiesen, gegebenenfalls als lokale Zeitschrift. Pakete oder Portale, in denen Zeitschriften oder Zeitschriften und weitere Medienarten enthalten sind, dürfen aufgenommen werden und mit der EZB verknüpft werden.</li>
+                    
+                    <li><strong>Einzelne Elektronische Monographien (E-Books):</strong><br/>
+                    Ausnahmen bilden Lexika, Nachschlagewerke und Wörterbücher, für die ein eigener Datenbanktyp existiert. Pakete oder Portale, in denen E-Books oder E-Books und weitere Medienarten enthalten sind, dürfen aufgenommen werden.</li>
+                    
+                    <li><strong>Linklisten:</strong><br/>
+                    Ausnahmen sind im Einzelfall aus fachlichen Gründen möglich, etwa wenn sie für ein Fachgebiet das einzig Sinnvolle darstellen.</li>
+                    
+                    <li><strong>Einzelne Bibliothekskataloge (lokale OPACs):</strong><br/>
+		Aufgenommen werden ausschließlich ausgewählte Links auf Portale zu überregionalen, nationalen und internationalen Bibliothekskatalogen (z.B. KVK, Library of Congress Online Catalog). Ausnahmen bilden zudem fachlich spezialisierte Kataloge mit bibliographischem Charakter.</li>
+                    
+                    <li><strong>Institutionelle Repositorien (Hochschulschriften, graue Literatur, Forschungsdaten):</strong><br/>
+                    Aufgenommen werden ausschließlich disziplinäre (Forschungsdaten-) Repositorien und (institutions-)übergreifende Portale, für die eigene Datenbanktypen existieren.</li>
+                </ul>
+            </div>
+	</div>
+        {% else %}
+        <div class="container">
+            <h2 class="title is-2">Description of the database entry criteria in DBIS</h2>
+		<div class="content">
+                <p><b>The following may be added to the DBIS:</b></p>
+                <p><b>Databases</b> whose contents can be specifically searched using a <b>search functionality</b> and which meet the following <b>additional formal criteria</b>:</p>
+                <ul>
+                    <li><strong>Size:</strong><br/> The database has an extensive amount of data. An exact value is not specified, but in cases of doubt, technical justification must be provided.</li>
+                    <li><strong>Sustainability:</strong><br/> It is guaranteed that the database will be available to the user group in the long term. This cannot usually be assumed for offers created by private individuals.</li>
+                    <li><strong>Permanent Updating:</strong><br/> The database is maintained and updated on an ongoing basis. Databases explicitly marked as closed are an exception.</li>
+                    <li><strong>Academic Nature:</strong><br/> The database primarily serves scholarly purposes or could be a relevant data source for science.</li>
+                    <li><strong>Reliability:</strong><br/> The database contains precise information about its contents and its producer or operator.</li>
+                </ul>
+                <p><b>Not included in the DBIS:</b></p>
+                <ul>
+                    <li><strong>Bibliographies in the Form of Static PDF or HTML Documents:</strong><br/> Exceptions are possible in individual cases for technical reasons if all other criteria are met.</li>
+                    <li><strong>Electronic Journals:</strong><br/> Electronic journals are listed without exception in the <a href="https://ezb.ur.de/?lang=en" target="_blank">Electronic Journals Library (EZB)</a>, if necessary as a local journal. Packages or portals containing journals or periodicals and other types of media may be included and linked to the EZB.</li>
+                    <li><strong>Individual Electronic Monographs (e-books):</strong><br/> Exceptions are encyclopaedias, reference works and dictionaries, for which a separate database type exists. Packages or portals containing e-books or e-books and other types of media may be included.</li>
+                    <li><strong>Link Lists:</strong><br/> Exceptions are possible in individual cases for subject-specific reasons, for example if they are the only sensible option for a subject area.</li>
+                    <li><strong>Library Catalogs (local OPACs):</strong><br/> Only selected links to portals to transregional, national and international library catalogs (e.g. WorldCat, Library of Congress Online Catalog) are included. Exceptions over and above that are subject-specific catalogs with a bibliographic character.</li>
+                    <li><strong>Institutional repositories (university publications, gray literature, research data):</strong><br/> Only disciplinary (research data) repositories and (cross-institutional) portals for which separate database types exist are included.</li>
+                </ul>
+            </div>        
+	</div>
+        {% endif %}
+
+    {%  endblock %}
+{% endembed %}

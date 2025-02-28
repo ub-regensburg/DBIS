@@ -1,0 +1,24 @@
+Die Datenbank "{databaseTitle} " wurde wieder in ALLEN DBIS-Sichten eingeblendet. Dies bedeutet, dass die Datenbank bei einer Suche in der beim Filter “Verfügbarkeit” auch “Nicht an meiner Einrichtung verfügbar” angehakt ist, auch ohne Lizenz der Einrichtung mit einer roten Ampel gefunden wird.  
+
+Bitte beachten Sie, dass diese Änderung über Nacht indexiert wird und ab ca. 7 Uhr des Folgetages such- und sichtbar wird.
+
+Möchten Sie, dass diese Datenbank für Ihre Nutzenden auch bei einer Suche im Gesamtbestand in Ihrer Sicht verborgen bleibt, können Sie diese Datenbank in Ihrer Sicht ausblenden.  
+
+Sollten Sie eine Lizenz für diese Datenbank besitzen, können Sie diese eintragen. Die Datenbank wir als an Ihrer Einrichtung verfügbar mit einer gelben Ampel angezeigt.  
+
+
+Die Datenbankaufnahme finden Sie hier: https://dbis.ur.de/resources/{databaseId} 
+
+_________________________________________
+ 
+
+The database "{databaseTitle} " has been displayed again in ALL DBIS views. This means that the database can be found in a search in which "Not available at my institution" is checked in the "Availability" filter, even without a license from the institution.  
+
+Please note that this change will be indexed overnight and will be searchable and visible from approx. 7 a.m. the following day.
+
+If you want this database to remain hidden for your users in your view, even when searching the entire inventory, you can hide this database in your view.  
+
+If you have a license for this database, you can enter it and the database will be displayed as available at your institution with a yellow traffic light.   
+
+
+You can find the database entry here: https://dbis.ur.de/resources/{databaseId} 

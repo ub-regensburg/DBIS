@@ -1,0 +1,148 @@
+{#
+    This page serves for:
+    - Creating new organizations (Superadmin)
+    - Editing existing organizations (Admin)
+    - Editing existing organizations (Superadmin)
+#}
+
+{% embed "admin/base.twig" %}
+    {%  block content %}
+        <section role="region"
+                 aria-label="{{ i18n.aria_section_form_organizations }}">
+            {# Notifications #}
+            {% if is_created_successfully %}
+                <article class="message is-success">
+                    <div class="message-body">
+                        {{ i18n.msg_org_created_successfully }}
+                    </div>
+                </article>
+            {% elseif is_updated_successfully %}
+                <article class="message is-success">
+                    <div class="message-body">
+                        {{ i18n.msg_org_updated_successfully }}
+                    </div>
+                </article>
+            {% endif %}
+
+        <ul class="breadcrumbs mb-1 is-size-7">
+            <li><a href="/admin">{{ i18n.breadcrumb_admin }}</a></li>
+            {% if is_superadmin %}
+                <li><a href="/superadmin/organizations/">{{ i18n.breadcrumb_organizations}}</a></li>
+            {% else %}
+                <li>{{ i18n.breadcrumb_organizations}}</li>
+            {% endif %}
+            <li>{{ organizationI18N.name }}</li>
+        </ul>
+
+            {# Heading #}
+            {%  if organization %}
+                <h1 class="title is-1">{{ i18n.lbl_heading_edit_organization|replace({':org_name': organizationI18N.name}) }}</h1>
+            {% else %}
+                <h1 class="title is-1">{{ i18n.lbl_heading_create_organization }}</h1>
+            {% endif %}
+
+            {# Navigational tabs #}
+            {% if is_superadmin and organization %}
+                <div class="tabs">
+                    <ul role="navigation">
+                        <li class="is-active">
+                            <a>
+                                <span class="icon is-small">
+                                    <i class="fas fa-home"></i>
+                                </span>
+                                {{ i18n.lbl_org_data }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/superadmin/organizations/{{ organization.ubrId }}/views/">
+                                <span class="icon is-small">
+                                    <i class="fas fa-columns"></i>
+                                </span>
+                                {{ i18n.lbl_org_view }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+
+            {# Form for organization data #}
+            {% embed "admin/organization_form.twig" with {'redirect_success_url': '/superadmin/organizations?updatedSuccessfully=1'}%}
+            {% endembed %}
+
+        </section>
+
+
+        {# Form for deleting an organization #}
+        {%  if organization and is_superadmin %}
+        <div class="filter mt-6">
+            <button
+                    class="button
+                    has-text-left
+                    is-danger
+                    is-light
+                    delete-area
+                    filter-activator"
+                    type="button">
+                <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                {{ i18n.lbl_delete_organization }}
+            </button>
+            <div class="filter-body">
+            <section class="delete-area has-background-danger-light p-5"
+                     role="region"
+                     aria-label="{{ i18n.aria_section_delete_organization }}">
+                    <!--<h2 class="title is-2">{{ i18n.lbl_delete_organization }}</h2>-->
+                    <p>{{ i18n.lbl_delete_organization_hint|replace({':ubr_id': organization.ubrId}) }}</p>
+                    <form method="post" id="delete-org-form">
+                        <!--
+                            see https://www.slimframework.com/docs/v2/routing/delete.html
+                        -->
+                        <input type="hidden" name="_METHOD" value="DELETE"/>
+                        <br>
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <input id="confirm_ubrid"
+                                       class="input"
+                                       type="text"
+                                       data-expected-value="{{ organization.ubrId }}"
+                                       placeholder="{{ organization.ubrId }}"
+                                       >
+                            </div>
+                            <div class="control">
+                                <button id="delete-organization-button"
+                                        class="button is-danger"
+                                        type="submit" disabled>
+                                    {{ i18n.lbl_delete_organization }}
+                                </button>
+                            </div>
+                        </div>
+                        <input name="redirect_success" type="hidden" value="/superadmin/organizations?deletedSuccessfully=1">
+                    </form>
+
+                <!-- Modal dialog for confirming deletion of organization -->
+                <div id="confirm-delete-modal" class="modal">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">{{ i18n.lbl_delete_organization }}</p>
+                            <button class="delete" aria-label="close"></button>
+                        </header>
+                        <section class="modal-card-body">
+                            {{ i18n.lbl_info_delete }}
+                        </section>
+                        <footer class="modal-card-foot">
+                            <button class="button is-danger submit">{{ i18n.lbl_delete }}</button>
+                            <button class="button cancel">{{ i18n.lbl_cancel }}</button>
+                        </footer>
+                    </div>
+                </div>
+                <!----------------------------------------------------------->
+            </section>
+            </div>
+        </div>
+        {%  endif %}
+    {%  endblock %}
+{% endembed %}
+{% block js %}
+    {%  webpack_entry_js 'admin_edit_organization' %}
+{% endblock %}

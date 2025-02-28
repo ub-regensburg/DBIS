@@ -1,0 +1,57 @@
+@import "app/scss/users_base.scss";
+
+li.access-info
+{
+    	border-top: $grey-light solid 2px;
+	margin-top: 1.0rem;
+        margin-bottom: 1.5rem;
+	background-color: rgba(0,0,0,0.015);
+	padding: 1.0rem;
+}
+
+.access-info table
+{
+    background-color: transparent;
+}
+
+.access-info table td
+{
+    border: none;
+}
+
+
+.access-info table tr td:nth-child(1)
+{
+    width: 10.0rem;
+}
+
+table.further-data tr td:nth-child(1)
+{
+    width: 10.0rem;
+}
+
+.resource-id {
+  cursor: pointer;
+}
+
+
+.dropdown .dropdown-trigger button {
+    background-color: #fff;
+    // border-color: #dbdbdb;
+    // border-width: 1px;
+    // border-style: solid;
+    color: #363636;
+    cursor: pointer;
+    justify-content: center;
+    padding-bottom: calc(0.5em - 1px);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: calc(0.5em - 1px);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.dropdown .dropdown-content a.dropdown-item {
+    max-width: none !important;
+    width: 100%;
+}

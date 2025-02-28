@@ -1,0 +1,36 @@
+{% if isAdmin or isSuperAdmin %}
+<div class="field">
+    <div class="control">
+        <label class="checkbox"
+               for="is_visible">
+            <input id="is_visible_global"
+                   name="is_visible_global"
+                   type="checkbox"
+                    {% if resourceGlobal.is_visible is not null and resourceGlobal.is_visible == false %}
+                        checked
+                    {% endif %}>
+            {{ i18n.lbl_database_hide }}
+        </label>
+    </div>
+     {% if licensesCount > 0 %}
+        <p class="help is-danger">{{ i18n.msg_resource_global_visibility }}</p>
+    {% endif %}
+</div>
+{% endif %}
+
+{%  if selectedOrganization.ubrId is not empty %}
+<div class="field">
+    <div class="control">
+        <label class="checkbox"
+               for="is_visible_local">
+            <input id="is_visible"
+                   name="is_visible_local"
+                   type="checkbox"
+                    {% if resourceLocal.overwrite|length > 0 and resourceLocal.overwrite.is_visible == false %}
+                        checked
+                    {% endif %}>
+            {{ i18n.lbl_database_hide_local }}
+        </label>
+    </div>
+</div>
+{% endif %}

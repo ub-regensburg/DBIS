@@ -1,0 +1,8 @@
+{% embed "users/base.twig" %}
+    {% block content %}
+        <div class="container">
+            <h1 class="title is-1">{{ i18n.lbl_error_occured }}</h1>
+            <div>{{message}}</div>
+        </div>
+    {% endblock %}
+{% endembed %}

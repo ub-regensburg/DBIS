@@ -1,0 +1,47 @@
+<footer class="footer is-size-7">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-two-fifths">
+                <p class="level-left">{{ i18n.dbis_is_part_of_url }}</p>
+                <br>
+                <a href="https://ur-library.de" target="_blank">
+                    <img class="mb-3" src="/img/logo/url_logo_expanded_grey.png" alt="{{ i18n.alt_url_logo }}" style="height: 2.5em; width: auto;">
+                </a>
+                <!--<a href="https://gepris.dfg.de/gepris/projekt/440516279" target="_blank">
+                    <img class="mb-3" src="/img/logo/dfg_logo_schriftzug_blau.gif" alt="DFG logo" style="height: 2.5em; width: auto;padding-top: 3px;padding-left: 30px;">
+                </a>-->
+                <ul>
+                    <li><a class="has-text-grey" href="https://ezb.ur.de">{{ i18n.ezb }}</a></li>
+                    <li><a class="has-text-grey" href="https://rvk.ur.de">{{ i18n.rvk }}</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="level mt-6 mb-2">
+            <div class="level-left">
+                <p class="level-item">{{ i18n.lbl_dbis_short_description }} </p>
+            </div>
+            <div class="level-right">
+
+                {% if organization.ubrId == 'UBR' %}
+                    {% if language == 'de' %}
+                        <p class="level-item mr-6"><a class="has-text-grey" href="https://www.uni-regensburg.de/bibliothek/recherche-ausleihe/zugriff-auf-e-medien/index.html#content_toggle_33081">{{ i18n.lbl_user_tracking }}</a></p>
+                    {% else %}
+                        <p class="level-item mr-6"><a class="has-text-grey" href="https://www.uni-regensburg.de/library/faq/e-media/index.html#content_toggle_33299">{{ i18n.lbl_user_tracking }}</a></p>
+                    {% endif %}
+                {% endif %}
+
+                <p class="level-item mr-6"><a class="has-text-grey" href="https://www.uni-regensburg.de/impressum/startseite">{{ i18n.lbl_imprint }}</a></p>
+                <p class="level-item mr-6 ml-3"><a class="has-text-grey" href="https://www.uni-regensburg.de/datenschutz/startseite">{{ i18n.lbl_data_privacy }}</a></p>
+                <p class="level-item mr-6 ml-3"><a class="has-text-grey" href="/services">DBIS-Services</a></p>
+                <p class="level-item mr-6 ml-3"><a class="has-text-grey" href="/admin/login?lang={{language}}">Administration</a></p>
+            </div>
+        </div>
+        <div class="level">
+            <div class="level-left">
+                <p class="level-item">{{ i18n.lbl_funded_by_dfg }},&nbsp;<a href="https://gepris.dfg.de/gepris/projekt/440516279" target=_blank>{{ i18n.lbl_funded_by_dfg_project_number }}</a></p>
+            </div>
+        </div>
+    </div>
+</footer>

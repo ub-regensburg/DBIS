@@ -1,0 +1,162 @@
+<div id="alternativetitle-title" class="level mb-2 mt-6">
+    <h3 class="title is-3 mb-2">{{ i18n.h_lbl_alternative_titles }}</h3>
+</div>
+
+<!-- GLOBAL -->
+{% if resourceGlobal and resourceGlobal is defined and resourceGlobal.alternative_titles|length > 0 %}
+
+    <div class="field field-alt_titles global">
+        <div class="alternative-title-entries">
+            {# ENTRIES #}
+            {% for alternative_title in resourceGlobal.alternative_titles %}
+                <div class="alternative-title-entry">
+                    <input name="alternative_title_global_id[]"
+                           type="hidden"
+                           value="{{ alternative_title.id }}">
+                    <div class="columns mb-0">
+                        <div class="column">
+                            <div class="keyword-list">
+                                <div class="field">
+                                    <label class="label level-left">
+                                        <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                    {{ i18n.lbl_other_languages }}
+                                        </span>
+                                    </label>
+                                    <div class="control">
+                                        <input name="alternative_title_global[]"
+                                               class="input"
+                                               type="text"
+                                               autocomplete="off"
+                                               placeholder="{{ i18n.lbl_other_titles }}"
+                                               aria-labelledby="alt_title_de"
+                                               value="{{ alternative_title.title }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label level-left">
+                                    <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                {{ i18n.lbl_from }}
+                                    </span>
+                                </label>
+                                <div class="control">
+                                    <input name="alternative_title_valid_from_global[]"
+                                           class="input alternative_title_valid_from"
+                                           type="date"
+                                           value="{{ alternative_title.valid_from }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label class="label level-left">
+                                    <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                {{ i18n.lbl_to }}
+                                    </span>
+                                </label>
+                                <div class="level">
+                                    <div class="control is-flex-grow-1">
+                                        <input name="alternative_title_valid_to_global[]"
+                                               class="input alternative_title_valid_to"
+                                               type="date"
+                                               value="{{ alternative_title.valid_to}}">
+                                        <!-- Only for spacing -->
+                                    </div>
+                                    <btn class="delete ml-3 is-invisible"></btn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="field field-alt_titles global">
+        <div class="alternative-title-entry is-hidden">
+            <input name="alternative_title_global_id[]"
+                   type="hidden"
+                   value="">
+            <div class="columns mb-0">
+                <div class="column">
+                    <div class="keyword-list">
+                        <div class="field">
+                            <label class="label level-left">
+                                    <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                {{ i18n.lbl_other_languages }}
+                                    </span>
+                            </label>
+                            <div class="control">
+                                <input name="alternative_title_global[]"
+                                       class="input"
+                                       type="text"
+                                       autocomplete="off"
+                                       placeholder="{{ i18n.lbl_other_titles }}"
+                                       aria-labelledby="alt_title"
+                                       value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label level-left">
+                                    <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                {{ i18n.lbl_from }}
+                                    </span>
+                        </label>
+                        <div class="control">
+                            <input name="alternative_title_valid_from_global[]"
+                                   class="input alternative_title_valid_from"
+                                   type="date"
+                                   value="">
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label level-left">
+                            <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                        {{ i18n.lbl_to }}
+                            </span>
+                        </label>
+                        <div class="level">
+                            <div class="control is-flex-grow-1">
+                                <input name="alternative_title_valid_to_global[]"
+                                       class="input alternative_title_valid_to"
+                                       type="date"
+                                       value="">
+                                <!-- Only for spacing -->
+                            </div>
+                            <btn class="delete ml-3 is-invisible"></btn>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+<div class="columns field-alt_titles-add-button-container global">
+    <div class="column pt-0">
+        <button id="btn_add_alternative_title_global"
+                class="button is-primary is-inverted has-text-weight-semibold is-small"
+                aria-label="{{ i18n.aria_add_alttitle }}"
+                type="button">
+            <span class="icon mr-1">
+                <i class="fas fa-plus"></i>
+            </span>
+            {{ i18n.aria_add_alttitle }}
+        </button>
+    </div>
+</div>

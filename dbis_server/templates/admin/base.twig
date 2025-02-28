@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+        <title>{{ pageTitle }}</title>
+        {% set asset = page|default('admin_base') %}
+        {% block css %}
+            {% if asset == 'admin_base' %}
+                {% webpack_entry_css 'admin_base' %}
+            {% elseif asset == 'create_database' %}
+                <link rel="stylesheet" href="/vendor/chosen.min.css" />
+                {% webpack_entry_css 'admin_create_database' %}
+            {% elseif asset == 'create_organization' %}
+                {% webpack_entry_css 'admin_organization_form' %}
+            {% elseif asset == 'edit_organization' %}
+                {% webpack_entry_css 'admin_organization_form' %}
+            {% elseif asset == 'manage_organizations' %}
+                {% webpack_entry_css 'admin_manage_organizations' %}
+            {% elseif asset == 'manage_databases' %}
+                {% webpack_entry_css 'admin_manage_databases' %}
+            {% elseif asset == 'manage_licenses' %}
+                {% webpack_entry_css 'admin_manage_licenses' %}
+            {% elseif asset == 'create_license' %}
+                {% webpack_entry_css 'admin_create_license' %}
+            {% elseif asset == 'edit_license' %}
+                {% webpack_entry_css 'admin_edit_license' %}
+            {% elseif asset == 'select_subject' %}
+                {% webpack_entry_css 'admin_select_subject' %}
+            {% elseif asset == 'manage_collections' %}
+                {% webpack_entry_css 'admin_manage_collections' %}
+            {% elseif asset == 'manage_keywords' %}
+                {% webpack_entry_css 'admin_manage_keywords' %}
+            {% elseif asset == 'manage_relationships' %}
+                {% webpack_entry_css 'admin_manage_relationships' %}
+            {% elseif asset == 'manage_drafts' %}
+                {% webpack_entry_css 'admin_manage_drafts' %}
+            {% elseif asset == 'manage_labels' %}
+                {% webpack_entry_css 'admin_manage_labels' %}
+            {% elseif asset == 'edit_collection' or asset == 'create_collection' %}
+                {% webpack_entry_css 'admin_create_collection' %}
+            {% elseif asset == 'login' %}
+                {% webpack_entry_css 'admin_login' %}
+            {% elseif asset == 'superadmin_settings' %}
+                {% webpack_entry_css 'superadmin_settings' %}
+            {% elseif asset == 'superadmin_free_resources' %}
+                {% webpack_entry_css 'superadmin_free_resources' %}
+            {% else %}
+                {% webpack_entry_css 'admin_base' %}
+            {% endif %}
+        {% endblock %}
+        <script>
+            var config = {
+                org_id: "{{ selectedOrganization.ubrId }}",
+                lang: "{{ lang }}",
+                translate_url: "{{ settings.translate_url }}"
+            };
+        </script>
+    </head>
+
+    <body>
+    <div class="page-main columns mb-0">
+        {% if not isHidingNav %}
+            <div class="page-nav column is-one-fifth has-background-light">
+                <div class="pt-4 pl-4 pr-4 pb-2">
+                    <a href="/">
+                        <img id="dbis-logo" src="/img/logo/logo_expanded.png" alt="{{ i18n.alt_dbis_logo }}">
+                    </a>
+                </div>
+
+                <aside
+                        class="menu sidenav pl-5 pr-5 pb-5 pt-6"
+                        aria-label="{{ i18n.aria_side_menu }}"
+                        role="navigation">
+
+                    {%  if isSubjectSpecialist or isAdmin or isSuperAdmin %}
+                        <p class="menu-label">
+                            <span class="icon is-small">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                            </span>
+                            {{ i18n.organization }}
+                            {% if selectedOrganization.ubrId is not empty %}
+                                {{ selectedOrganization.ubrId }}
+                            {% endif %}
+                        </p>
+                        <!----------------------------------
+                          -- Admin Functions
+                          ---------------------------------->
+                        <!-- Dropdown for selection of administrated organization -->
+                        <div class="dropdown searchable is-fullwidth"
+                             aria-label="{{ i18n.aria_select_organization }}">
+                            <div class="dropdown-trigger"
+                                 aria-label="{{ i18n.aria_open_dropdown_organizations }}">
+                                <button class="button"
+                                        aria-haspopup="true"
+                                        aria-controls="dropdown-organizations">
+                                                <span>{{ selectedOrganization ?
+                                                    selectedOrganization.name :
+                                                    i18n.placeholder_please_select_org}}</span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                    </span>
+                                </button>
+                            </div>
+
+
+                            <div
+                                    class="dropdown-menu"
+                                    id="dropdown-organizations"
+                                    aria-label="{{ i18n.aria_dropdown_organizations }}"
+                                    role="menu">
+                                <div class="dropdown-content">
+                                    <div class="searchfield-container">
+                                        <input type="text"
+                                               placeholder="{{ i18n.hint_search_organization_by_name }}"
+                                               aria-label="{{ i18n.aria_dropdown_organizations_search}}"
+                                               class="searchfield input dropdown-item"/>
+                                    </div>
+                                    {% for org in administrableOrganizations %}
+                                        <a href="/admin/manage/{{ org.ubrId }}/" class="dropdown-item" data-city="{{ org.city }}">
+                                            {{ org.name }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <!---------------------------------------------------------->
+
+                    {% if selectedOrganization.ubrId is not empty %}
+
+                        <!-- Admin Functions -->
+                        {%  if selectedOrganization.ubrId is not empty and (isAdmin or isSuperAdmin) %}
+                            <ul class="menu-list">
+                                <li>
+                                    <a class="is-size-6" href="/admin/manage/{{ selectedOrganization.ubrId }}/organization/"
+                                            {% if selectedOrganization==null %} class="disabled" {% endif %}>
+                                        {{ i18n.lbl_heading_edit_organization }}
+                                    </a>
+                                </li>
+                            </ul>
+                        {% endif %}
+
+                        {% if isAdmin or isSuperAdmin or isSubjectSpecialist %}
+                        <p class="menu-label mt-5">
+                            {{ i18n.breadcrumb_resources }}
+                        </p>
+                        <ul class="menu-list">
+                            <li>
+                                <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}resources/">
+                                    {{ i18n.lbl_menu_nav_superadministration_manage_res }}
+                                </a>
+                            </li>
+                            {%  if isAdmin or isSuperAdmin %}
+                            <li>
+                                <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}resources/new/">
+                                    {{ i18n.lbl_menu_nav_superadministration_manage_res_create }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}drafts/">
+                                    {{ i18n.lbl_drafts_manage }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}relationships/">
+                                    {{ i18n.lbl_menu_nav_superadministration_manage_relationships }}
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                        {% endif %}
+
+
+                        {%  if selectedOrganization.ubrId is not empty %}
+                                <p class="menu-label mt-5">
+                                    {{ i18n.lbl_subjects_list }}
+                                </p>
+                                <ul class="menu-list">
+                                    <li>
+                                        <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}subjects/top-resources/">
+                                            {{ i18n.nav_manage_topresources }}
+                                        </a>
+                                    </li>
+                                    {% if isAdmin or isSuperAdmin %}
+                                    <li>
+                                        <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}subjects/">
+                                            {{ i18n.nav_manage_subjects }}
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+
+                                {% if isAdmin or isSuperAdmin %}
+                                <p class="menu-label mt-5">
+                                    {{ i18n.lbl_collections }}
+                                </p>
+                                <ul class="menu-list">
+                                    <li>
+                                        <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}collections/new/">
+                                            {{ i18n.lbl_menu_nav_administration_manage_collection_create }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}collections/">
+                                            {{ i18n.lbl_menu_nav_administration_manage_collections }}
+                                        </a>
+                                    </li>
+                                </ul>
+                                {% endif %}
+                            {% endif %}
+
+                            <p class="menu-label mt-5">
+                                    {{ i18n.lbl_labels }}
+                            </p>
+                            <ul class="menu-list">
+                                {% if isAdmin or isSuperAdmin %}
+                                <li>
+                                    <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}labels/">
+                                        {{ i18n.lbl_labels_extended }}
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+
+                            <p class="menu-label mt-5">
+                                {{ i18n.lbl_quality_management }}
+                            </p>
+                            <ul class="menu-list">
+                                {% if isAdmin or isSuperAdmin %}
+                                <li>
+                                    <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}cleanup/">
+                                        {{ i18n.lbl_menu_nav_administration_edit_cleanup }}
+                                    </a>
+                                </li>
+                                {% endif %}
+                                <li>
+                                    <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}keywords/">
+                                        {{ i18n.lbl_menu_nav_administration_edit_keywords }}
+                                    </a>
+                                </li>			    
+                            </ul>
+
+                            {% if isAdmin or isSuperAdmin or isSubjectSpecialist %}
+                                <p class="menu-label mt-5">
+                                    {{ i18n.lbl_statistics }}
+                                </p>
+                                <ul class="menu-list">
+                                    
+                                    <li>
+                                        <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}statistics/daily/">
+                                            {{ i18n.lbl_menu_nav_administration_daily_statistics }}
+                                        </a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}statistics/selectable/">
+                                            {{ i18n.lbl_menu_nav_administration_selectable_statistics }}
+                                        </a>
+                                    </li>			    
+                                </ul>
+                            {% endif %}
+
+                            <p class="menu-label mt-5">
+                                {{ i18n.lbl_information_exchange}}
+                            </p>
+                            <ul class="menu-list">
+                                <li>
+                                    <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}profile/">
+                                        {{ i18n.lbl_menu_nav_administration_edit_profile }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}firststeps/">
+                                        {{ i18n.lbl_menu_nav_administration_edit_first_steps }}
+                                    </a>
+                                </li>                       
+                                <li>
+                                    <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}contact/">
+                                        {{ i18n.lbl_menu_nav_administration_edit_contact }}
+                                    </a>
+                                </li>
+                            </ul>
+
+                    {% endif %}
+
+
+
+
+
+
+                        <!-- Superadmin Functions -->
+                        {% if isSuperAdmin %}
+                            <p class="menu-label mt-5">
+                                {{ i18n.lbl_menu_nav_superadministration }}
+                            </p>
+                            <ul class="menu-list">
+                                <li>
+                                    <a href="/superadmin/settings/">
+                                        {{ i18n.h_super_settings }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/superadmin/freeresources/">
+                                        {{ i18n.h_super_free_resources }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/superadmin/organizations/">{{ i18n.lbl_menu_nav_superadministration_manage_orgs }}</a>
+                                </li>
+                                <li>
+                                    <a href="/superadmin/organizations/new/">
+                                        {{ i18n.lbl_menu_nav_superadministration_manage_orgs_create }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/superadmin/privileges/users/">
+                                        {{ i18n.h_privileges_select_users }}
+                                    </a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </aside>
+                </div>
+            {% endif %}
+
+            {% endif %}
+
+        <div class="column">
+
+            <div class="is-right has-text-right">
+                {% if user %}
+                    <div class="dropdown is-hoverable is-right"
+                         role="menuitem"
+                         aria-label="{{ i18n.aria_accountsettings }}"
+                    >
+
+                        <div class="dropdown-trigger">
+                            <button
+                                    class="button is-inverted is-primary"
+                                    aria-haspopup="true"
+                                    aria-controls="navbar-dropdown">
+                                <span class="icon is-small mr-2">
+                                    <i class="fas fa-user" aria-hidden="true"></i>
+                                </span>
+                                <span><b>{{ i18n.hi }}, {{ user.prename }} {{ user.surname }}</b>!</span>
+                            </button>
+                        </div>
+
+                        <div class="dropdown-menu"
+                             id="navbar-dropdown"
+                             aria-label="{{ i18n.aria_dropdown_accountsettings }}"
+                             role="menu">
+                            <div class="dropdown-content" aria-hidden="true">
+                                <!-- Language Select -->
+                                <div class="navbar-item">
+                                    <span>{{ i18n.lbl_language_select }}</span>
+                                </div>
+                                <div class="navbar-item">
+                                    <form action="/admin/user/language/"
+                                          class="language"
+                                          role="form"
+                                          aria-label="{{ i18n.aria_select_language }}"
+                                          method="POST">
+                                        <button name="language"
+                                                class="
+                                                button
+                                                is-fullwidth
+                                                is-inverted
+                                                mr-1
+                                                {% if user.language=='de' %}
+                                                    selected
+                                                    is-link
+                                                    is-light
+                                                {% else %}
+                                                    is-link
+                                                {% endif %}
+                                                "
+                                                aria-label="{{ i18n.aria_set_language_to_de }}"
+                                                value="de"
+                                                type="submit">de</button>
+                                        <button name="language"
+                                                value="en"
+                                                class="
+                                                button
+                                                is-fullwidth
+                                                is-inverted
+                                                ml-1
+                                                {% if user.language=='en' %}
+                                                    selected
+                                                    is-link
+                                                    is-light
+                                                {% else %}
+                                                    is-link
+                                                {% endif %}
+                                                "
+                                                aria-label="{{ i18n.aria_set_language_to_en }}"
+                                                type="submit">en</button>
+                                    </form>
+                                </div>
+
+                                <hr class="navbar-divider" aria-hidden="true">
+
+                                <!-- Logout Button -->
+                                <a class="navbar-item" href="/api/v1/auth/logout">
+                                    {{ i18n.lbl_logout }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="page-content pt-1
+                {% if not isHidingNav %}
+                    {# If nav (one-fifth) exists, make width explicit to avoid overflows #}
+                    is-four-fifths
+                {% endif %}
+                 ">
+                <!-- just a placeholder for content block -->
+                {% block content %}
+                    PLACEHOLDER - PLEASE CHANGE
+                {% endblock %}
+                <!-- end placeholder -->
+            </div>
+        </div>
+    </div>
+    {%  block footer %}
+        {{ include('admin/footer.twig') }}
+    {%  endblock %}
+    {% block js %}
+        {% if asset == 'admin_base' %}
+            {% webpack_entry_js 'admin_base' %}
+        {% elseif asset == 'create_database' %}
+            {% webpack_entry_js 'admin_create_database' %}
+        {% elseif asset == 'create_organization' %}
+            {% webpack_entry_js 'admin_organization_form' %}
+        {% elseif asset == 'edit_organization' %}
+            {% webpack_entry_js 'admin_organization_form' %}
+        {% elseif asset == 'manage_organizations' %}
+            {% webpack_entry_js 'admin_manage_organizations' %}
+        {% elseif asset == 'manage_databases' %}
+            {% webpack_entry_js 'admin_manage_databases' %}
+        {% elseif asset == 'manage_licenses' %}
+            {% webpack_entry_js 'admin_manage_licenses' %}
+        {% elseif asset == 'create_license' %}
+            {% webpack_entry_js 'admin_create_license' %}
+        {% elseif asset == 'edit_license' %}
+            {% webpack_entry_js 'admin_edit_license' %}
+        {% elseif asset == 'select_subject' %}
+            {% webpack_entry_js 'admin_select_subject' %}
+        {% elseif asset == 'manage_collections' %}
+            {% webpack_entry_js 'admin_manage_collections' %}
+        {% elseif asset == 'manage_keywords' %}
+            {% webpack_entry_js 'admin_manage_keywords' %}
+        {% elseif asset == 'manage_relationships' %}
+            {% webpack_entry_js 'admin_manage_relationships' %}
+        {% elseif asset == 'manage_drafts' %}
+            {% webpack_entry_js 'admin_manage_drafts' %}
+        {% elseif asset == 'manage_labels' %}
+            {% webpack_entry_js 'admin_manage_labels' %}
+        {% elseif asset == 'edit_collection' or asset == 'create_collection' %}
+            {% webpack_entry_js 'admin_create_collection' %}
+        {% elseif asset == 'login' %}
+            {% webpack_entry_js 'admin_login' %}
+        {% elseif asset == 'superadmin_manage_privileges' %}
+            {% webpack_entry_js 'superadmin_manage_privileges' %}
+        {% elseif asset == 'superadmin_manage_privileges_user_select' %}
+            {% webpack_entry_js 'superadmin_manage_privileges_user_select' %}
+        {% elseif asset == 'search_databases' %}
+            {% webpack_entry_js 'admin_search_databases' %}
+        {% elseif asset == 'superadmin_settings' %}
+            {% webpack_entry_js 'superadmin_settings' %}
+        {% elseif asset == 'superadmin_free_resources' %}
+            {% webpack_entry_js 'superadmin_free_resources' %}
+        {% elseif asset == 'selectable_statistics' %}
+            <script src="/vendor/table-sort.min.js"></script>
+            {% webpack_entry_js 'admin_base' %}
+        {% endif %}
+    {% endblock %}
+    </body>
+</html>

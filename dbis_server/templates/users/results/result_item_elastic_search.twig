@@ -1,0 +1,140 @@
+<div class="box box-{{ resource.resource_id }}">
+    <div class="columns">
+        <div class="column">
+            <a class="title is-2"
+               href='{{ organization ? "/" ~ organization.ubrId: null }}/resources/{{ resource.resource_id }}'>
+                <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_{{ resource.traffic_light }}.svg" alt=""></span> <span>{{ resource.resource_localisations.0.title | default(resource.resource_title) }}</span>
+                {% if is_top and is_top is defined %}
+                    <span class="tag is-primary is-light">TOP</span>
+                {% endif %}
+            </a>
+            <p>
+            <a class="" style="color:inherit;" href='{{ organization ? "/" ~ organization.ubrId: null }}/resources/{{ resource.resource_id }}'>
+                <span class="wrap-result-text">
+                {% if resource.description_short[lang] %}
+                    {% set description = resource.description_short[lang]|striptags('<b>,<a>,<pre>') %}
+                {% else %}
+                    {% if resource.description[lang]|length >= 400 %}
+                        {% set description = resource.description[lang]|striptags('<b>,<a>,<pre>')|slice(0,397) ~ "..." %}
+                    {% else %}
+                        {% set description = resource.description[lang]|striptags('<b>,<a>,<pre>') %}
+                    {% endif %}
+                {% endif %}
+
+                {% autoescape %}
+                    {{ description |striptags }}
+                {% endautoescape %}
+                </span>
+            </a>
+                <a class="ml-0 mt-2" href='{{ organization ? "/" ~ organization.ubrId: null }}/resources/{{ resource.resource_id }}'>{{ i18n.lbl_more_information }}</a>
+            </p>
+            <p class="further-information mt-2">
+                {% if is_top_database_for_subject is defined and is_top_database_for_subject == true %}
+                    <span class="tag is-info is-light">{{ i18n.msg_top_database }}</span>
+                {% endif %}
+                {% for license in resource.licenses %}
+                    {% if (license.organisation is defined and license.organisation == organization.ubrId) or license.organisation == "" %}
+                        {% if license.type == 3 %}
+                            <span class="tag is-normal is-light">{{ i18n.lbl_tag_nl_license }}</span>
+                        {% elseif license.type == 4 %}
+                            <span class="tag is-normal is-light">FID</span>
+                            {% if license.form == 41 %}
+                                <span class="tag is-normal is-light">{{ i18n.lbl_tag_nl_license }}</span>
+                            {% endif %}
+                            {% if license.form == 42 or license.form == 43 %}
+                                <span class="tag is-normal is-light">{{ i18n.lbl_tag_fid_nl_campus_license }}</span>
+                                {% if license.form == 42 %}
+                                    <span class="tag is-normal is-light">{{ i18n.lbl_tag_single_user_registration }}</span>
+                                {% endif %}
+                            {% endif %}
+                        {% elseif license.type == 6 and license.form.id == 61 %}
+                            <span class="tag is-normal is-light">ZB MED</span>
+                            <span class="tag is-normal is-light">{{ i18n.lbl_tag_single_user_registration }}</span>
+                        {% endif %}
+
+                        {% if license.form == 24 %}
+                            <span class="tag is-normal is-light">{{ i18n.lbl_tag_test_license }}</span>
+                        {% endif %}
+
+                        {% if license.is_oa %}
+                            <span class="tag is-normal is-light">OA</span>
+                        {% endif %}
+
+                        {% if license.is_allowing_data_mining %}
+                            <span class="tag is-normal is-light">TEXT MINING</span>
+                        {% endif %}
+
+                    {% endif %}
+                {% endfor %}
+            </p>
+            <p class="relationships mt-2">
+                <span class="has-children pr-1"><span class="tag is-white has-children-label pl-0 is-hidden">{{ i18n.msg_relationships_is_parent }}: </span></span>
+                <span class="has-parents pr-1"><span class="tag is-white has-parents-label pl-0 is-hidden">{{ i18n.msg_relationships_is_child }}: </span></span>
+                <span class="is-related pr-1"><span class="tag is-white is-related-label pl-0 is-hidden">{{ i18n.msg_relationships_is_related }}: </span></span>
+            </p>
+            <div class="is-hidden">
+                <dl>
+                    <div>
+                        <dt>Identifier</dt>
+                        <dd data-id="{{ resource.resource_id }}">{{ resource.resource_id }}</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+        <div class="column is-one-quarter has-text-right resource-access">
+            {% if resource.most_valuable_access == false %}
+                {% if organization %}
+                    {% set linkToDetail = "/" ~ organization.ubrId ~ "/resources/" ~ resource.resource_id %}
+                {% else %}
+                    {% set linkToDetail = "/resources/" ~ resource.resource_id %}
+                {% endif %}
+                <a class="button is-primary is-light has-text-weight-bold" rel="noopener noreferrer"
+                    href="{{ linkToDetail }}">
+                                                        <span class="icon">
+                                                            <i class="fas fa-arrow-right"></i>
+                                                        </span>
+                        <span>
+                                                            {{ i18n.lbl_open_database }}
+                                                        </span>
+                    </a>
+                    <br>
+            {% else %}
+                {% if resource.most_valuable_access|length > 0 and (resource.most_valuable_access.accesses.0.access_url|length > 0 or resource.most_valuable_access.accesses.0.form == 12) %}
+                    {% if resource.most_valuable_access.accesses.0.form == 12 %}
+                        {% if organization %}
+                            {% set linkForAccessOrAccessToOnSiteAccess = "/" ~ organization.ubrId ~ "/resources/" ~ resource.resource_id %}
+                        {% else %}
+                            {% set linkForAccessOrAccessToOnSiteAccess = "/resources/" ~ resource.resource_id %}
+                        {% endif %}
+                    {% else %}
+                        {% set linkForAccessOrAccessToOnSiteAccess = "/warpto?ubr_id=" ~ organization.ubrId ~ "&resource_id=" ~ resource.resource_id ~ "&license_type=" ~ resource.most_valuable_access.type ~ "&license_form=" ~ resource.most_valuable_access.form ~ "&access_type=" ~ resource.most_valuable_access.accesses.0.type ~ "&access_form=" ~ resource.most_valuable_access.accesses.0.form ~ "&access_id=" ~ resource.most_valuable_access.accesses.0.id %}
+                    {% endif %}
+                        <a class="button is-primary is-light has-text-weight-bold" target="_blank" rel="noopener noreferrer"
+                        href="{{ linkForAccessOrAccessToOnSiteAccess }}">
+                                                            <span class="icon">
+                                                                <i class="fas fa-arrow-right"></i>
+                                                            </span>
+                            <span>
+                                                                {{ i18n.lbl_open_database }}
+                                                            </span>
+                        </a>
+                        <br>
+                {% elseif resource.most_valuable_access|length > 0 and (resource.most_valuable_access.accesses.0.access_url|length < 1) %}
+                    <button class="button text-toggler-button access-help-button is-white has-text-grey-dark" type="button">
+                            {{ i18n.lbl_access_possibilities }} <span class="symbol-arrow">&#9660;</span></button>
+                    {% if organization and organization is defined and organization.ubrId != "ALL" %}
+                        <p class="pr-4 access-help toggle-text">{{ i18n.msg_find_access_in_org }} <a href="mailto:{{ organization.contact }}">{{ organization.contact }}</a></p>
+                    {% endif %}
+                {% else %}
+                    <button class="button text-toggler-button access-help-button is-white has-text-grey-dark" type="button">
+                        {{ i18n.lbl_access_possibilities }} <span class="symbol-arrow">&#9660;</span></button>
+                    {% if organization and organization is defined and organization.ubrId != "ALL" %}
+                        <p class="pr-4 access-help toggle-text">{{ i18n.msg_find_access }}<a href="mailto:{{ organization.contact }}">{{ organization.contact }}</a></p>
+                    {% else %}
+                        <p class="pr-4 access-help toggle-text">{{ i18n.msg_find_access_no_org }} <a href="mailto:info.dbis@ur.de">{{ i18n.msg_contact_dbis }}</a></p>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>

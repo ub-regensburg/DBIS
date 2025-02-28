@@ -1,0 +1,104 @@
+{% if not resourceLocal.overwrite.report_time_start is empty and resourceLocal.overwrite.report_time_start|length > 0 or not resourceLocal.overwrite.report_time_end is empty and resourceLocal.overwrite.report_time_end|length > 0%}
+    {% set isLocalized = true %}
+{% else %}
+    {% set isLocalized = false %}
+{% endif %}
+
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ i18n.lbl_report_time }}</h3>
+    {%  if selectedOrganization.ubrId is not empty %}
+    <div class="tags has-addons is-clickable is-unselectable localization-tag" data-id="field-reporttime">
+        {% if resourceLocal.overwrite.report_time_start is empty and resourceLocal.overwrite.report_time_start|length < 1 and resourceLocal.overwrite.report_time_end is empty and resourceLocal.overwrite.report_time_end|length < 1 %}
+            <span class="tag global-tag">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light is-hidden">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-grey-lighter">&nbsp;</span>
+        {% else %}
+            <span class="tag global-tag is-hidden">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-info">&nbsp;</span>
+        {% endif %}
+        <input type="checkbox" name="reporttime-local" class="localization-checkbox" hidden {% if isLocalized %} checked {% endif %}>
+    </div>
+    {% endif %}
+</div>
+<!-- GLOBAL -->
+<div class="columns field-reporttime global
+     {% if isLocalized %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <div class="field">
+            <label class="label level-left">
+                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                            {{ i18n.lbl_from }}
+                </span>
+            </label>
+            <div class="control">
+                <input id="report_time_start_global"
+                       name="report_time_start_global"
+                       class="input"
+                       type="date"
+                       value="{{ resourceGlobal.report_time_start }}">
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="field">
+            <label class="label level-left">
+                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                            {{ i18n.lbl_to }}
+                </span>
+            </label>
+            <div class="control">
+                <input id="report_time_end_global"
+                       name="report_time_end_global"
+                       class="input"
+                       type="date"
+                       value="{{ resourceGlobal.report_time_end }}">
+            </div>
+        </div>
+    </div>
+</div>
+            
+            
+            
+<!-- LOCAL -->
+<div class="columns field-reporttime local
+     {% if resourceLocal.overwrite.report_time_start is empty and resourceLocal.overwrite.report_time_start|length < 1 and resourceLocal.overwrite.report_time_end is empty and resourceLocal.overwrite.report_time_end|length < 1 %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <div class="field">
+            <label class="label level-left">
+                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                            {{ i18n.lbl_from }}
+                </span>
+            </label>
+            <div class="control">
+                <input id="report_time_start_local"
+                       name="report_time_start_local"
+                       class="input"
+                       type="date"
+                       value="{{ resourceLocal.overwrite.report_time_start }}">
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="field">
+            <label class="label level-left">
+                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                            {{ i18n.lbl_to }}
+                </span>
+            </label>
+            <div class="control">
+                <input id="report_time_end_local"
+                       name="report_time_end_local"
+                       class="input"
+                       type="date"
+                       value="{{ resourceLocal.overwrite.report_time_end }}">
+            </div>
+        </div>
+    </div>
+</div>

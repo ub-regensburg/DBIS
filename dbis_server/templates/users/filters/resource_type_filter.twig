@@ -1,0 +1,28 @@
+<div id="resource-type-filter" 
+    class="select is-multiple w-100">
+    
+    {% if not no_tags %}
+        <div id="resource-type-tags" class="tags is-fullwidth mt-2"></div>
+    {% endif %}
+    
+    <input class="input jsonly search-field"
+           placeholder="{{ i18n.lbl_search }}" aria-label="{{ i18n.aria_search_resource_types }}"/>
+    
+    <select name="filter-resource-types[]" 
+            id="filter-resource-types" 
+            class="is-small is-fullwidth"
+            multiple aria-label="{{ i18n.aria_select_resource_types }}">
+        {% for resource_type in resource_types %}
+            <option value="{{ resource_type.title }}"
+                {% if resource_type.title in selectedResourceTypes %}selected="true"{% endif %}>
+                {{ resource_type.title }}
+            </option>
+        {% endfor %}
+    </select>
+    
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

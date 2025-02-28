@@ -1,0 +1,52 @@
+<div id="keywords-filter"
+     class="select is-multiple">
+
+    {% if not no_tags %}
+        <div id="keyword-tags" class="tags is-fullwidth mt-2"></div>
+    {% endif %}
+
+    <input class="input jsonly search-field"
+           placeholder="{{ i18n.lbl_search }}" aria-label="{{ i18n.aria_search_keywords }}"/>
+
+    <select name="filter-keywords[]"
+            id="filter-keywords"
+            class="is-small is-fullwidth"
+            multiple aria-label="{{ i18n.aria_select_keywords }}">
+        
+        {# Render selected options first #}
+        {% for keyword in keywords %}
+            {% for filtered_keyword in filtered_keywords %}
+                {% if keyword.key == filtered_keyword.title %}
+                    <option value="{{ keyword.key }}" selected="true">
+                        {{ keyword.key }}
+                        {% if keyword.doc_count %} <span>({{ keyword.doc_count }})</span> {% endif %}
+                    </option>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        {# Render unselected options next #}
+        {% for keyword in keywords %}
+            {% set is_selected = false %}
+            {% for filtered_keyword in filtered_keywords %}
+                {% if keyword.key == filtered_keyword.title %}
+                    {% set is_selected = true %}
+                {% endif %}
+            {% endfor %}
+            
+            {% if not is_selected %}
+                <option value="{{ keyword.key }}">
+                    {{ keyword.key }}
+                    {% if keyword.doc_count %} <span>({{ keyword.doc_count }})</span> {% endif %}
+                </option>
+            {% endif %}
+        {% endfor %}
+        
+    </select>
+
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

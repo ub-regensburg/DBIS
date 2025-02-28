@@ -1,0 +1,95 @@
+<h3 id="title_local_note" 
+    class="title is-3 mt-6 mb-2
+    {% if resourceLocal.overwrite.local_note.de is empty and resourceLocal.overwrite.local_note.en is empty %}
+        is-hidden
+    {% endif %}
+    ">
+    {{ i18n.lbl_local_note }}
+</h3>
+<div class="field">
+    <div id="columns_local_note" 
+         class="columns c-translate
+         {% if resourceLocal.overwrite.local_note.de is empty and resourceLocal.overwrite.local_note.en is empty %}
+            is-hidden
+         {% endif %}
+         ">
+        <div class="column is-45">
+            <div class="field">
+                <label class="label level-left">
+                    <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                {{ i18n.lbl_german }}
+                    </span>
+                </label>
+                <div class="control">
+                    <textarea id="local_note_de"
+                           name="local_note_de"
+                           class="input textarea translate language--german global"
+                           type="text"
+                           autocomplete="off"
+                           placeholder="{{ i18n.lbl_local_note_placeholder }}"
+                           >{{ resourceLocal.overwrite.local_note.de }}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="column is-auto">
+            <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                    <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                </button>
+                <button class="icon button is-text translate language--english global pl-5 pr-5">
+                    <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                </button>
+            </div>
+        </div>
+        <div class="column is-45">
+            <div class="field">
+                <label class="label level-left">
+                    <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                {{ i18n.lbl_english }}
+                    </span>
+                </label>
+                <div class="control">
+                    <textarea id="local_note_en"
+                           name="local_note_en"
+                           class="input textarea translate language--english global"
+                           type="text"
+                           autocomplete="off"
+                           placeholder="{{ i18n.lbl_local_note_placeholder }}"
+                           >{{ resourceLocal.overwrite.local_note.en }}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column pt-0">
+        <button id="btn_add_local_note"
+                class="button is-primary is-inverted has-text-weight-semibold is-small
+                {% if not resourceLocal.overwrite.local_note.de is empty and not resourceLocal.overwrite.local_note.en is empty %}
+                    is-hidden
+                {% endif %}
+                " 
+                aria-label="{{ i18n.lbl_add_local_note }}"
+                type="button">
+            <span class="icon mr-1">
+                <i class="fas fa-plus"></i>
+            </span>
+            {{ i18n.lbl_add_local_note }}
+        </button>
+
+        <button id="btn_remove_local_note"
+                class="button is-danger is-inverted has-text-weight-semibold is-small
+                {% if resourceLocal.overwrite.local_note.de is empty and resourceLocal.overwrite.local_note.en is empty %}
+                    is-hidden
+                {% endif %}
+                " 
+                aria-label="{{ i18n.lbl_remove_local_note }}"
+                type="button">
+            <span class="icon mr-1">
+                <i class="fas fa-ban"></i>
+            </span>
+            {{ i18n.lbl_remove_local_note }}
+        </button>
+    </div>
+</div>

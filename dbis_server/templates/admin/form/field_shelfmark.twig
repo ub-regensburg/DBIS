@@ -1,0 +1,87 @@
+{% if not resourceLocal.overwrite.shelfmark_group is empty and not resourceLocal.overwrite.shelfmark_numbers is empty %}
+    {% set isLocalized = true %}
+{% else %}
+    {% set isLocalized = false %}
+{% endif %}
+
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ i18n.lbl_shelfmark }}</h3>
+    {%  if selectedOrganization.ubrId is not empty %}
+    <div class="tags has-addons is-clickable is-unselectable localization-tag" data-id="field-shelfmark">
+        {% if resourceLocal.overwrite.shelfmark is empty and resourceLocal.overwrite.shelfmark|length < 1 %}
+            <span class="tag global-tag">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light is-hidden">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-grey-lighter">&nbsp;</span>
+        {% else %}
+            <span class="tag global-tag is-hidden">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-info">&nbsp;</span>
+        {% endif %}
+        <input type="checkbox" name="shelfmark-local" class="localization-checkbox" hidden {% if isLocalized %} checked {% endif %}>
+    </div>
+    {% endif %}
+</div>
+<!-- GLOBAL -->
+<div class="columns field-shelfmark global
+     {% if isLocalized %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <div class="field is-horizontal">
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <input id="shelfmark_global_group" name="shelfmark_global_group" class="input" type="text"
+                               autocomplete="off" placeholder="{{ i18n.lbl_shelfmark_group }}"
+                               value="{{ resourceGlobal.shelfmark_group }}" onkeydown="return /[a-z]/i.test(event.key)">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input id="shelfmark_global_numbers" name="shelfmark_global_numbers" class="input" type="number"
+                               autocomplete="off" placeholder="{{ i18n.lbl_shelfmark_numbers }}"
+                               value="{{ resourceGlobal.shelfmark_numbers }}" oninput="this.value = this.valueAsNumber">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if errors.shelfmark %}
+            <div class="err-required help is-danger">{{ i18n.msg_invalid_notation }}</div>
+        {% endif %}
+    </div>
+</div>
+            
+            
+      
+<!-- LOCAL -->
+<div class="columns field-shelfmark local
+     {% if resourceLocal.overwrite.shelfmark_group is empty and resourceLocal.overwrite.shelfmark_numbers is empty %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <div class="field is-horizontal">
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <input id="shelfmark_local_group" name="shelfmark_local_group" class="input" type="text"
+                               autocomplete="off" placeholder="{{ i18n.lbl_shelfmark_group }}"
+                               value="{{ resourceLocal.overwrite.shelfmark_group }}" onkeydown="return /[a-z]/i.test(event.key)">
+
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input id="shelfmark_local_numbers" name="shelfmark_local_numbers" class="input" type="number"
+                               autocomplete="off" placeholder="{{ i18n.lbl_shelfmark_numbers }}"
+                               value="{{ resourceLocal.overwrite.shelfmark_numbers }}" oninput="this.value = this.valueAsNumber">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if errors.shelfmark %}
+            <div class="err-required help is-danger">{{ i18n.msg_invalid_notation }}</div>
+        {% endif %}
+    </div>
+</div>

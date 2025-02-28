@@ -1,0 +1,30 @@
+Die Datenbank "{databaseTitle}" wurde von einer anderen Lizenz auf frei verfügbar geändert.
+
+
+Bitte beachten Sie, dass diese Änderung über Nacht indexiert wird und ab ca. 7 Uhr des Folgetages such- und sichtbar wird.  
+
+
+Die Titeldaten sind unter 
+
+https://dbis.ur.de/UBR/resources/{databaseId} 
+
+zu sehen. 
+
+
+Bibliotheken mit Bestand sollten ihren Eintrag ab morgen überprüfen. Lokale Lizenzen müssen von jeder Einrichtung noch selbst gelöscht werden.  
+
+_________________________________________
+
+
+The database "{databaseTitle}" has been changed from another license to freely available.  
+
+
+Please note that this change will be indexed overnight and will be searchable and visible from approx. 7 a.m. the following day.
+
+
+The title data should be available at  
+
+https://dbis.ur.de/UBR/resources/{databaseId}  
+
+  
+Libraries with holdings should check their entry from tomorrow. Local licenses must still be deleted by each institution itself.   

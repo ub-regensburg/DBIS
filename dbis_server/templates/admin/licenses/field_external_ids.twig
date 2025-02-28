@@ -1,0 +1,24 @@
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">FIDELIO</h3>
+</div>
+
+<div class="columns field-fidelio">
+    <div class="column">
+        <label>{{ i18n.external_id_fidelio_ppn }}</label>
+        <div class="field">
+            <div class="control">
+                <input type="hidden" name="external_id_namespace[]" value="FIDELIO">
+                <input type="hidden" name="external_id_name[]" value="PPN">
+                {% set id = '' %}
+                {% for external_id in selectedExternalIds %}
+                    {% if external_id.namespace == 'FIDELIO' and external_id.id_name == 'PPN' %}
+                        {% set id = external_id.id %}
+                    {% endif %}
+                {% endfor %}
+                <input name="external_license_id[]" class="input" type="text"
+                       autocomplete="off" placeholder="{{ i18n.external_id_fidelio_ppn_placeholder }}"
+                       value="{{ id }}">
+            </div>
+        </div>
+    </div>
+</div>

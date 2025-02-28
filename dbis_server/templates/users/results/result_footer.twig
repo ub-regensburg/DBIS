@@ -1,0 +1,34 @@
+
+{{ include('shared/pagination.twig', {alignment: 'is-centered'}) }}
+
+<br>
+
+<div class="container">
+    <div class="field is-grouped is-pulled-right level">
+        <label for="pagination_size level-item">{{ i18n.lbl_results_per_page }}:</label>
+        <div class="select ml-2 level-item is-small">
+            <select name="ps" id="pagination_size" class="button">
+                <option value="25"
+                        {% if pagination_size == 25 %}
+                            selected
+                        {% endif %}>25</option>
+                <option value="50"
+                        {% if pagination_size == 50 %}
+                            selected
+                        {% endif %}>50</option>
+                <option value="100"
+                        {% if pagination_size == 100 %}
+                            selected
+                        {% endif %}>100</option>
+                <option value="250"
+                        {% if pagination_size == 250 %}
+                            selected
+                        {% endif %}>250</option>
+                <option value="{{ total_nr }}"
+                        {% if pagination_size == total_nr %}
+                            selected
+                        {% endif %}">{{ i18n.lbl_all }}</option>
+            </select>
+        </div>
+    </div>
+</div>

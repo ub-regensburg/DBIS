@@ -1,0 +1,18 @@
+{% if isFid is defined and isFid == true %}
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ fidelioNamespace }}</h3>
+</div>
+
+<div class="columns field-zdb global">
+    <div class="column">
+        <div class="field ">
+            <div class="control">
+                <input type="hidden" id="fidelio_namespace" name="fidelio_namespace" value="fidelio">
+                <input id="fidelio_id_global" name="fidelio_id_global" class="input" type="text"
+                       autocomplete="off" placeholder="{{ i18n.lbl_fidelio_ppn_placeholder }}"
+                       value="{{ resourceGlobal.fidelio_id }}">
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

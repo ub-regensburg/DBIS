@@ -1,0 +1,70 @@
+<div id="publication-form-filter" 
+    class="select is-multiple">
+    
+    {% if not no_tags %}
+        <div id="publication-form-tags" class="tags is-fullwidth mt-2"></div>
+    {% endif %}
+    <input class="input jsonly search-field"
+           placeholder="{{ i18n.lbl_search }}" aria-label="{{ i18n.aria_search_publication_forms }}" />
+    
+    <select name="filter-publication-forms[]" 
+        id="filter-publication-forms" 
+        class="is-small is-fullwidth"
+        multiple aria-label="{{ i18n.aria_select_publication_forms }}">
+
+        {# Render selected publication forms first #}
+        {% for publication_form in publication_forms %}
+        {% for filtered_publication_form in filtered_publication_forms %}
+            {% if publication_form.key == filtered_publication_form.title %}
+                {# Check if publication_form.key exists in the forms_sorted array #}
+                {% set is_sorted = false %}
+                {% set sorted_doc_count = 0 %}
+                {% for sorted_form in forms_sorted %}
+                    {% if sorted_form.key == publication_form.key %}
+                        {% set is_sorted = true %}
+                        {% set sorted_doc_count = sorted_form.doc_count %}
+                    {% endif %}
+                {% endfor %}
+
+                <option value="{{ publication_form.key }}" selected="true" {% if not is_sorted %}disabled{% endif %}>
+                    {{ publication_form.key }}
+                    {% if publication_form.doc_count %} <span>({{ sorted_doc_count }}<!--/{{ publication_form.doc_count }}-->)</span> {% endif %}
+                </option>
+            {% endif %}
+        {% endfor %}
+        {% endfor %}
+
+        {# Render unselected publication forms next #}
+        {% for publication_form in publication_forms %}
+            {% set is_selected = false %}
+            {% for filtered_publication_form in filtered_publication_forms %}
+                {% if publication_form.key == filtered_publication_form.title %}
+                    {% set is_selected = true %}
+                {% endif %}
+            {% endfor %}
+            {% if not is_selected  %}        
+                {# Check if publication_form.key exists in the forms_sorted array #}
+                {% set is_sorted = false %}
+                {% set sorted_doc_count = 0 %}
+                {% for sorted_form in forms_sorted %}
+                    {% if sorted_form.key == publication_form.key %}
+                        {% set is_sorted = true %}
+                        {% set sorted_doc_count = sorted_form.doc_count %}
+                    {% endif %}
+                {% endfor %}
+
+                <option value="{{ publication_form.key }}" {% if not is_sorted %}disabled{% endif %}>
+                    {{ publication_form.key }}
+                    {% if publication_form.doc_count %} <span>({{ sorted_doc_count }}<!--/{{ publication_form.doc_count }}-->)</span> {% endif %}
+                </option>
+            {% endif %}
+        {% endfor %}
+        
+    </select>
+    
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

@@ -1,0 +1,76 @@
+.h-edit-collection {
+    .column.is-45 {
+        width: 45%;
+        flex: none;
+    }
+
+    .columns:last-child {
+        // Override "margin-bottom: -0.75rem;"
+        margin-bottom: calc(1.5rem - 0.75rem);
+    }
+}
+
+.databases-available, .databases-selected {
+    max-height: 340px;
+    overflow-y: auto;
+
+    path {
+        pointer-events: none;
+    }
+}
+
+.panel{
+    &--databases-available {
+        .is-fullwidth {
+            width: 100%;
+        }
+    }
+
+    .entry-info-icon {
+        cursor: pointer;
+        width: 1.475em;
+    }
+}
+
+.page-content .modal-card-title {
+    width: 95%;
+}
+
+.pickable-item {
+    .move-down-button {
+        display: none;
+    }
+
+    .move-up-button {
+        display: none;
+    }
+}
+
+#resources-source-list button.unpick-button {
+    display: none;
+}
+
+#resources-target-list button.pick-button {
+    display: none;
+}
+
+#resources-target-panel, #resources-source-panel {
+    display: flex;
+    flex-direction: column;
+    max-height: 550px;
+}
+
+.list-block {
+    flex: 1;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+#resources-target-list, #resources-source-list {
+    width:100%;
+}
+
+.field.has-addons {
+    flex-basis: 100%;
+}

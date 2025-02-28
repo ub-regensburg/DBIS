@@ -1,0 +1,657 @@
+{#
+    This is a unified form for updating and creating organization entities.
+#}
+
+<form method="post"
+    aria-label="{{ i18n.aria_form_organization }}"
+    enctype="multipart/form-data">
+
+    {# method override,
+        see https://www.slimframework.com/docs/v2/routing/delete.html
+    #}
+    {% if  organization != null%}
+        <input type="hidden" name="_METHOD" value="PUT"/>
+    {%  endif %}
+
+
+    {# Organization names #}
+    <section aria-labelledby="h-orgname">
+        <h2 id="h-orgname"
+            class="title is-2">{{i18n.heading_name}}</h2>
+
+        <div class="columns">
+            <div class="column">
+                <label class="label i18_de"
+                       for="name_de">
+                    {{ i18n.lbl_orgaform_orgname }}*
+                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                </label>
+
+                <div class="control">
+                    <input name="name_de"
+                           id="name_de"
+                           class="input validate-required"
+                           data-msg_required="{{ i18n.msg_required }}"
+                           type="text"
+                           placeholder="{{ i18n.help_orgaform_orgname}}"
+                           value="{{ organization.name.de }}">
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="label i18_en"
+                       for="name_en">
+                    {{ i18n.lbl_orgaform_orgname }}
+                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                </label>
+
+                <div class="control">
+                    <input name="name_en"
+                           id="name_en"
+                           class="input"
+                           type="text"
+                           placeholder="{{ i18n.help_orgaform_orgname}}"
+                           value="{{ organization.name.en }}">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {# Identifiers #}
+    <section aria-labelledby="h-identifiers">
+        <h2 id="h-identifiers"
+            class="title is-2">{{ i18n.heading_identifiers }}</h2>
+        <div class="field is-expanded">
+            <label
+                class="label"
+                for="ubr_id">
+                {{ i18n.lbl_orgaform_ubrid }}*</label>
+            <div class="control">
+                <input name="ubr_id"
+                       id="ubr_id"
+                       class="input validate-required"
+                       type="text"
+                       {# Prohibit editing of ubr_id on existing orgs #}
+                       {% if organization.ubrId %}readonly{% endif %}
+                       data-msg_required="{{ i18n.msg_required }}"
+                       placeholder="{{ i18n.help_orgaform_ubrid }}"
+                       value="{{ organization.ubrId }}"
+                       required>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <label class="label"
+                       id="lbl-ext-identifier-ns"
+                       >{{ i18n.lbl_external_identifier_namespaces}}</label>
+            </div>
+            <div class="column">
+                <label class="label"
+                       id="lbl-ext-identifier-id">{{ i18n.lbl_external_identifier_key}}</label>
+            </div>
+        </div>
+
+        <div id="external-org-ids">
+            <div class="columns">
+                <div class="column">
+                    <div class="select is-expanded stretch">
+                        <select class="stretch" disabled="disabled"
+                                name="ext_id_dbis"
+                                aria-labelledby="lbl-ext-identifier-ns">
+                            <option value="dbis_id"
+                                    selected="true">DBIS ID</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="control is-expanded ">
+                        <input name="dbis_id"
+                               class="input"
+                               type="text"
+                               aria-labelledby="lbl-ext-identifier-id"
+                               placeholder="{{ i18n.help_orgaform_dbisid}}"
+                               value="{{ organization.dbisId }}" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+            template field for external id (not visible, cloned via js)
+            
+            <div id="external_ids_template" class="columns" style="display:none;">
+                <div class="column">
+                    <div class="select is-expanded stretch">
+                        <select class="stretch"
+                                name="external_id_ns[]"
+                                aria-labelledby="lbl-ext-identifier-ns">
+                            {% for extId in externalIdentifierNamespaces %}
+                                <option value="{{ extId.nsId }}">{{ extId.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="control is-expanded ">
+                        <input name="external_id_key[]"
+                               class="input"
+                               type="text"
+                               aria-labelledby="lbl-ext-identifier-id"
+                               placeholder="{{ i18n.lbl_external_key_placeholder}}">
+                    </div>
+                </div>
+            </div>
+            end field for external id 
+
+            create fields for all entered identifiers and namespaces
+            {% for extId in organization.externalIds %}
+                <div id="external_ids" class="columns">
+                    <div class="column">
+                        <div class="select is-expanded stretch">
+                            <select class="stretch" disabled="disabled"
+                                    name="external_id_ns[]"
+                                    aria-labelledby="lbl-ext-identifier-ns">>
+                                {% for ns in externalIdentifierNamespaces %}
+                                    <option
+                                        value="{{ ns.nsId }}"
+                                        {% if extId.namespace.nsId==ns.nsId%}selected="selected"{% endif %}>
+                                        {{ ns.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="control is-expanded ">
+                            <input name="external_id_key[]" readonly
+                                   class="input"
+                                   type="text"
+                                   aria-labelledby="lbl-ext-identifier-id"
+                                   value="{{ extId.key }}"
+                                   placeholder="{{ i18n.lbl_external_key_placeholder}}">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="columns">
+            <div class="column">
+
+            </div>
+            <div class="column">
+                <button id="btn_add_organization_identifier"
+                        class="button stretch"
+                        type="button"
+                        >{{ i18n.lbl_btn_add }}</button>
+            </div>
+        </div>
+        -->
+    </section>
+
+
+    {# Organization address #}
+    <section aria-labelledby="h-addressinfo">
+        <h2 id="h-addressinfo"
+            class="title is-2">{{ i18n.heading_address_info }}</h2>
+
+        {# Country field #}
+        <div class="field">
+            <label class="label"
+                   for="country">
+                {{ i18n.lbl_orgaform_country }}*</label>
+            <div class="select is-expanded stretch">
+                <select class="stretch"
+                        name="country"
+                        id="country">
+                    <!-- if there is no organization defined, use default -->
+                    <!-- if there is already an organization defined, use selected country -->
+                    {% for country_key in countries|keys %}
+                        {% if organization==null %}
+                            <option
+                                value="{{ country_key }}"
+                                {% if country_key == 'DE' %}selected{% endif %}
+                                >
+                                {{ countries[country_key] }} {{flags[country_key]}}
+                            </option>
+                        {% else %}
+                            <option
+                                value="{{ country_key }}"
+                                {% if country_key==organization.countryCode %}selected{% endif %}
+                                >
+                                {{ countries[country_key] }} {{flags[country_key]}}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        {# Zipcode field #}
+        <div class="field">
+            <label class="label"
+                   for="zipcode">
+                {{ i18n.lbl_orgaform_zipcode }}*
+            </label>
+            <div class="control">
+                <input name="zipcode"
+                       id="zipcode"
+                       class="input validate-required"
+                       type="text"
+                       required
+                       data-msg_required="{{ i18n.msg_required }}"
+                       placeholder="{{ i18n.help_orgaform_zipcode}}"
+                       value="{{ organization.zipcode }}">
+            </div>
+        </div>
+
+        {# Region field #}
+        <div class="columns field">
+            <div class="column">
+                <label class="label i18_de"
+                       for="region_de">
+                    {{ i18n.lbl_orgaform_region }}
+                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                </label>
+
+                <div class="control">
+                    <input name="region_de"
+                           id="region_de"
+                           class="input"
+                           type="text"
+                           placeholder="{{ i18n.help_orgaform_region }}"
+                           value = "{{ organization.region.de }}">
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="label i18_en"
+                       for="region_en">
+                    {{ i18n.lbl_orgaform_region }}
+                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                </label>
+                <div class="control">
+                    <input name="region_en"
+                           id="region_en"
+                           class="input"
+                           type="text"
+                           placeholder="{{ i18n.help_orgaform_region }}"
+                           value="{{  organization.region.en }}">
+                </div>
+            </div>
+        </div>
+
+        {# City field #}
+        <div class="columns field">
+            <div class="column">
+                <label class="label i18_de"
+                       for="city_de">
+                    {{ i18n.lbl_orgaform_city}}*
+                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                </label>
+                <div class="control">
+                    <input name="city_de"
+                           id="city_de"
+                           class="input validate-required"
+                           type="text"
+                           required
+                           data-msg_required="{{ i18n.msg_required }}"
+                           placeholder="{{ i18n.help_orgaform_city}}"
+                           value="{{ organization.city.de }}">
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="label i18_en"
+                       for="city_en">
+                    {{ i18n.lbl_orgaform_city }}
+                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                </label>
+                <div class="control">
+                    <input class="input"
+                           type="text"
+                           name="city_en"
+                           id="city_en"
+                           placeholder="{{ i18n.help_orgaform_city }}"
+                           value="{{ organization.city.en }}">
+                </div>
+            </div>
+        </div>
+
+        {# Address field #}
+        <div class="columns field">
+            <div class="column">
+                <label class="label i18_de"
+                       for="adress_de">
+                    {{ i18n.lbl_orgaform_adress}}
+                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                </label>
+                <div class="control">
+                    <input class="input"
+                           type="text"
+                           name="adress_de"
+                           id="adress_de"
+                           placeholder="{{ i18n.help_orgaform_adress}}"
+                           value="{{ organization.adress.de }}">
+                </div>
+            </div>
+            <div class="column">
+                <label class="label i18_en"
+                       for="adress_en">
+                    {{ i18n.lbl_orgaform_adress }}
+                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                </label>
+                <div class="control">
+                    <input class="input"
+                           type="text"
+                           name="adress_en"
+                           id="adress_en"
+                           placeholder="{{ i18n.help_orgaform_adress }}"
+                           value="{{ organization.adress.en }}">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Contact info #}
+    <section aria-labelledby="h-contact">
+        <h2 class="title is-2"
+            id="h-contact">{{ i18n.heading_contact_info }}</h2>
+
+        <div class="field is-expanded">
+            <label class="label"
+                   for="contact_mail">{{ i18n.lbl_orgaform_contactmail }}</label>
+                   <label class="label level-left"><span class="is-size-7 has-text-grey level-item">
+                    {{ i18n.lbl_orgaform_contactmail_infotext }}
+        </span></label>                   
+            <div class="control">
+                <input name="contact_mail"
+                       id="contact_mail"
+                       class="input validate-email"
+                       type="text"
+                       data-msg_invalid_email ="{{ i18n.msg_invalid_email }}"
+                       placeholder="{{ i18n.help_orgaform_contactmail }}"
+                       value="{{ organization.contact }}">
+            </div>
+        </div>
+
+        <div class="columns field">
+            <div class="column">
+                <label class="label i18_de"
+                       for="homepage_de">
+                    {{ i18n.lbl_orgaform_homepage}}
+                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                </label>
+                <div class="control">
+                    <input class="input validate-url"
+                           type="text"
+                           name="homepage_de"
+                           id="homepage_de"
+                           placeholder="{{ i18n.help_orgaform_homepage}}"
+                           data-msg_invalid_url="{{ i18n.msg_invalid_url }}"
+                           value="{{ organization.homepage.de }}">
+                </div>
+            </div>
+            <div class="column">
+                <label class="label i18_en"
+                       for="homepage_en">
+                    {{ i18n.lbl_orgaform_homepage }}
+                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                </label>
+                <div class="control">
+                    <input class="input validate-url"
+                           type="text"
+                           name="homepage_en"
+                           id="homepage_en"
+                           data-msg_invalid_url="{{ i18n.msg_invalid_url }}"
+                           placeholder="{{ i18n.help_orgaform_homepage }}"
+                           value="{{ organization.homepage.en }}">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 id="h-icon"
+            class="title is-2">{{ i18n.heading_organizational_form }}</h2>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input name="is_fid" type="checkbox" {% if organization.isFID %} checked {% endif %} {% if not isSuperAdmin %} disabled {% endif %}>
+                        {% if not isSuperAdmin and organization.isFID %} <input type="hidden" name="is_fid" /> {% endif %}
+                        FID
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input name="is_consortium" type="checkbox" {% if organization.isConsortium %} checked {% endif %} {% if not isSuperAdmin %} disabled {% endif %}>
+                        {{ i18n.lbl_consortial }}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!--<div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input name="is_kfl" type="checkbox" {% if organization.isKfL %} checked {% endif %} {% if not isSuperAdmin %} disabled {% endif %}>
+                        {{ i18n.lbl_kfl }}
+                    </label>
+                </div>
+            </div>
+        </div>-->
+    </section>
+
+    <!-- Autoadd -->
+    <section aria-labelledby="h-contact">
+        <h2 class="title is-2"
+            id="h-contact">{{ i18n.heading_autoadd_free_resources }}</h2>
+        <p>{{ i18n.lbl_autoadd_resources}}</p>
+        <div class="field is-expanded">
+            <div class="control">
+            <label class="radio">
+                <input type="radio" name="autoaddflag" value="1" {% if organization.dbisSettings.autoaddflag == true %} checked {% endif %} />
+                {{ i18n.lbl_yes}}
+            </label>
+            <label class="radio">
+                <input type="radio" name="autoaddflag" value="0" {% if organization.dbisSettings.autoaddflag == false %} checked {% endif %} />
+                {{ i18n.lbl_no}}
+            </label>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logo -->
+    <section aria-labelledby="h-icon">
+        <h2 id="h-icon"
+            class="title is-2">{{ i18n.heading_icon }}</h2>
+
+        <label class="label"
+               for="org-icon">{{ i18n.lbl_orgaform_upload_icon}}</label>
+
+        <div class="is-full-width icon-preview">
+            <img id="organization-icon-preview"
+                 class="image" src="{{ organization.publicIconPath }}"/>
+            <p id="organization-icon-preview_notification" style="display:none;">{{ i18n.lbl_no_icon_selected }}</p>
+        </div>
+
+        <div class="file has-name is-fullwidth" id="organization-icon-upload">
+            <label class="file-label" >
+                <input class="file-input validate-icon"
+                       type="file"
+                       name="org-icon"
+                       id="org-icon"
+                       data-msg_invalid_fileformat="{{ i18n.msg_invalid_icon_format }}"
+                       >
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                        {{ i18n.lbl_choose_file }}
+                    </span>
+                </span>
+                <span class="file-name">
+                    {{ i18n.lbl_no_file_selected }}
+                </span>
+                <span id="icon-delete-btn" class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    <span class="file-label">
+                        {{ i18n.lbl_clear_field }}
+                    </span>
+                </span>
+            </label>
+        </div>
+
+        <!--
+            Workaround evading restriction of not being able to set "value" of
+            file-type input fields.
+        -->
+        <input hidden
+               id="organization-icon-filepath"
+               name="organization-icon-filepath"
+               value="{{ organization.publicIconPath }}">
+
+        <!--
+            Tells the action, where to set the header after success
+        -->
+        <input name="redirect_success" type="hidden" value="{{ redirect_success_url }}">
+    </section>
+
+    <section>
+        <h2 id="h-icon" class="title is-2">{{ i18n.heading_links }}</h2>
+        <div id="links">
+            {% set links = organizationI18N.links %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ i18n.lbl_orgaform_link }} <span class="tag" aria-label="{{ i18n.aria_de }}">de</span></th>
+                        <th>{{ i18n.lbl_orgaform_link_text }} <span class="tag" aria-label="{{ i18n.aria_de }}">de</span></th>
+                        <th>{{ i18n.lbl_orgaform_link }} <span class="tag" aria-label="{{ i18n.aria_en }}">en</span></th>
+                        <th>{{ i18n.lbl_orgaform_link_text }} <span class="tag" aria-label="{{ i18n.aria_en }}">en</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in 0..2 %}
+                        {% set link = links[i] ?? {} %}
+                        <tr>
+                            <td>{{ i + 1 }}</td>
+                            <td>
+                                <div class="control is-flex-grow-1">
+                                    <input name="url_de[]" class="input" type="text" placeholder=""
+                                           autocomplete="off" value="{{ link.url.de|default('') }}">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="control is-flex-grow-1">
+                                    <input name="text_de[]" class="input" type="text" placeholder=""
+                                           autocomplete="off" value="{{ link.text.de|default('') }}">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="control is-flex-grow-1">
+                                    <input name="url_en[]" class="input" type="text" placeholder=""
+                                           autocomplete="off" value="{{ link.url.en|default('') }}">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="control is-flex-grow-1">
+                                    <input name="text_en[]" class="input" type="text" placeholder=""
+                                           autocomplete="off" value="{{ link.text.en|default('') }}">
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!--
+        template field for links (not visible, cloned via js)
+        -->
+        <div id="links_template" class="columns link-entry" style="display:none;">
+            <div class="column">
+                <div class="link-list">
+                    <div class="field">
+                        <div class="label">URL</div>
+                        <div class="control is-flex-grow-1">
+                            <input name="link[]" class="input" type="text" placeholder=""
+                                   autocomplete="off" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="link-list">
+                    <div class="field">
+                        <div class="label">DE</div>
+                        <div class="control is-flex-grow-1">
+                            <input name="text_de[]" class="input" type="text" placeholder=""
+                                   autocomplete="off" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="link-list">
+                    <div class="field">
+                        <div class="label">EN</div>
+                        <div class="control is-flex-grow-1">
+                            <input name="text_en[]" class="input" type="text" placeholder=""
+                                   autocomplete="off" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end field for links -->
+    </section>
+    
+
+    <section>
+        <h2 id="h-icon"
+            class="title is-2">{{ i18n.heading_colorpickjer }}</h2>
+        <div class="pickr-container">
+            <input type="text" class="pickr" name="color" value="{{ organization.color }}">
+        </div>
+    </section>
+
+    {# Also create dbis-view #}
+    <section>
+        {% if organization == null %}
+            <label class="checkbox" for="is-creating-view">
+                <input type="checkbox"
+                       name="is-creating-dbis-view"
+                       id="is-creating-view"
+                       checked>
+                    <b>{{ i18n.lbl_is_creating_new_view }}</b>
+                </input>
+            </label>
+                <div>
+                    <i>{{ i18n.hint_is_creating_new_view }}</i>
+                </div>
+            <hr>
+        {% endif %}
+    </section>
+
+    <button class="button is-primary"
+            type="submit">
+        {% if organization!=null %}
+            {{ i18n.create_orgaform_submit_save}}
+        {% else %}
+            {{ i18n.create_orgaform_submit_create}}
+        {% endif %}
+    </button>
+</form>
+{% block js %}
+    {%  webpack_entry_js 'admin_organization_form' %}
+{% endblock %}

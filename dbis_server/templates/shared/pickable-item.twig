@@ -1,0 +1,89 @@
+{#
+    Pickable Item
+
+    This is a template for an item, that can be used in a pickable list.
+
+    It can also be sorted via dragging or button press.
+
+    disabled   required    Whether the id field is disabled
+    searchable required    Whether the field can be searched
+    name       required    Form-Name
+#}
+<div
+    id="pickable_{{resource.id}}"
+    class="
+    {% if is_template %}
+        template
+    {% endif %}
+    pickable-item
+    resource-item
+    is-hoverable
+    panel-block
+    is-flex
+    {{ (searchable=="false") ? "search-ignore" : ""}}"
+    {{ is_template ? 'aria-hidden="true"' : null }}
+    {% if is_template %}
+        style="display:none!important;"
+    {% endif %}
+    >
+    <span class="search-content
+          pickable-title">
+        {{ resource.title }}
+    </span>
+    <span class="search-content pickable-id ml-2 tag is-ligh">
+        {{ resource.id }}
+    </span>
+    <span class="spacer"></span>
+    <input
+        type="hidden"
+        {% if disabled %}
+            disabled="true"
+        {% endif %}
+
+        name="{{ name }}[]"
+        value="{{ resource.id }}">
+
+        <button
+                type="button"
+                aria-label="{{ i18n.aria_moveup }}"
+                class="button
+            move-up-button
+            is-rounded
+            is-inverted
+            is-pulled-right">
+                <span class="icon is-small">
+                    <i class="fas fa-caret-up" aria-hidden="true"></i>
+                </span>
+        </button>
+        <button
+                type="button"
+                aria-label="{{ i18n.aria_movedown }}"
+                class="button
+            move-down-button
+            is-rounded
+            is-inverted
+            is-pulled-right">
+                <span class="icon is-small">
+                    <i class="fas fa-caret-down" aria-hidden="true"></i>
+                </span>
+        </button>
+
+    <button
+        type="button"
+        aria-label="{{ i18n.aria_addtoselection }}"
+        class="button
+        is-rounded
+        pick-button
+        is-pulled-right">
+        +
+    </button>
+    <button
+        type="button"
+        aria-label="{{ i18n.aria_removefromselection }}"
+        class="button
+        is-rounded
+        unpick-button
+        is-pulled-right">
+        -
+    </button>
+</div>

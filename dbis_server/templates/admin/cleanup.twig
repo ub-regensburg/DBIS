@@ -1,0 +1,58 @@
+{% embed "admin/base.twig" %}
+    {%  block content %}
+    <h1 class="title is-1">{{ i18n.h_clean_up }}</h1>
+    <div class="">
+        <h2 class="title is-2">{{ i18n.lbl_invalid_urls }}</h2>
+
+        {% if updated_successfully %}
+            <article class="message is-success">
+                <div class="message-body">
+                    {{ i18n.msg_collection_updated_successfully }}
+                </div>
+            </article>
+        {% endif %}
+
+        <form method="POST">
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>
+                            {{ i18n.breadcrumb_resources }}
+                        </th>
+                        <th>
+                            {{ i18n.lbl_invalid_url }}
+                        </th>
+                        <th>
+                            {{ i18n.lbl_state }}
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for access in accesses_with_invalid_urls %}
+                        <tr>
+                            <td>
+                                <a href="/admin/manage/{{ organizationId }}/resources/{{ access.resource.id }}/licenses/{{ access.license }}/" target="_blank">{{ access.resource.title }}</a>
+                            </td>
+                            <td>
+                                {{ access.accessUrl }}
+                            </td>
+                            <td>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="state-okay[]" value="{{ access.id }}" />
+                                    {{ i18n.lbl_state_ok }}
+                                </label>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="field is-grouped">
+                <div class="control">
+                        <button class="button is-primary" type="submit" name="save">{{ i18n.lbl_save }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    {%  endblock %}
+{% endembed %}

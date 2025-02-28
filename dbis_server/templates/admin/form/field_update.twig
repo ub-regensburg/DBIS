@@ -1,0 +1,126 @@
+{% if not resourceLocal.overwrite.is_still_updated is empty and resourceLocal.overwrite.is_still_updated is not null %}
+    {% set isLocalized = true %}
+{% else %}
+    {% set isLocalized = false %}
+{% endif %}
+
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ i18n.lbl_database_update }}</h3>
+    {%  if selectedOrganization.ubrId is not empty %}
+    <div class="tags has-addons is-clickable is-unselectable localization-tag" data-id="field-update">
+        {% if resourceLocal.overwrite.is_still_updated is empty or resourceLocal.overwrite.is_still_updated is null %}
+            <span class="tag global-tag">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light is-hidden">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-grey-lighter">&nbsp;</span>
+        {% else %}
+            <span class="tag global-tag is-hidden">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-info">&nbsp;</span>
+        {% endif %}
+        <input type="checkbox" name="update-local" class="localization-checkbox" hidden {% if isLocalized %} checked {% endif %}>
+    </div>
+    {% endif %}
+</div>
+<!-- GLOBAL -->
+<div class="columns field-update global
+     {% if isLocalized %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <div class="level">
+            <div class="level-left">
+                <div class="field mb-0 mr-4">
+                    <div class="control">
+                        <input id="is_still_updated_yes_global"
+                               name="is_still_updated_global"
+                               type="radio"
+                               value="3"
+                               {% if resourceGlobal.is_still_updated == 3 %}
+                                   checked
+                               {% endif %}
+                               >
+                        <label for="is_still_updated_yes_global" class="mr-2">
+                            {{ i18n.lbl_database_still_updated_yes }}
+                        </label>
+                        <input id="is_still_updated_no_global"
+                               name="is_still_updated_global"
+                               type="radio"
+                               value="2"
+                               {% if resourceGlobal.is_still_updated == 2 %}
+                                   checked
+                               {% endif %}
+                               >
+                        <label for="is_still_updated_no_global" class="mr-2">
+                            {{ i18n.lbl_database_still_updated_no }}
+                        </label>
+                        <input id="is_still_updated_unknown_global"
+                               name="is_still_updated_global"
+                               type="radio"
+                               value="1"
+                               {% if resourceGlobal.is_still_updated == 1 %}
+                                   checked
+                               {% endif %}
+                               >
+                        <label for="is_still_updated_unknown_global" class="mr-2">
+                            {{ i18n.lbl_database_still_updated_unknown }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                            
+                            
+                            
+<!-- LOCAL -->
+<div class="columns field-update local
+     {% if resourceLocal.overwrite.is_still_updated is empty or resourceLocal.overwrite.is_still_updated is null %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <div class="level">
+            <div class="level-left">
+                <div class="field mb-0 mr-4">
+                    <div class="control">
+                        <input id="is_still_updated_yes_local"
+                               name="is_still_updated_local"
+                               type="radio"
+                               value="3"
+                               {% if resourceLocal.overwrite.is_still_updated == 3 %}
+                                   checked
+                               {% endif %}
+                               >
+                        <label for="is_still_updated_yes_local" class="mr-2">
+                            {{ i18n.lbl_database_still_updated_yes }}
+                        </label>
+                        <input id="is_still_updated_no_local"
+                               name="is_still_updated_local"
+                               type="radio"
+                               value="2"
+                               {% if resourceLocal.overwrite.is_still_updated == 2 %}
+                                   checked
+                               {% endif %}
+                               >
+                        <label for="is_still_updated_no_local" class="mr-2">
+                            {{ i18n.lbl_database_still_updated_no }}
+                        </label>
+                        <input id="is_still_updated_unknown_local"
+                               name="is_still_updated_local"
+                               type="radio"
+                               value="1"
+                               {% if resourceLocal.overwrite.is_still_updated == 1 %}
+                                   checked
+                               {% endif %}
+                               >
+                        <label for="is_still_updated_unknown_local" class="mr-2">
+                            {{ i18n.lbl_database_still_updated_unknown }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,608 @@
+{% embed "admin/base.twig" with { page: 'manage_labels' } %}
+    {% block content %}
+        <section aria-labelledby="h-labels">
+                <h1 id="h-manage-drafts"
+                    class="title is-1">{{ i18n.lbl_labels_extended }}</h1>
+
+                {% if updated_successfully %}
+                    <article class="message is-success">
+                        <div class="message-body">
+                            {{ i18n.msg_updated_successfully }}
+                        </div>
+                    </article>
+                {% endif %}
+                {% if deleted_successfully %}
+                    <article class="message is-success">
+                        <div class="message-body">
+                            {{ i18n.msg_label_deleted_successfully }}
+                        </div>
+                    </article>
+                {% endif %}
+                {% if merge_successfully %}
+                    <article class="message is-success">
+                        <div class="message-body">
+                            {{ i18n.msg_label_merged_successfully }}
+                        </div>
+                    </article>
+                {% endif %}
+
+                <div class="container h-manage-drafts">
+                    <form method="POST">
+                        {% if labels|length > 0 or labels_global|length > 0 %}
+                            <div class="labels-container">
+                                {% if labels|length > 0 %}
+                                    <h2 class="is-size-3 mt-5 mb-2">Labels der {{ organizationId }}</h2>
+                                {% endif %}
+                                {% for label in labels %}
+                                    <div class="label-container box">
+                                        <div class="tag mt-2 mb-4">{{ i18n.lbl_labels_id }}: {{ label.id }}</div>
+                                        <input type="hidden" name="label_id[]" value="{{ label.id }}" />
+                                        <div class="field columns c-translate">
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_de">
+                                                    {{ i18n.lbl_access_label }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                                    <div class="control">
+                                                        <input class="input translate language--german" 
+                                                        name="label_de[]"
+                                                        type="text"
+                                                        value="{{ label.label.de }}"
+                                                        >
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="column is-auto">
+                                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                                    </button>
+                                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_en">
+                                                    {{ i18n.lbl_access_label }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                                    <div class="control">
+                                                        <input class="input translate language--english"
+                                                                name="label_en[]"
+                                                                type="text"
+                                                                value="{{ label.label.en }}"
+                                                        >
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="field columns c-translate">
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_de">
+                                                    {{ i18n.lbl_access_label_long }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                                    <div class="control">
+                                                        <textarea class="input translate language--german" 
+                                                            name="label_long_de[]"
+                                                            type="text">{{ label.label_long.de }}</textarea>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="column is-auto">
+                                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                                    </button>
+                                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_en">
+                                                    {{ i18n.lbl_access_label_long }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                                    <div class="control">
+                                                        <textarea class="input translate language--english"
+                                                                name="label_long_en[]"
+                                                                type="text">{{ label.label_long.en }}</textarea>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="field columns c-translate">
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_de">
+                                                    {{ i18n.lbl_access_label_longest }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                                    <div class="control">
+                                                        <textarea class="input translate language--german" 
+                                                            name="label_longest_de[]"
+                                                            type="text">{{ label.label_longest.de }}</textarea>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="column is-auto">
+                                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                                    </button>
+                                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_en">
+                                                    {{ i18n.lbl_access_label_longest }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                                    <div class="control">
+                                                        <textarea class="input translate language--english"
+                                                                type="text"
+                                                                name="label_longest_en[]">{{ label.label_longest.en }}</textarea>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="field is-flex is-align-items-center">
+                                            <button class="button is-danger" type="submit" name="delete" value="{{ label.id }}">{{ i18n.lbl_delete  }}</button>
+                                            <!-- 
+                                                {% if label.is_referenced %}
+                                                <small class="has-text-danger ml-2">
+                                                    {{ i18n.lbl_label_is_referenced }}
+                                                </small>
+                                                {% else %}
+                                                <small class="has-text-grey-dark ml-2">
+                                                    {{ i18n.lbl_label_is_not_referenced }}
+                                                </small>
+                                                {% endif %}
+                                            -->
+                                        </div>
+                                        <input type="hidden" name="is_for_license_type[]" value="">
+                                        <div class="field mt-5 is-hidden">
+                                            <button class="button is-inverted is-gray is-vcentered is-small">
+                                                <span class="merge-labels">{{ i18n.lbl_merge_labels }}</span>
+                                            </button>
+                                        </div>
+                                        <div class="field columns container-merge-labels is-hidden">
+                                            <div class="column">
+                                                <div class="is-flex is-align-items-center">
+                                                    <label for="merge-from">{{ i18n.lbl_merge_to_labels }}</label>
+                                                    <div class="select ml-2">
+                                                        <select name="merge-to[{{ label.id }}]">
+                                                            {% for mergeToLabel in labels %}
+                                                            <option value="{{ mergeToLabel.id }}">{{ mergeToLabel.id }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <button class="button is-warning ml-2" type="submit" name="merge" value="{{ label.id }}">{{ i18n.lbl_merge_labels  }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="labels-global-container">
+                                {% if labels_global|length > 0 %}
+                                <h2 class="is-size-3 mt-5 mb-2">Labels nachnutzbarer Lizenzen</h2>
+                                {% endif %}
+                                {% for label in labels_global %}
+                                    <div class="label-container box">
+                                        <div class="tag mt-2 mb-4">{{ i18n.lbl_labels_id }}: {{ label.id }}</div>
+                                        <input type="hidden" name="label_id[]" value="{{ label.id }}" />
+                                        <div class="field columns c-translate">
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_de">
+                                                    {{ i18n.lbl_access_label }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                                    <div class="control">
+                                                        <input class="input translate language--german" 
+                                                        name="label_de[]"
+                                                        type="text"
+                                                        value="{{ label.label.de }}"
+                                                        >
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="column is-auto">
+                                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                                    </button>
+                                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_en">
+                                                    {{ i18n.lbl_access_label }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                                    <div class="control">
+                                                        <input class="input translate language--english"
+                                                                name="label_en[]"
+                                                                type="text"
+                                                                value="{{ label.label.en }}"
+                                                        >
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="field columns c-translate">
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_de">
+                                                    {{ i18n.lbl_access_label_long }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                                    <div class="control">
+                                                        <textarea class="input translate language--german" 
+                                                            name="label_long_de[]"
+                                                            type="text">{{ label.label_long.de }}</textarea>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="column is-auto">
+                                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                                    </button>
+                                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_en">
+                                                    {{ i18n.lbl_access_label_long }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                                    <div class="control">
+                                                        <textarea class="input translate language--english"
+                                                                name="label_long_en[]"
+                                                                type="text">{{ label.label_long.en }}</textarea>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="field columns c-translate">
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_de">
+                                                    {{ i18n.lbl_access_label_longest }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                                    <div class="control">
+                                                        <textarea class="input translate language--german" 
+                                                            name="label_longest_de[]"
+                                                            type="text">{{ label.label_longest.de }}</textarea>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="column is-auto">
+                                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                                    </button>
+                                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="column is-45">
+                                                <label class="label is-2 i18_en">
+                                                    {{ i18n.lbl_access_label_longest }}
+                                                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                                    <div class="control">
+                                                        <textarea class="input translate language--english"
+                                                                type="text"
+                                                                name="label_longest_en[]">{{ label.label_longest.en }}</textarea>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="field columns">
+                                            <div class="column is-100">
+                                                <input class="input" type="text" name="is_for_license_type[]" value="{% if label.is_for_license_type == 3 %}Für Nationallinzen{% elseif label.is_for_license_type == 4 %}Für FID-Lizenzen{% elseif label.is_for_license_type == 5 %}Für Konsortiallizenzen{% endif %}" disabled>
+                                                <input type="hidden" name="is_for_license_type[]" value="{{ label.is_for_license_type }}">
+                                            </div>
+                                        </div>
+                                        <div class="field is-flex is-align-items-center">
+                                            <button class="button is-danger" type="submit" name="delete" value="{{ label.id }}">{{ i18n.lbl_delete  }}</button>
+                                            
+                                                {% if label.is_referenced %}
+                                                <small class="has-text-danger ml-2">
+                                                    {{ i18n.lbl_label_is_referenced }}
+                                                </small>
+                                                {% else %}
+                                                <small class="has-text-grey-dark ml-2">
+                                                    {{ i18n.lbl_label_is_not_referenced }}
+                                                </small>
+                                                {% endif %}
+                                            
+                                        </div>
+                                        <div class="field mt-5">
+                                            <button class="button is-inverted is-gray is-vcentered is-small">
+                                                <span class="merge-labels">{{ i18n.lbl_merge_labels }}</span>
+                                            </button>
+                                        </div>
+                                        <div class="field columns container-merge-labels is-hidden">
+                                            <div class="column">
+                                                <div class="is-flex is-align-items-center">
+                                                    <label for="merge-from">{{ i18n.lbl_merge_to_labels }}</label>
+                                                    <div class="select ml-2">
+                                                        <select name="merge-to[{{ label.id }}]">
+                                                            {% for mergeToLabel in labels %}
+                                                            <option value="{{ mergeToLabel.id }}">{{ mergeToLabel.id }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <button class="button is-warning ml-2" type="submit" name="merge" value="{{ label.id }}">{{ i18n.lbl_merge_labels  }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="labels-container box">
+                                <div class="label-container">
+                                    <input type="hidden" name="label_id[]" value="" />
+                                    <div class="field columns c-translate">
+                                        <div class="column is-45">
+                                            <label class="label is-2 i18_de">
+                                                {{ i18n.lbl_access_label }}
+                                                <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                                <div class="control">
+                                                    <input class="input translate language--german" 
+                                                    name="label_de[]"
+                                                    type="text"
+                                                    value=""
+                                                    >
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="column is-auto">
+                                            <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                                <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                                    <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                                </button>
+                                                <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                                    <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="column is-45">
+                                            <label class="label is-2 i18_en">
+                                                {{ i18n.lbl_access_label }}
+                                                <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                                <div class="control">
+                                                    <input class="input translate language--english"
+                                                            name="label_en[]"
+                                                            type="text"
+                                                            value=""
+                                                    >
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="field columns c-translate">
+                                        <div class="column is-45">
+                                            <label class="label is-2 i18_de">
+                                                {{ i18n.lbl_access_label_long }}
+                                                <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                                <div class="control">
+                                                    <textarea class="input translate language--german" 
+                                                        name="label_long_de[]"
+                                                        type="text"></textarea>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="column is-auto">
+                                            <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                                <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                                    <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                                </button>
+                                                <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                                    <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="column is-45">
+                                            <label class="label is-2 i18_en">
+                                                {{ i18n.lbl_access_label_long }}
+                                                <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                                <div class="control">
+                                                    <textarea class="input translate language--english"
+                                                            name="label_long_en[]"
+                                                            type="text"></textarea>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="field columns c-translate">
+                                        <div class="column is-45">
+                                            <label class="label is-2 i18_de">
+                                                {{ i18n.lbl_access_label_longest }}
+                                                <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                                <div class="control">
+                                                    <textarea class="input translate language--german" 
+                                                        name="label_longest_de[]"
+                                                        type="text"></textarea>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="column is-auto">
+                                            <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                                <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                                    <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                                </button>
+                                                <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                                    <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="column is-45">
+                                            <label class="label is-2 i18_en">
+                                                {{ i18n.lbl_access_label_longest }}
+                                                <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                                <div class="control">
+                                                    <textarea class="input translate language--english"
+                                                            type="text"
+                                                            name="label_longest_en[]"></textarea>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% if has_consortial_privileges or has_national_privileges or is_fid %}
+                                        <div class="field columns">
+                                            <div class="column is-100">
+                                                <label class="label">Soll für einen nachnutzbaren Lizenztypen gelten:</label>
+                                                <div class="control w-100">
+                                                    <div class="select w-100">
+                                                        <select class="w-100" name="is_for_license_type[]">
+                                                            <option value=""></option>
+                                                            {% if has_national_privileges %}<option value="3">Für Nationallinzen</option>{% endif %}
+                                                            {% if is_fid %}<option value="4">Für FID-Lizenzen</option>{% endif %}
+                                                            {% if has_consortial_privileges %}<option value="5">Für Konsortiallizenzen</option>{% endif %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <input type="hidden" name="is_for_license_type[]" value="">
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="new-labels-contaniner mt-4"></div>
+                        <div class="mt-5 is-flex buttons-container">
+                            <span class="button is-secondary add-label">Neue Beschriftung hinzufügen</span>
+                            <button type="submit" class="button is-primary ml-4">Speichern</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="template" class="field columns c-translate is-hidden">
+                    <div class="label-container box">
+                        <input type="hidden" name="label_id[]" value="" />
+                        <div class="field columns c-translate">
+                            <div class="column is-45">
+                                <label class="label is-2 i18_de">
+                                    {{ i18n.lbl_access_label }}
+                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                    <div class="control">
+                                        <input class="input translate language--german" 
+                                        name="label_de[]"
+                                        type="text"
+                                        value="">
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="column is-auto">
+                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                    </button>
+                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="column is-45">
+                                <label class="label is-2 i18_en">
+                                    {{ i18n.lbl_access_label }}
+                                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                    <div class="control">
+                                        <input class="input translate language--english"
+                                                name="label_en[]"
+                                                type="text"
+                                                value="">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="field columns c-translate">
+                            <div class="column is-45">
+                                <label class="label is-2 i18_de">
+                                    {{ i18n.lbl_access_label_long }}
+                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                    <div class="control">
+                                        <textarea class="input translate language--german" 
+                                            name="label_long_de[]"
+                                            type="text"></textarea>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="column is-auto">
+                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                    </button>
+                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="column is-45">
+                                <label class="label is-2 i18_en">
+                                    {{ i18n.lbl_access_label_long }}
+                                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                    <div class="control">
+                                        <textarea class="input translate language--english"
+                                                name="label_long_en[]"
+                                                type="text"></textarea>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="field columns c-translate">
+                            <div class="column is-45">
+                                <label class="label is-2 i18_de">
+                                    {{ i18n.lbl_access_label_longest }}
+                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                    <div class="control">
+                                        <textarea class="input translate language--german" 
+                                            name="label_longest_de[]"
+                                            type="text"></textarea>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="column is-auto">
+                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                    </button>
+                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="column is-45">
+                                <label class="la endif "tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                    <div class="control">
+                                        <textarea class="input translate language--english"
+                                                type="text"
+                                                name="label_longest_en[]"></textarea>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        {% if has_consortial_privileges or has_national_privileges or is_fid %}
+                            <div class="field columns">
+                                <div class="column is-100">
+                                    <label class="label">Soll für einen nachnutzbaren Lizenztypen gelten:</label>
+                                    <div class="control w-100">
+                                        <div class="select w-100">
+                                            <select class="w-100" name="is_for_license_type[]">
+                                                <option value=""></option>
+                                                {% if has_national_privileges %}<option value="3">Für Nationallinzen</option>{% endif %}
+                                                {% if is_fid %}<option value="4">Für FID-Lizenzen</option>{% endif %}
+                                                {% if has_consortial_privileges %}<option value="5">Für Konsortiallizenzen</option>{% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <input type="hidden" name="is_for_license_type[]" value="">
+                        {% endif %}
+                    </div>
+                </div>
+        </section>
+    {% endblock %}
+{% endembed %}

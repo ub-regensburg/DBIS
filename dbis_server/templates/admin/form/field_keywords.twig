@@ -1,0 +1,473 @@
+{% if resourceLocal and resourceLocal is defined and resourceLocal.keywords|length > 0 %}
+    {% set isLocalized = true %}
+{% else %}
+    {% set isLocalized = false %}
+{% endif %}
+
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ i18n.lbl_database_keywords }}</h3>
+    {%  if selectedOrganization.ubrId is not empty %}
+    <div class="tags has-addons is-clickable is-unselectable localization-tag" data-id="field-keywords">
+        {% if not resourceLocal.keywords|length > 0 %}
+            <span class="tag global-tag">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light is-hidden">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-grey-lighter">&nbsp;</span>
+        {% else %}
+            <span class="tag global-tag is-hidden">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-info">&nbsp;</span>
+        {% endif %}
+        <input type="checkbox" name="keywords-local" class="localization-checkbox" hidden {% if isLocalized %} checked {% endif %}>
+    </div>
+    {% endif %}
+</div>
+<div class="columns">
+    <div class="column">
+        <!-- GLOBAL -->
+        <div class="field field-keywords global
+             {% if resourceLocal.keywords|length > 0 %}
+                 is-hidden
+             {% endif %}
+             ">
+
+            {% if resourceGlobal and resourceGlobal is defined and resourceGlobal.keywords|length > 0 %}
+
+                <div class="keyword-entries">
+                    {# ENTRIES #}
+                    {% for keyword in resourceGlobal.keywords %}
+                        <div class="keyword-entry c-translate">
+                            <input name="keyword_global_id[]"
+                                   type="hidden"
+                                   value="{{ keyword.id }}">
+                            <div class="columns">
+                                <div class="column is-45">
+                                    <div class="keyword-list keyword-list-de">
+                                        <div class="field">
+                                            <label class="label level-left">
+                                                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                            {{ i18n.lbl_german }}
+                                                </span>
+                                            </label>
+                                            <div class="control">
+                                                <div class="keyword-typeahead keyword-typeahead--de">
+                                                    <input name="keyword_global_de[]"
+                                                           class="input search dropdown-list-search jsonly-enabled translate language--german global"
+                                                           type="text"
+                                                           autocomplete="off"
+                                                           aria-labelledby="keyword_de"
+                                                           value="{{ keyword.title.de }}">
+                                                    <div class="dropdown-list hidden p-2 jsonly-enabled">
+                                                        <ul>
+
+                                                        </ul>
+                                                    </div>
+                                                    <input name="keyword_system_global[]"
+                                                           type="hidden"
+                                                           class="keyword_system"
+                                                           value="{{ keyword.keyword_system }}">
+                                                    <input name="external_keyword_id_global[]"
+                                                           type="hidden"
+                                                           class="external_id"
+                                                           value="{{ keyword.external_id }}">
+                                                    <template id="template-dropdown-entry" class="dropdown-entry">
+                                                        <li class="pt-1 pb-1 dropdown-value">
+                                                            <button class="button is-fullwidth has-text-left" type="button">
+                                                            </button>
+                                                        </li>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                            {% if not keyword.keyword_system == "gnd" %}
+                                                <p class="help is-danger">{{ i18n.lbl_not_gnd_keyword }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column is-auto">
+                                    <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                        <button class="level-item icon button is-text translate language--german global">
+                                            <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                        </button>
+                                        <button class="icon button is-text translate language--english global">
+                                            <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="column is-45">
+                                    <div class="keyword-list keyword-list-en">
+                                        <label class="label level-left">
+                                                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                            {{ i18n.lbl_english }}
+                                                </span>
+                                        </label>
+                                        <div class="level">
+                                            <div class="control is-flex-grow-1">
+                                                <div class="keyword-typeahead keyword-typeahead--en">
+                                                    <input name="keyword_global_en[]"
+                                                           class="input search dropdown-list-search jsonly-enabled translate language--english global"
+                                                           type="text"
+                                                           autocomplete="off"
+                                                           aria-labelledby="keyword_en"
+                                                           value="{{ keyword.title.en }}">
+                                                    <div class="dropdown-list hidden p-2 jsonly-enabled">
+                                                        <ul>
+
+                                                        </ul>
+                                                    </div>
+                                                    <template id="template-dropdown-entry" class="dropdown-entry">
+                                                        <li class="pt-1 pb-1 dropdown-value">
+                                                            <button class="button is-fullwidth has-text-left" type="button">
+                                                            </button>
+                                                        </li>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                            <btn class="delete ml-3"></btn>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="keyword-entry">
+                    <input name="keyword_global_id[]"
+                           type="hidden"
+                           value="">
+                    <div class="columns c-translate">
+                        <div class="column is-45">
+                            <div class="keyword-list keyword-list-de">
+                                <div class="field">
+                                    <label class="label level-left">
+                                                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                            {{ i18n.lbl_german }}
+                                                </span>
+                                    </label>
+                                    <div class="control">
+                                        <div class="keyword-typeahead keyword-typeahead--de">
+                                            <input name="keyword_global_de[]"
+                                                   class="input search dropdown-list-search jsonly-enabled translate language--german global"
+                                                   type="text"
+                                                   autocomplete="off"
+                                                   aria-labelledby="keyword_de"
+                                                   value="">
+                                            <div class="dropdown-list hidden p-2 jsonly-enabled">
+                                                <ul>
+
+                                                </ul>
+                                            </div>
+                                            <input name="keyword_system_global[]"
+                                                   type="hidden"
+                                                   class="keyword_system"
+                                                   value="">
+                                            <input name="external_keyword_id_global[]"
+                                                   type="hidden"
+                                                   class="external_id"
+                                                   value="">
+                                            <template id="template-dropdown-entry" class="dropdown-entry">
+                                                <li class="pt-1 pb-1 dropdown-value">
+                                                    <button class="button is-fullwidth has-text-left" type="button">
+                                                    </button>
+                                                </li>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-auto">
+                            <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                <button class="level-item icon button is-text translate language--german global">
+                                    <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                </button>
+                                <button class="icon button is-text translate language--english global">
+                                    <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="column is-45">
+                            <div class="keyword-list keyword-list-en">
+                                <div class="field">
+                                    <label class="label level-left">
+                                            <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                        {{ i18n.lbl_english }}
+                                            </span>
+                                    </label>
+                                    <div class="level">
+                                        <div class="control is-flex-grow-1">
+                                            <div class="keyword-typeahead keyword-typeahead--en">
+                                                <input name="keyword_global_en[]"
+                                                       class="input search dropdown-list-search jsonly-enabled translate language--english global"
+                                                       type="text"
+                                                       autocomplete="off"
+                                                       aria-labelledby="keyword_en"
+                                                       value="">
+                                                <div class="dropdown-list hidden p-2 jsonly-enabled">
+                                                    <ul>
+
+                                                    </ul>
+                                                </div>
+                                                <template id="template-dropdown-entry" class="dropdown-entry">
+                                                    <li class="pt-1 pb-1 dropdown-value">
+                                                        <button class="button is-fullwidth has-text-left" type="button">
+                                                        </button>
+                                                    </li>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        <btn class="delete ml-3"></btn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+
+
+        <!-- LOCAL -->
+        <div class="field field-keywords local
+             {% if not resourceLocal.keywords|length > 0 %}
+                 is-hidden
+             {% endif %}
+             ">
+
+            {% if resourceLocal and resourceLocal is defined and resourceLocal.keywords|length > 0 %}
+
+                <div class="keyword-entries">
+                    {# ENTRIES #}
+                    {% for keyword in resourceLocal.keywords %}
+                        <div class="keyword-entry">
+                            <input name="keyword_local_id[]"
+                                   type="hidden"
+                                   value="{{ keyword.id }}">
+                            <div class="columns c-translate">
+                                <div class="column is-45">
+                                    <div class="keyword-list keyword-list-de">
+                                        <div class="field">
+                                            <label class="label level-left">
+                                                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                            {{ i18n.lbl_german }}
+                                                </span>
+                                            </label>
+                                            <div class="control">
+                                                <div class="keyword-typeahead keyword-typeahead--de">
+                                                    <input name="keyword_local_de[]"
+                                                           class="input search dropdown-list-search jsonly-enabled translate language--german local"
+                                                           type="text"
+                                                           autocomplete="off"
+                                                           aria-labelledby="keyword_de"
+                                                           value="{{ keyword.title.de }}">
+                                                    <div class="dropdown-list hidden p-2 jsonly-enabled">
+                                                        <ul>
+
+                                                        </ul>
+                                                    </div>
+                                                    <input name="keyword_system_local[]"
+                                                           type="hidden"
+                                                           class="keyword_system"
+                                                           value="{{ keyword.keyword_system }}">
+                                                    <input name="external_keyword_id_local[]"
+                                                           type="hidden"
+                                                           class="external_id"
+                                                           value="{{ keyword.external_id }}">
+                                                    <template id="template-dropdown-entry" class="dropdown-entry">
+                                                        <li class="pt-1 pb-1 dropdown-value">
+                                                            <button class="button is-fullwidth has-text-left" type="button">
+                                                            </button>
+                                                        </li>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column is-auto">
+                                    <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                        <button class="level-item icon button is-text translate language--german global">
+                                            <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                        </button>
+                                        <button class="icon button is-text translate language--english global">
+                                            <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="column is-45">
+                                    <div class="keyword-list keyword-list-en">
+                                        <label class="label level-left">
+                                                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                            {{ i18n.lbl_english }}
+                                                </span>
+                                        </label>
+                                        <div class="level">
+                                            <div class="control is-flex-grow-1">
+                                                <div class="keyword-typeahead keyword-typeahead--en">
+                                                    <input name="keyword_local_en[]"
+                                                           class="input search dropdown-list-search jsonly-enabled translate language--english local"
+                                                           type="text"
+                                                           autocomplete="off"
+                                                           aria-labelledby="keyword_en"
+                                                           value="{{ keyword.title.en }}">
+                                                    <div class="dropdown-list hidden p-2 jsonly-enabled">
+                                                        <ul>
+
+                                                        </ul>
+                                                    </div>
+                                                    <template id="template-dropdown-entry" class="dropdown-entry">
+                                                        <li class="pt-1 pb-1 dropdown-value">
+                                                            <button class="button is-fullwidth has-text-left" type="button">
+                                                            </button>
+                                                        </li>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                            <btn class="delete ml-3"></btn>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="keyword-entry">
+                    <input name="keyword_local_id[]"
+                           type="hidden"
+                           value="">
+                    <div class="columns c-translate">
+                        <div class="column is-45">
+                            <div class="keyword-list keyword-list-de">
+                                <div class="field">
+                                    <label class="label level-left">
+                                                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                            {{ i18n.lbl_german }}
+                                                </span>
+                                    </label>
+                                    <div class="control">
+                                        <div class="keyword-typeahead keyword-typeahead--de">
+                                            <input name="keyword_local_de[]"
+                                                   class="input search dropdown-list-search jsonly-enabled translate language--german global"
+                                                   type="text"
+                                                   autocomplete="off"
+                                                   aria-labelledby="keyword_de"
+                                                   value="">
+                                            <div class="dropdown-list hidden p-2 jsonly-enabled">
+                                                <ul>
+
+                                                </ul>
+                                            </div>
+                                            <input name="keyword_system_local[]"
+                                                   type="hidden"
+                                                   class="keyword_system"
+                                                   value="">
+                                            <input name="external_keyword_id_local[]"
+                                                   type="hidden"
+                                                   class="external_id"
+                                                   value="">
+                                            <template id="template-dropdown-entry" class="dropdown-entry">
+                                                <li class="pt-1 pb-1 dropdown-value">
+                                                    <button class="button is-fullwidth has-text-left" type="button">
+                                                    </button>
+                                                </li>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-auto">
+                            <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                <button class="level-item icon button is-text translate language--german global">
+                                    <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                </button>
+                                <button class="icon button is-text translate language--english global">
+                                    <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="column is-45">
+                            <div class="keyword-list keyword-list-en">
+                                <div class="field">
+                                    <label class="label level-left">
+                                                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                            {{ i18n.lbl_english }}
+                                                </span>
+                                    </label>
+                                    <div class="level">
+                                        <div class="control is-flex-grow-1">
+                                            <div class="keyword-typeahead keyword-typeahead--en">
+                                                <input name="keyword_local_en[]"
+                                                       class="input search dropdown-list-search jsonly-enabled translate language--english local"
+                                                       type="text"
+                                                       autocomplete="off"
+                                                       aria-labelledby="keyword_en"
+                                                       value="">
+                                                <div class="dropdown-list hidden p-2 jsonly-enabled">
+                                                    <ul>
+
+                                                    </ul>
+                                                </div>
+                                                <template id="template-dropdown-entry" class="dropdown-entry">
+                                                    <li class="pt-1 pb-1 dropdown-value">
+                                                        <button class="button is-fullwidth has-text-left" type="button">
+                                                        </button>
+                                                    </li>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        <btn class="delete ml-3"></btn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="columns field-keywords-add-button-container global
+     {% if resourceLocal.keywords|length > 0 %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <button id="btn_add_database_keyword_global"
+                class="button is-primary is-inverted has-text-weight-semibold is-small"
+                aria-label="{{ i18n.aria_add_keyword }}"
+                type="button">
+            <span class="icon mr-1">
+                <i class="fas fa-plus"></i>
+            </span>
+            {{ i18n.lbl_btn_add }}
+        </button>
+    </div>
+</div>
+
+<div class="columns field-keywords-add-button-container local
+     {% if not resourceLocal.keywords|length > 0 %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <button id="btn_add_database_keyword_local"
+                class="button is-primary is-inverted has-text-weight-semibold is-small"
+                aria-label="{{ i18n.aria_add_keyword }}"
+                type="button">
+            <span class="icon mr-1">
+                <i class="fas fa-plus"></i>
+            </span>
+            {{ i18n.lbl_btn_add }}
+        </button>
+    </div>
+</div>

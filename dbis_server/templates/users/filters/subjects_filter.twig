@@ -1,0 +1,28 @@
+<div id="subjects-filter" 
+    class="select is-multiple">
+    
+    {% if not no_tags %}
+        <div id="subject-tags" class="tags is-fullwidth mt-2"></div>
+    {% endif %}
+    
+    <input class="input jsonly search-field"
+           placeholder="{{ i18n.lbl_search }}" aria-label="{{ i18n.aria_search_databases }}"/>
+    
+    <select name="filter-subjects[]" 
+            id="filter-subjects" 
+            class="is-small is-fullwidth"
+            multiple aria-label="{{ i18n.aria_select_subjects }}">
+        {% for subject in subjects %}
+                <option value="{{ subject.title }}"
+                    {% for filteredSubject in filteredSubjects %}{% if subject.title == filteredSubject.title %}selected="true"{% endif %}{% endfor %}>
+                    {{ subject.title }}
+                </option>
+        {% endfor %}
+    </select>
+    
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

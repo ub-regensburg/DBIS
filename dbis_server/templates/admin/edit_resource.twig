@@ -1,0 +1,265 @@
+{% embed "admin/base.twig" with { page: 'create_database' } %}
+    {% block content %}
+        <fieldset {% if not isAdmin and not isSuperAdmin %}disabled="disabled"{% endif %}>
+            {% if is_created_successfully %}
+                <article class="message is-success is-light">
+                    <p class="message-body">
+                                {{ i18n.msg_database_created_successfully }}.
+                    <a href="/resources/{{ resourceGlobal.id }}?direct-link=1">{{ i18n.lbl_open_in_userview }}</a>
+                    </p>
+                </article>
+            {% elseif is_updated_successfully %}
+                <article class="message is-success is-light">
+                    <p class="message-body">
+                                {{ i18n.msg_database_updated_successfully }}
+
+                    <a href="/resources/{{ resourceGlobal.id }}?direct-link=1">{{ i18n.lbl_open_in_userview }}</a>
+                    </p>
+                </article>
+            {% elseif is_deleted_successfully %}
+                <article class="message is-success is-light">
+                    <p class="message-body">
+                                {{ i18n.msg_database_deleted_successfully }}
+                    </p>
+                </article>
+            {% endif %}
+
+            <ul class="breadcrumbs mb-1 is-size-7">
+                <li><a href="../..">{{ i18n.breadcrumb_admin }}</a></li>
+                <li><a href="..">{{ i18n.breadcrumb_resources}}</a></li>
+                {% if resourceGlobal == null %}
+                    <li><span>{{ i18n.breadcrumb_new}}</span></li>
+                {% else %}
+                    {% if resourceLocal and resourceLocal.titel is not empty %}
+                        <li><span>{{ resourceLocalI18n.title }}</span></li>
+                    {% else %}
+                        <li><span>{{ resourceGlobalI18n.title }}</span></li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+            <h1 id="h-edit-resource"
+                class="title is-1">
+                {% if resourceGlobal %}
+                    {{ i18n.lbl_heading_edit_database }}
+                {% else %}
+                    {{ i18n.lbl_heading_create_database }}
+                {% endif %}
+            </h1>
+
+            <form method="POST">
+
+                <section>
+                    {% if errors|length > 0 %}
+                        <div class="notification is-danger is-size-6">
+                            {{ i18n.msg_form_errors }}
+                        </div>
+                    {% endif %}
+                </section>
+
+                <section aria-labelledby="h-edit-resource" class="h-edit-resource">
+                {% if resourceGlobal %}
+                    <div class="tabs"
+                            role="navigation">
+                        <ul>
+                            <li class="is-active"><a>{{ i18n.h_navtab_metadata }}</a></li>
+                            {% if organization is defined and organization and (isAdmin or isSuperAdmin) %}
+                            <li><a href="./licenses/">{{ i18n.h_navtab_licenses }}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {% if resourceGlobal and resourceGlobal.id and resourceGlobal.id > 0 %}
+                    <input type="hidden" name="_METHOD" value="PUT"/>
+                {% endif %}
+
+                    <section aria-labelledby="h-basics">
+                        <h2 id="h-basics" class="title is-2">{{ i18n.h_basics }}</h2>
+                        <div class="box">
+                            {% if resourceGlobal.id %}
+                            <div id="id-block" class="mb-5">
+                                <span class="is-size-4 mr-2">ID</span>
+                                <span class="resource-id tag is-large is-primary is-light">
+                                    <span class="resource-id-text mr-2">{{ resourceGlobal.id }}</span>
+                                    <i class="copy-id fas fa-regular fa-copy"></i>
+                                        <span class='copy-id-tooltip is-size-6 has-text-light' style='display:none'>
+                                        {% if language == "de" %}
+                                            Kopiert!
+                                        {% else %}
+                                            Copied!
+                                        {% endif %}
+                                        </span>
+                                </span>
+                            </div>
+                            {% endif %}
+
+                            {# TITLE #}
+                            <div id="title-block">
+                                {{ include('admin/form/field_title.twig') }}
+                            </div>
+
+                            {# ALTERNATIVE TITLES #}
+                            <div id="alternativetitle-block" class="mb-6">
+                                {{ include('admin/form/field_alternativetitle.twig') }}
+                            </div>
+
+                            {# COSTS #}
+                            <div id="free-block" class="mb-6">
+                                {{ include('admin/form/field_is_free.twig') }}
+                            </div>
+
+                            {# DESCRIPTION #}
+                            <div id="description-block">
+                                {{ include('admin/form/field_description.twig') }}
+                            </div>
+
+                            {# SHORT DESCRIPTION #}
+                            <div id="shortdescription-block" class="mb-6">
+                                {{ include('admin/form/field_shortdescription.twig') }}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section aria-labelledby="h-subjectindexing">
+                        <h2 id="h-subjectindexing" class="title is-2">{{ i18n.h_subjectindexing }}</h2>
+                        <div class="box p-5">
+                            {# SUBJECTS #}
+                            <div id="subjects-block" class="mb-6">
+                                {{ include('admin/form/field_subjects.twig') }}
+                            </div>
+
+                            {# TYPE #}
+                            <div id="type-block" class="mb-6">
+                                {{ include('admin/form/field_type.twig') }}
+                            </div>
+                            {# KEYWORDS #}
+                            <div id="keywords-block" class="mb-6">
+                                {{ include('admin/form/field_keywords.twig') }}
+                            </div>
+
+                            {# COUNTRIES #}
+                            <div id="countries-block" class="mb-6">
+                                {{ include('admin/form/field_countries.twig') }}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section aria-labelledby="h-indexedtime">
+                        <h2 class="title is-2" id="h-indexedtime">{{ i18n.h_indexedtime }}</h2>
+                        <div class="box">
+                            {# REPORT TIME #}
+                            <div id="reporttime-block" class="mb-6">
+                                {{ include('admin/form/field_reporttime.twig') }}
+                            </div>
+
+                            {# PUBLICATION DATE #}
+                            <div id="publicationtime-block" class="mb-6">
+                                {{ include('admin/form/field_publicationtime.twig') }}
+                            </div>
+
+                            {# UPDATE #}
+                            <div id="update-block" class="mb-6">
+                                {{ include('admin/form/field_update.twig') }}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section aria-labelledby="h-misc">
+                        <h2 class="title is-2" id="h-misc">{{ i18n.h_misc }}</h2>
+                        <div class="box">
+                            {# NOTE #}
+                            <div id="note-block">
+                                {{ include('admin/form/field_note.twig') }}
+                            </div>
+
+                            {# LOCAL NOTE #}
+                            {% if organization is defined and organization %}
+                            <div id="localnote-block" class="mb-6">
+                                {{ include('admin/form/field_localnote.twig') }}
+                            </div>
+                            {% endif %}
+
+                            {# INSTRUCTIONS #}
+                            <div id="instruction-block" class="mb-6">
+                                {{ include('admin/form/field_instruction.twig') }}
+                            </div>
+
+                            {# AUTHORS #}
+                            <div id="authors-block" class="mb-6">
+                                {{ include('admin/form/field_authors.twig') }}
+                            </div>
+
+                            {# ISBN ISSN #}
+                            <div id="isbnissn-block" class="mb-6">
+                                {{ include('admin/form/field_isbnissn.twig') }}
+                            </div>
+
+                            {# SHELFMARK #}
+                            <div id="shelfmark-block" class="mb-6">
+                                {{ include('admin/form/field_shelfmark.twig') }}
+                            </div>
+
+                            {# API #}
+                            <div id="api-block" class="mb-6">
+                                {{ include('admin/form/field_api.twig') }}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section aria-labelledby="h-external-identifiers">
+                        <h2 class="title is-2" id="h-misc">{{ i18n.h_external_identifiers }}</h2>
+                        <div class="box">
+                                <div id="external-ids-block" class="mb-6">
+                                    {% include 'admin/form/field_external_ids.twig' %}
+                                </div>
+                        </div>
+                    </section>
+
+                    <section aria-labelledby="h-hide">
+                        <h2 id="h-hide" class="title is-2">{{ i18n.lbl_hide_resource }}</h2>
+                        <div class="box">
+                            {# VISIBILITY #}
+                            {{ include('admin/form/field_visibility.twig') }}
+                        </div>
+                    </section>
+                    
+                    {% if isAdmin or isSuperAdmin %}
+                    <section>
+                        <div class="field is-grouped">
+                            <div class="control">
+                                {% if errors|length == 0 and post == true %}
+                                    <button class="button is-primary" type="submit" name="save" disabled>{{ i18n.create_orgaform_submit_save }}</button>
+                                {% else %}
+                                    <button class="button is-primary" type="submit" name="save">{{ i18n.create_orgaform_submit_save }}</button>
+                                {% endif %}
+                            </div>
+                            <div class="control">
+                                {% if resourceGlobal and resourceGlobal.id and resourceGlobal.id > 0 and can_be_deleted and licensesCount < 1 %}
+                                    <button class="button is-danger" type="submit" name="delete">{{ i18n.lbl_delete }}</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if can_be_deleted and licensesCount > 0 %}
+                            <div class="notification is-warning is-light">{{ i18n.msg_resource_cant_be_deleted }}</div>
+                        {% endif %}
+                    </section>
+                    {% endif %}
+                    {% if resourceGlobal and resourceGlobal.id and resourceGlobal.id > 0 %}
+                    <section>
+                        <div class="box">
+                            {% set created_at_global = resourceGlobal.created_at|split('.')[0] %}
+                            <p>{{ i18n.lbl_resource_created_at }}: {{ created_at_global|date("Y-m-d H:i") }}</p>
+                            
+                            {% set modified_at_global = resourceGlobal.modified_at|split('.')[0] %}
+                            <p>{{ i18n.lbl_modified_at_global }}: {{ modified_at_global|date("Y-m-d H:i") }}</p>
+
+                            {% set modified_at_local = resourceLocal.modified_at|split('.')[0] %}
+                            <p>{{ i18n.lbl_modified_at_local }}: {{ modified_at_local|date("Y-m-d H:i") }}</p>
+                        </div>
+                    </section>
+                    {% endif %}
+                </section>
+            </form>
+        </fieldset>
+    {% endblock %}
+{% endembed %}

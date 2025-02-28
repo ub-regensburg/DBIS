@@ -1,0 +1,24 @@
+<div id="access-label-filter" 
+    class="">
+    <div class="control">
+        <label class="checkbox">
+            <input type="checkbox"
+                class="mr-2"
+                name="filter-access-labels[]"
+                value="-1" {% if -1 in selectedAccessLabels %}checked="true"{% endif %}>
+            {{ i18n.lbl_resources_without_access_label }}
+        </label>
+    </div>
+    <div class="divider">{{ i18n.lbl_access_labels_of_own_organisation }}</div>
+    {% for accessLabel in accessLabels %}
+        <div class="control">
+            <label class="checkbox">
+                <input type="checkbox"
+                    class="mr-2"
+                    name="filter-access-labels[]"
+                    value="{{ accessLabel.id }}" {% if accessLabel.id in selectedAccessLabels %}checked="true"{% endif %}>
+                {{ accessLabel.label }} {% if accessLabel.label_long %}({{ accessLabel.label_long }}){% endif %}
+            </label>
+        </div>
+    {% endfor %}
+</div>

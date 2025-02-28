@@ -1,0 +1,18 @@
+{% embed "admin/base.twig" %}
+    {%  block content %}
+        <h1 class="title is-1">Login</h1>
+        <h2 class="title is-2">Simulate admin logins via button press</h2>
+        <div class ="columns">
+            <div class="column">
+                <a class="button is-primary" href="/api/v1/auth/dummylogin/admin">
+                    Login as Admin
+                </a>
+        </div>
+            <div class="column">
+                <a class="button is-primary" href="/api/v1/auth/dummylogin/superadmin">
+                    Login as Superadmin
+                </a>
+            </div>
+        </div>
+    {%  endblock %}
+{% endembed %}

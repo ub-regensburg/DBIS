@@ -1,0 +1,68 @@
+<div id="resource-type-filter" 
+    class="select is-multiple">
+    
+    {% if not no_tags %}
+        <div id="resource-type-tags" class="tags is-fullwidth mt-2"></div>
+    {% endif %}
+    
+    <input class="input jsonly search-field"
+           placeholder="{{ i18n.lbl_search }}" aria-label="{{ i18n.aria_search_resource_types }}" />
+    <select name="filter-resource-types[]" 
+        id="filter-resource-types" 
+        class="is-small is-fullwidth"
+        multiple aria-label="{{ i18n.aria_select_resource_types }}">
+        {# Render selected resource types first #}
+        {% for resource_type in resource_types %}
+            {% for filtered_resource_type in filtered_resource_types %}
+            {% if resource_type.key == filtered_resource_type.title %}
+                {# Check if sorted_type.key exists in the publication_form array #}
+                {% set is_sorted = false %}
+                {% set sorted_doc_count = 0 %}
+                {% for sorted_type in types_sorted %}
+                    {% if sorted_type.key == resource_type.key %}
+                        {% set is_sorted = true %}
+                        {% set sorted_doc_count = sorted_type.doc_count %}
+                    {% endif %}
+                {% endfor %}
+
+                <option value="{{ resource_type.key }}" selected="true" {% if not is_sorted %}disabled{% endif %}>
+                    {{ resource_type.key }}
+                    {% if resource_type.doc_count %} <span>({{ sorted_doc_count }}<!--/{{ resource_type.doc_count }}-->)</span> {% endif %}
+                </option>
+            {% endif %}
+        {% endfor %}
+        {% endfor %}
+        
+        {# Render unselected resource types next #}
+        {% for resource_type in resource_types %}
+            {% set is_selected = false %}
+            {% for filtered_resource_type in filtered_resource_types %}
+                {% if resource_type.key == filtered_resource_type.title %}
+                    {% set is_selected = true %}
+                {% endif %}
+            {% endfor %}
+            {% if not is_selected  %}
+                {# Check if sorted_type.key exists in the publication_form array #}
+                {% set is_sorted = false %}
+                {% set sorted_doc_count = 0 %}
+                {% for sorted_type in types_sorted %}
+                    {% if sorted_type.key == resource_type.key %}
+                        {% set is_sorted = true %}
+                        {% set sorted_doc_count = sorted_type.doc_count %}
+                    {% endif %}
+                {% endfor %}
+
+                <option value="{{ resource_type.key }}" {% if not is_sorted %}disabled{% endif %}>
+                    {{ resource_type.key }}
+                    {% if resource_type.doc_count %} <span>({{ sorted_doc_count }}<!--/{{ resource_type.doc_count }}-->)</span> {% endif %}
+                </option>
+            {% endif %}
+        {% endfor %}
+    </select>    
+    
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

@@ -1,0 +1,27 @@
+{
+  "name": "dbis-projekt",
+  "version": "1.0.0",
+  "description": "In diesem Repository soll die Planung und Umsetzung des DFG-Projekts zum Ausbau und der Konsolidierung des DBIS erfolgen.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-import-resolver-webpack": "^0.13.2",
+    "eslint-plugin-import": "^2.25.3"
+  },
+  "dependencies": {
+    "@creativebulma/bulma-divider": "^1.1.0",
+    "bulma": "^0.9.3",
+    "bulma-extensions": "^6.2.7",
+    "dbis": "file:dbis_server"
+  }
+}

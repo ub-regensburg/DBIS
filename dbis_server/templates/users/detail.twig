@@ -1,0 +1,819 @@
+{% embed "users/base.twig" with { page: 'users_detail' } %}
+    {% block content %}
+        <div class="container">
+            {% if contextUrl != null and isRequestedFromDirectLink == false %}
+                <div class="columns m-0">
+                    <div class="column p-0">
+                        <a id="btn-return-to-results" class="button is-inverted is-primary mb-5"
+                           href="{{ contextUrl }}">
+                            <i class="fas fa-caret-left mr-2"></i>{{ i18n.btn_back_to_results }}
+                        </a>
+                    </div>
+                    <div class="column has-text-right p-0">
+                        {% for key, id in resultIds %}
+                            {% if id == resource.id %}
+                                {# If this is not the first result item, render previous button #}
+                                {% if key > 0 %}
+                                    <a id="btn-browse-previous" class="button is-inverted is-primary mb-5"
+                                       href="{{ organization ? '/' ~organization.ubrId : '' }}/resources/{{ resultIds[key - 1] }}">
+                                        <i class="fas fa-angle-left"></i>
+                                        {{ i18n.lbl_previous_result }}
+                                    </a>
+                                {% endif %}
+                                {# If this is not the last result item, render next button #}
+                                {% if key < (resultIds|length - 1) %}
+                                    <a id="btn-browse-next" class="button is-inverted is-primary mb-5"
+                                       href="{{ organization ? '/' ~organization.ubrId : '' }}/resources/{{ resultIds[key + 1] }}">
+                                        {{ i18n.lbl_next_result }}
+                                        <i class="fas fa-angle-right"></i>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="entry box">
+                <h1 class="title mb-5 is-1">
+                    {% if not resourceLocal.overwrite.title is empty and resourceLocal.overwrite.title|length > 0 %}
+                        {% set title = resourceLocal.overwrite.title %}
+                    {% else %}
+                        {% set title = resource.title %}
+                    {% endif %}
+                    <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_{{ resource.traffic_light }}.svg" alt=""></span><span class="ml-2">{{ title }}</span>
+                    {% if resource.top_resource_entries|length > 0 %}
+                        <span class="tag is-large ml-4 mb-2 is-primary is-light">{{ i18n.msg_top_database }}</span>
+                    {% endif %}
+                </h1>
+                <!-- TODO: Link hier finden! -->
+                {% if accesses|length == 1 and accesses[0].accessUrl|length > 0 %}
+                    {% set mainWarpToLink = "/warpto?ubr_id=" ~ organizationId ~ "&resource_id=" ~ resource.id ~ "&license_type=" ~ accesses[0].license.type.id ~ "&license_form=" ~ accesses[0].license.form.id ~ "&access_type=" ~ accesses[0].type.id ~ "&access_form=" ~ accesses[0].form.id ~ "&access_id=" ~ accesses[0].id %}
+                    <a target="_blank" rel="noopener noreferrer" href="{{ mainWarpToLink }}" class="button is-primary is-size-5 mb-5">
+                        <i class="fas fa-arrow-right entry-access-icon"></i>
+                        <b>{{ i18n.lbl_open_database }}</b>
+                    </a>
+                {% endif %}
+                <div class="content-group">
+                    <div class="is-size-6 expandable is-keeping-sentences raw-content" data-limit-chars=800>
+                        {% if resourceLocal.overwrite.description is not empty and resourceLocal.overwrite.description|length > 0 %}
+                            {% set description = resourceLocal.overwrite.description %}
+                        {% else %}
+                            {% set description = resource.description %}
+                        {% endif %}
+                        {% autoescape %}
+                            {{ description | striptags('<b>,<a>,<pre>') | raw }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+                {% set access_available = false %}
+
+                {% if licenses|length > 0 %}
+                    {% for license in licenses %}
+                        <div class="content-group mt-6">
+                            <h4 class="title is-4 mb-4">{{ license.type.title }} {% if license.form.title %} <span class="">({{license.form.title}})</span> {% endif %}</h4>
+                            
+                            {% if license.publicationForm %}
+                            <div class="publication-form pl-4">
+                                {{ i18n.lbl_publication_form }}&nbsp;
+                                <a href="{{ organizationId ? '/'~organizationId  : "" }}/results?q=&filter-publication-forms[]={{ license.publicationForm.id }}">
+                                    <span class="tag is-medium m-1 has-text-link">
+                                        {{ license.publicationForm.title }}
+                                    </span>
+                                </a>
+                            </div>
+                            {% endif %}
+
+                            {% if license.textMiningAllowed or license.isAllowingWalking or (license.numberOfConcurrentUsers and license.numberOfConcurrentUsers matches '/^\\d+$/') %}
+                            <div class="additional-terms pl-4">
+                                {{ i18n.lbl_additional_license_terms }}&nbsp;
+                                {% if license.textMiningAllowed %}
+                                    <span class="tag is-medium m-1">
+                                        {{ i18n.lbl_text_mining }}
+                                    </span>
+                                {% endif %}
+                                {% if license.isAllowingWalking %}
+                                    <span class="tag is-medium m-1">
+                                        {{ i18n.lbl_is_allowing_walking }}
+                                    </span>
+                                {% endif %}
+                                {% if license.numberOfConcurrentUsers and license.numberOfConcurrentUsers matches '/^\\d+$/' %}
+                                    <span class="tag is-medium m-1">
+                                        {{ i18n.lbl_parallel_users }}: {{ license.numberOfConcurrentUsers }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+
+                            {% if license and license.externalNotes|length > 0 %}
+                            <div class="notification is-italic has-background-white pl-4 mb-0">
+                                {{ license.externalNotes | raw }}
+                            </div>
+                            {% endif %}
+
+                            {% if license and license.fid %}
+                            <div class="notification has-background-white pl-4 mb-0">
+                                {{ i18n.lbl_founded_by_fid }} {{ license.fidName }}
+                            </div>
+                            {% endif %}
+
+                            {% if license.licenseLocalisation and license.licenseLocalisation.externalNotes|length > 0 %}
+                            <div class="notification is-italic has-background-white pl-4 mb-0">
+                                {{ license.licenseLocalisation.externalNotes | raw }}
+                            </div>
+                            {% endif %}
+
+                            {% if license.accesses|length > 0 %}
+                                {% set license_accesses = license.accesses %}
+                                {% set access_available = true %}
+                                <ul>
+                                    {% for access in license_accesses %}
+                                    {% set warpToLink = "/warpto?ubr_id=" ~ organizationId ~ "&resource_id=" ~ resource.id ~ "&license_type=" ~ license.type.id ~ "&license_form=" ~ license.form.id ~ "&access_type=" ~ access.type.id ~ "&access_form=" ~ access.form.id ~ "&access_id=" ~ access.id %}
+                                        <li>
+                                            {% if accesses|length > 0 and accesses[0].accessUrl|length > 0 %}
+                                                <a class="button is-primary is-inverted w-100" target="_blank"
+                                                href="{{ warpToLink }}">
+                                                    <b class="mr-1 w-100 break-word has-text-left">{{ access.label != "" ? access.label : access.accessUrl }}</b>
+                                                </a>
+                                            {% else %}
+                                                <span class="button is-primary is-inverted">
+                                                    <b class="mr-1">{{ access.label != "" ? access.label: i18n.default_access_label }}</b>
+                                                </span>
+                                            {% endif %}
+                                            <span class="jsonly">
+                                            <button class="display-access-info button is-inverted is-gray is-vcentered is-small is-pulled-right mt-2">
+                                                <i class="fas fa-chevron-up mr-2"></i>
+                                                {{ i18n.btn_more_info_for_access }}
+                                            </button>
+                                        </span>
+                                        </li>
+                                        <li class="access-info">
+                                            <table class="table is-fullwidth">
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <b>{{ i18n.lbl_access_type }}</b> 
+                                                    </td>
+
+                                                    <td>
+                                                        {{ access.type.title }} {% if access.form.title %} <span class="">({{access.form.title}})</span> {%endif%}
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <b>{{ i18n.lbl_access_link }}</b>
+                                                    </td>
+
+                                                    <td>
+                                                        <a href="{{ warpToLink }}" target="_blank">
+                                                            {{ access.accessUrl }}
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                                {% if access.host %}
+                                                    <tr>
+                                                        <td>
+                                                            <b>{{ i18n.lbl_host }}</b>
+                                                        </td>
+
+                                                        <td>
+                                                            {{ access.host.title }}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+
+                                                {% if access.description %}
+                                                    <tr>
+                                                        <td>
+                                                            <b>{{ i18n.description }}</b>
+                                                        </td>
+
+                                                        <td class="raw-content">
+                                                            {{ access.description | raw }}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+
+                                                {% if access.labelLong %}
+                                                    <tr>
+                                                        <td>
+                                                            <b>{{ i18n.lbl_access_label_long }}</b>
+                                                        </td>
+
+                                                        <td class="raw-content">
+                                                            {{ access.labelLong | raw }}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+
+                                                {% if access.labelLongest %}
+                                                    <tr>
+                                                        <td>
+                                                            <b>{{ i18n.lbl_access_label_longest }}</b>
+                                                        </td>
+
+                                                        <td class="raw-content">
+                                                            {{ access.labelLongest | raw }}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+
+                                                {% if access.requirements %}
+                                                    <tr>
+                                                        <td>
+                                                            <b>{{ i18n.lbl_resource_requirements }}</b>
+                                                        </td>
+                                                        <td class="raw-content">
+                                                            {{ access.requirements  | raw }}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if access.shelfmark %}
+                                                    <tr>
+                                                        <td>
+                                                            <b>{{ i18n.lbl_shelfmark_access }}</b>
+                                                        </td>
+                                                        <td class="raw-content">
+                                                            {{ access.shelfmark  | raw }}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if access.manualUrl %}
+                                                    <a href="{{ access.manualUrl }}"
+                                                    class="ml-3">
+                                                        <i class="fas fa-book mr-2"></i>
+                                                        {{ i18n.lbl_manual_link }}
+                                                    </a>
+                                                {% endif %}
+                                                </tbody>
+                                            </table>
+                                        </li>
+                                        <hr class="mt-2 mb-2">
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+
+                        </div>
+                    {% endfor %}
+                    <p class="notification is-size-6 mt-4">
+                        {{ i18n.msg_contact }} {% if organization.contact|length > 0 %}<a href="mailto:{{ organization.contact }}">{{ organization.contact }}</a>{% else %}: <em>{{ i18n.msg_no_contact_mail }}</em>{% endif %}
+                    </p>
+                {% else %}
+                    <div class="notification mt-6 is-warning is-light is-size-6">
+                        <div>
+                            {{ organizationId ? i18n.lbl_no_access_from_organization : i18n.lbl_no_free_access }}
+                        </div>
+			        {% if organization.contact %}
+                        <div class="mt-4">
+                            {% if organization.contact|length > 0 %}<a class="is-underlined" href="mailto:{{ organization.contact }}">{{ i18n.lbl_tips_no_access }}</a>{% else %}: <em>{{ i18n.msg_no_contact_mail }}</em>{% endif %}
+                        </div>
+			        {% endif %}
+                    </div>
+                    {% if organisations_with_license|length > 0 %}
+                        <div class="c-select-organisation columns">
+                            <div class="column">
+                                <div class="dropdown searchable is-fullwidth"
+                                        aria-label="{{ i18n.aria_select_organization }}">
+                                    <div class="dropdown-trigger"
+                                            aria-label="{{ i18n.aria_open_dropdown_organizations }}">
+                                        <button class="button"
+                                                aria-haspopup="true"
+                                                aria-controls="dropdown-organizations">
+                                                        <span class="selected-org" data-ubrid="{{ selectedOrganization ? selectedOrganization.ubrId : '' }}">{{ i18n.msg_organisations_with_licenses }}</span>
+                                            <span class="icon is-small">
+                                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div
+                                        class="dropdown-menu"
+                                        id="dropdown-organizations"
+                                        aria-label="{{ i18n.aria_dropdown_organizations }}"
+                                        role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="searchfield-container">
+                                                <input type="text"
+                                                        placeholder="{{ i18n.hint_search_organization_by_name }}"
+                                                        aria-label="{{ i18n.aria_dropdown_organizations_search}}"
+                                                        class="searchfield input dropdown-item"/>
+                                            </div>
+                                            <hr class="dropdown-divider">
+                                            <div class="dropdown-items">
+                                            {% for city_name, organizations_per_city in organisations_with_license %}
+                                                <div class="city-group">
+                                                    <p class="city has-text-grey-dark">
+                                                        <strong>{{ city_name }}</strong>
+                                                    </p>
+                                                    {% for organisation_with_license in organizations_per_city %}
+                                                        <button value="{{ organisation_with_license.ubrId }}" data-city="{{ organisation_with_license.city }}" role="menuitem"
+                                                            class="select-organisation-with-license dropdown-item has-text-grey-dark" onclick="event.preventDefault();">
+                                                        {{ organisation_with_license.name }}
+                                                        </button>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <a id="link-to-user" data-resource-id="{{ resource.id }}" class="link-to button" target="_blank">{{ i18n.lbl_switch_to_user_view }}</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.lbl_resource_id }}</h2>
+                    <span class="resource-id tag is-medium ml-1 mb-2 is-primary is-light has-text-weight-normal">
+                        <span class="resource-id-text">{{ resource.id }}</span>
+                        <span><i class="copy-id fas fa-regular fa-copy"></i></span>
+                          <span class='copy-id-tooltip is-size-5 has-text-light' style='display:none'>
+                            {% if language == "de" %}
+                                Kopiert!
+                            {% else %}
+                                Copied!
+                            {% endif %}
+                          </span>
+                    </span>
+                </div>
+
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.lbl_database_subjects }}</h2>
+                    {% if resource.subjects|length > 0 %}
+                        {% set subjects = resource.subjects %}
+                    {% else %}
+                        {% set subjects = resourceGlobal.subjects %}
+                    {% endif %}
+
+                    {% for subject in subjects %}
+                        <a href="{{ organizationId ? '/'~organizationId  : "" }}/browse/subjects/{{ subject.id }}/">
+                            <span class="tag is-medium m-1 has-text-link">
+                                {{ subject.title|length > 50 ? subject.title|slice(0,50) ~ '...': subject.title }}
+                            </span>
+                        </a>
+                    {% endfor %}
+                    {% if organizationId %}
+                        {% for collection in resourceLocal.collections %}
+                            {% if collection.is_subject %}
+                                <a href="{{ '/'~organizationId }}/browse/collections/{{ collection.id }}/">
+                                    <span class="tag is-medium m-1 has-text-link">
+                                        {{ collection.title|length > 50 ? collection.title|slice(0,50) ~ '...': collection.title }}
+                                    </span>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.lbl_database_types }}</h2>
+                    {% if resource.types|length > 0 %}
+                        {% set types = resource.types %}
+                    {% else %}
+                        {% set types = resourceGlobal.types %}
+                    {% endif %}
+
+                    {% for type in types %}
+                        <a href="{{ organizationId ? '/'~organizationId  : "" }}/results?q=&filter-resource-types[]={{ type.title }}">
+                            <span class="tag is-medium m-1 has-text-link">
+                                {{ type.title|length > 50 ? type.title|slice(0,50) ~ '...': type.title }}
+                            </span>
+                        </a>
+                    {% endfor %}
+                </div>
+
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.lbl_database_keywords }}</h2>
+                    {% if resourceLocal.keywords|length > 0 %}
+                        {% set keywords = resourceLocal.keywords %}
+                    {% else %}
+                        {% set keywords = resourceGlobal.keywords %}
+                    {% endif %}
+
+                    {% for keyword in keywords %}
+                        <a href="{{ organizationId ? '/'~organizationId  : "" }}/results?q=&filter-keywords[]={{ keyword.title }}">
+                            <span class="tag is-medium m-1 has-text-link">
+                                    {{ keyword.title|length > 50 ? keyword.title|slice(0,50) ~ '...': keyword.title }}
+                            </span>
+                        </a>
+                    {% endfor %}
+                    {% if keywords|length == 0 %}
+                        <i class="ml-3">{{ i18n.lbl_not_specified }}</i>
+                    {% endif %}
+                </div>
+
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.lbl_notes }}</h2>
+                    {% if resourceLocal and resourceLocal.overwrite and resourceLocal.overwrite.note|length > 0 %}
+                        {% set note_local = resourceLocal.overwrite.note %}
+                    {% else %}
+                        {% set note_global = resourceGlobal.note %}
+                    {% endif %}
+
+                    {% if resourceLocal and resourceLocal.overwrite and resourceLocal.overwrite.local_note|length > 0 %}
+                        {% set additional_local_note = resourceLocal.overwrite.local_note %}
+                    {% endif %}
+
+                    {% if (note_global is null or note_global|length == 0) and (note_local is null or note_local|length == 0) and (additional_local_note is null or additional_local_note|length == 0) %}
+                        <i class="ml-3">{{ i18n.lbl_not_specified }}</i>
+                    {% else %}
+                        {% if note_global and note_global|length != 0 %}
+                            <p class="is-medium m-1">{{ note_global | raw }}</p>
+                        {% endif %}
+                        {% if note_local and note_local|length != 0 %}
+                            <p class="is-medium m-1">{{ note_local | raw }}</p>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if additional_local_note and additional_local_note|length != 0 %}
+                        <p class="is-medium m-1">{{ additional_local_note | raw }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.lbl_instructions }}</h2>
+                    {% if resourceLocal and resourceLocal.overwrite and resourceLocal.overwrite.instructions|length > 0 %}
+                        {% set instructions = resourceLocal.overwrite.instructions %}
+                    {% else %}
+                        {% set instructions = resourceGlobal.instructions %}
+                    {% endif %}
+
+                    {% if instructions|length == 0 %}
+                        <i class="ml-3">{{ i18n.lbl_not_specified }}</i>
+                    {% else %}
+                        <p class="is-medium m-1">{{ instructions | raw }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.lbl_other_metadata }}</h2>
+                    <table class="further-data table is-fullwidth is-borderless">
+                        <tbody>
+
+                        {% if resourceGlobal.alternative_titles|length > 0 %}
+                            <tr>
+                                <td class="has-text-weight-bold">
+                                    {{ i18n.h_lbl_alternative_titles }}
+                                </td>
+                                <td>
+                                    {% for alt_title in resourceGlobal.alternative_titles %}
+                                        <span class="is-medium m-1">
+                                            {{ alt_title .title|length > 50 ? alt_title .title|slice(0,50) ~ '...': alt_title .title }}
+                                        </span>
+                                        {% if resourceGlobal.alternative_titles|length > 1 %}
+                                        <br>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        {% if resource.resource_types|length > 0 %}
+                            {% set resource_types = resource.resource_types %}
+                        {% else %}
+                            {% set resource_types = resourceGlobal.resource_types %}
+                        {% endif %}
+
+                        {% if resource_types|length > 0 %}
+                        <tr>
+                            <td class="has-text-weight-bold">
+                                {{ i18n.lbl_database_type }}
+                            </td>
+                            <td>
+                                {% for type in resource_types %}
+                                    <a href="{{ organizationId ? '/'~organizationId  : "" }}/results?q=&filter-resource-types[]={{ type.title }}">
+                                        <span class="tag is-medium m-1 has-text-link">
+                                            {{ type.title|length > 50 ? type.title|slice(0,50) ~ '...': type.title }}
+                                        </span>
+                                    </a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endif %}
+
+                        {% if resource.authors|length > 0 %}
+                            {% set authors = resource.authors %}
+                        {% else %}
+                            {% set authors = resourceGlobal.authors %}
+                        {% endif %}
+
+                        {% if authors|length > 0 %}
+                            <tr>
+                                <td class="has-text-weight-bold">
+                                    {{ i18n.lbl_authors }}
+                                </td>
+                                <td>
+                                    {% for author in authors %}
+                                        <span class="tag is-medium m-1 has-text-link">
+                                            {{ author.title|length > 50 ? author.title|slice(0,50) ~ '...': author.title }}
+                                        </span>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        {% if resource.countries|length > 0 %}
+                            {% set countries = resource.countries %}
+                        {% else %}
+                            {% set countries = resourceGlobal.countries %}
+                        {% endif %}
+
+                        {% if countries|length > 0 %}
+                            <tr>
+                                <td class="has-text-weight-bold">
+                                    {{ i18n.lbl_countries }}
+                                </td>
+                                <td>
+                                    {% for country in countries %}
+                                        <a href="{{ organizationId ? '/'~organizationId  : "" }}/results?q=&filter-countries[]={{ country.title }}">
+                                            <span class="tag is-medium m-1 has-text-link">
+                                                {{ country.title|length > 50 ? country.title|slice(0,50) ~ '...': country.title }}
+                                            </span>
+                                        </a>
+                                    {% endfor %}
+                                    {% if countries|length == 0 %}
+                                        <i class="ml-3">{{ i18n.lbl_not_specified }}</i>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        {% if resourceLocal and resourceLocal.overwrite and resourceLocal.overwrite.report_time_start|length > 0 %}
+                            {% set report_time_start = resourceLocal.overwrite.report_time_start %}
+                        {% else %}
+                            {% set report_time_start = resourceGlobal.report_time_start %}
+                        {% endif %}
+                        {% if resourceLocal and resourceLocal.overwrite and resourceLocal.overwrite.report_time_end|length > 0 %}
+                            {% set report_time_end = resourceLocal.overwrite.report_time_end %}
+                        {% else %}
+                            {% set report_time_end = resourceGlobal.report_time_end %}
+                        {% endif %}
+                        {% if report_time_start != null and
+                                    report_time_end != null %}
+                            <tr>
+                                <td class="has-text-weight-bold">
+                                    {{ i18n.lbl_report_time }}
+                                </td>
+                                <td>
+                                    <span class="is-medium ml-1">
+                                        <b class="mr-2">
+                                            {{ report_time_start|date('Y') }}
+                                        </b>
+                                        {{ i18n.to }}
+                                        <b class="ml-2">
+                                            {% if report_time_end %}
+                                                {{ report_time_end|date('Y') }}
+                                            {% else %}
+                                                {{ i18n.today }}
+                                            {% endif %}
+                                        </b>
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        {% if resourceLocal and resourceLocal.overwrite and resourceLocal.overwrite.publication_time_start|length > 0 %}
+                            {% set publication_time_start = resourceLocal.overwrite.publication_time_start %}
+                        {% else %}
+                            {% set publication_time_start = resourceGlobal.publication_time_start %}
+                        {% endif %}
+                        {% if resourceLocal and resourceLocal.overwrite and resourceLocal.overwrite.publication_time_end|length > 0 %}
+                            {% set publication_time_end = resourceLocal.overwrite.publication_time_end %}
+                        {% else %}
+                            {% set publication_time_end = resourceGlobal.publication_time_end %}
+                        {% endif %}
+                        {% if publication_time_start != null and
+                                    publication_time_end != null %}
+                            <tr>
+                                <td class="has-text-weight-bold">
+                                    {{ i18n.publication_time }}
+                                </td>
+                                <td>
+                                    <span class="is-medium ml-1">
+                                        <b class="mr-2">
+                                            {{ publication_time_start|date('Y') }}
+                                        </b>
+                                        {{ i18n.to }}
+                                        <b class="ml-2">
+                                            {% if publication_time_end %}
+                                                {{ publication_time_end|date('Y') }}
+                                            {% else %}
+                                                {{ i18n.today }}
+                                            {% endif %}
+                                        </b>
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        {% if resourceLocal and resourceLocal.overwrite and resourceLocal.overwrite.isbn_issn|length > 0 %}
+                            {% set isbn_issn = resourceLocal.overwrite.isbn_issn %}
+                        {% else %}
+                            {% set isbn_issn = resourceGlobal.isbn_issn %}
+                        {% endif %}
+
+                        {% if isbn_issn|length > 0 %}
+                            <tr>
+                                <td class="has-text-weight-bold">
+                                    {{ i18n.lbl_isbnissn }}
+                                </td>
+                                <td>
+                                    <span class="is-medium">{{ isbn_issn }}</span>
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        {% if not resourceLocal.overwrite.shelfmark is empty and not resourceLocal.overwrite.shelfmark is empty %}
+                            {% set shelfmark = resourceLocal.overwrite.shelfmark %}
+                        {% else %}
+                            {% set shelfmark = resourceGlobal.shelfmark %}
+                        {% endif %}
+
+                        {% if shelfmark|length > 0 %}
+                            <tr>
+                                <td class="has-text-weight-bold">
+                                    {{ i18n.lbl_shelfmark }}
+                                </td>
+                                <td>
+                                    <span class="is-medium">{{ shelfmark }}</span>
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        {% if not resourceLocal.overwrite.is_still_updated is empty and resourceLocal.overwrite.is_still_updated is not null %}
+                            {% set is_still_updated = resourceLocal.overwrite.is_still_updated %}
+                        {% else %}
+                            {% set is_still_updated = resourceGlobal.is_still_updated %}
+                        {% endif %}
+
+                        {% if is_still_updated|length > 0 %}
+                            <tr>
+                                <td class="has-text-weight-bold">
+                                    {{ i18n.lbl_database_update }}
+                                </td>
+                                <td>
+                                    <span class="is-medium">
+                                        {% if is_still_updated == 1 %}
+                                            {{ i18n.lbl_database_still_updated_unknown }}
+                                        {% endif %}
+                                        {% if is_still_updated == 2 %}
+                                            {{ i18n.lbl_database_still_updated_no }}
+                                        {% endif %}
+                                        {% if is_still_updated == 3 %}
+                                            {{ i18n.lbl_database_still_updated_yes }}
+                                        {% endif %}
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        {% if resourceGlobal.api_urls|length > 0 %}
+                            <tr>
+                                <td class="has-text-weight-bold">
+                                    {{ i18n.lbl_api_url }}
+                                </td>
+                                <td>
+                                {% for api_url in resourceGlobal.api_urls %}
+                                    <a href="{{ api_url.url }}" class="is-medium m-1">
+                                        {{ api_url.url }}
+                                    </a>
+                                {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        </tbody>
+                    </table>
+                </div>
+                {% if resourceGlobal.external_ids|length > 0 %}
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.lbl_external_identifiers }}</h2>
+                    <table class="further-data table is-fullwidth is-borderless">
+                        <tbody>
+                                {% for external_id in resourceGlobal.external_ids %}
+                                <tr>
+                                    <td class="has-text-weight-bold">
+                                        {{ external_id.namespace }}
+                                    </td>
+                                    <td>
+                                        {% if external_id.namespace == "ZDB" %}
+                                            <a target="_blank" href="https://ld.zdb-services.de/resource/{{ external_id.id }}">{{ external_id.id }}</a>
+                                        {% elseif external_id.namespace == "FIDELIO" %}
+                                            <a target="_blank" href="https://kxp.k10plus.de/DB=1.84/SET=3/TTL=1/CMD?ACT=SRCHA&IKT=12&SRT=YOP&TRM={{ external_id.id }}}">{{ external_id.id }}</a>
+                                        {% else %}
+                                            {{ external_id.id }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+
+                {% if related_resources['is-related']|length > 0 %}
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.msg_relationships_is_related }}</h2>
+                    {% for related_resource in related_resources['is-related'] %}
+                        <a href="{{ related_resource.id }}" class="is-medium m-1">
+                            <span class="tag is-medium m-1 has-text-link">
+                                <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_{{related_resource.traffic_light}}.svg" alt=""></span>&nbsp;<span>{{ related_resource.title }}</span> 
+                            </span>                                       
+                        </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if related_resources['is-parent']|length > 0 %}
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.msg_relationships_is_parent }}</h2>
+                    {% for related_resource in related_resources['is-parent'] %}
+                        <a href="{{ related_resource.id }}" class="is-medium m-1">
+                            <span class="tag is-medium m-1 has-text-link">
+                                <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_{{related_resource.traffic_light}}.svg" alt=""></span>&nbsp;<span>{{ related_resource.title }}</span> 
+                            </span>   
+                        </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if related_resources['is-child']|length > 0 %}
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-2">{{ i18n.msg_relationships_is_child }}</h2>
+                    {% for related_resource in related_resources['is-child'] %}
+                    <span class="tag is-medium m-1 has-text-link">
+                        <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_{{related_resource.traffic_light}}.svg" alt=""></span>&nbsp;<span>{{ related_resource.title }}</span> 
+                    </span>   
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if licenses|length > 0 and organisations_with_license|length > 0 %}
+                <div class="content-group mt-6">
+                    <h2 class="title is-3 mb-5">{{ i18n.lbl_organisations_with_licenses }}</h2>
+                    <div class="c-select-organisation columns">
+                        <div class="column">
+                            <div class="dropdown searchable is-fullwidth"
+                                    aria-label="{{ i18n.aria_select_organization }}">
+                                <div class="dropdown-trigger"
+                                        aria-label="{{ i18n.aria_open_dropdown_organizations }}">
+                                    <button class="button"
+                                            aria-haspopup="true"
+                                            aria-controls="dropdown-organizations">
+                                                    <span class="selected-org" data-ubrid="{{ selectedOrganization ? selectedOrganization.ubrId : '' }}">{{ i18n.msg_organisations_with_licenses }}</span>
+                                        <span class="icon is-small">
+                                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div
+                                        class="dropdown-menu"
+                                        id="dropdown-organizations"
+                                        aria-label="{{ i18n.aria_dropdown_organizations }}"
+                                        role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="searchfield-container">
+                                            <input type="text"
+                                                    placeholder="{{ i18n.hint_search_organization_by_name }}"
+                                                    aria-label="{{ i18n.aria_dropdown_organizations_search}}"
+                                                    class="searchfield input dropdown-item"/>
+                                        </div>
+                                        <hr class="dropdown-divider">
+                                        <div class="dropdown-items">
+                                            {% for city_name, organizations_per_city in organisations_with_license %}
+                                                <div class="city-group">
+                                                    <p class="city has-text-grey-dark">
+                                                        <strong>{{ city_name }}</strong>
+                                                    </p>
+                                                    {% for organisation_with_license in organizations_per_city %}
+                                                        <button value="{{ organisation_with_license.ubrId }}" data-city="{{ organisation_with_license.city }}" role="menuitem"
+                                                            class="select-organisation-with-license dropdown-item has-text-grey-dark" onclick="event.preventDefault();">
+                                                        {{ organisation_with_license.name }}
+                                                        </button>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <a id="link-to-user" data-resource-id="{{ resource.id }}" class="link-to button" target="_blank">{{ i18n.lbl_switch_to_user_view }}</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="content-group mt-6">
+                    {% set ubrid = organizationId ? organizationId : "" %}
+                    <a class="button is-primary is-inverted" href="/admin/redirect_to_edit?resource={{ resource.id }}&ubrid={{ ubrid }}">{{ i18n.lbl_administrate_database }}</a>
+                </div>
+
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}

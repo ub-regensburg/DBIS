@@ -1,0 +1,2715 @@
+{
+    "dbis_admin_news": {
+        "de": "DBIS-Ankündigungen",
+        "en": "DBIS News"
+    },
+    "dbis_admin_licenseadministration": {
+        "de": "Lizenzadministration",
+        "en": "License Administration"
+    },
+    "dbis_admin_databasetitle": {
+        "de": "Datenbanktitel",
+        "en": "Database Title Entries"
+    },
+    "dbis_admin_entertitle": {
+        "de": "Titel neu eingeben",
+        "en": "Enter new title"
+    },
+    "dbis_admin_editlicense": {
+        "de": "Lizenzen bearbeiten",
+        "en": "Edit license data"
+    },
+    "dbis_vision": {
+        "de": "« Unser Wissen vernetzen, international teilen und jeder Person einen Weg zu wissenschaftlichen Informationen aufzeigen. »",
+        "en": "« To network our knowledge, share it internationally and show every person a way to scholarly information. »"
+    },
+    "dbis_mission": {
+        "de": "« Wir glauben an vertrauenswürdige Information für Forschung und Lehre. Durch transparente Kooperation von Wissensinstitutionen finden wir effizient und individuell die passende wissenschaftliche Datenbank. »",
+        "en": "« We believe in trustworthy information for research and education. Through the transparent cooperation of knowledge institutions, we efficiently and individually find the fitting scholarly database. »"
+    },
+    "lbl_mission": {
+        "de": "Unsere Mission: Woran wir glauben",
+        "en": "Our mission: In what we believe"
+    },
+    "lbl_vision": {
+        "de": "Unsere Vision: Was wir erreichen wollen",
+        "en": "Our vision: What we want to achieve"
+    },
+    "text_brigitte": {
+        "de": "ist wissenschaftliche Bibliothekarin und fachliche Leiterin von DBIS. Sie leitet dieses DFG-Projekt.",
+        "en": "is an academic liaison and subject librarian as well as the head of DBIS. She manages the DBIS DFG project."
+    },
+    "text_silke": {
+        "de": "ist wissenschaftliche Bibliothekarin und leitet das Sachgebiet EZB/DBIS. Sie führt die technische Entwicklung von DBIS.",
+        "en": "heads the EZB/DBIS division and leads the technical development of DBIS."
+    },
+    "text_constantin": {
+        "de": "ist Medieninformatiker und Projektmitarbeiter bei DBIS. Er unterstützt die technische Implementierung und User-Centered Design in DBIS.",
+        "en": "is a computer scientist and DBIS project assistant. He supports the technical implementation as well as the user-centred design of DBIS."
+    },
+    "text_claudia": {
+        "de": "ist Bibliothekarin und fachliche Mitarbeiterin bei DBIS. Sie berät Institutionen, die DBIS nutzen (möchten) und leitet die Regensburger DBIS-Redaktion & -Lizenzverwaltung.",
+        "en": "is a librarian and technical assistant for DBIS. She advises institutions that (would like to) use DBIS and is head of the Regensburg DBIS editorial office and license administration."
+    },
+    "text_cornelia": {
+        "de": "ist Bibliothekarin und fachliche Mitarbeiterin bei DBIS. Sie ist für die DBIS-Statistik zuständig und arbeitet in der DBIS-Redaktion.",
+        "en": "is a librarian and specialist staff member for DBIS. She is responsible for DBIS statistics and works in the DBIS editorial office."
+    },
+    "lbl_library_homepage": {
+        "de": "Bibliothekshomepage",
+        "en": "Library Homepage"
+    },
+    "lbl_library_catalog": {
+        "de": "Bibliothekskatalog",
+        "en": "Library Catalog"
+    },
+    "lbl_additional_info": {
+        "de": "Weitere Informationen zur Lizenz",
+        "en": "Additional information of this license"
+    },
+    "lbl_info_vpn": {
+        "de": "Infos zu VPN",
+        "en": "Info on VPN"
+    },
+    "lbl_info_shibboleth": {
+        "de": "Infos zu Shibboleth",
+        "en": "Info on Shibboleth"
+    },
+    "lbl_help_feedback": {
+        "de": "Hilfe & Feedback",
+        "en": "Help & Feedback"
+    },
+    "lbl_ok": {
+        "de": "Ok",
+        "en": "Ok"
+    },
+    "lbl_imprint": {
+        "de": "Impressum",
+        "en": "Imprint"
+    },
+    "lbl_data_privacy": {
+        "de": "Datenschutz",
+        "en": "Data Privacy"
+    },
+    "lbl_user_tracking": {
+        "de": "Nutzungshinweise",
+        "en": "Instructions for Use"
+    },
+    "lbl_dbis_main": {
+        "de": "DBIS-Sicht",
+        "en": "DBIS home"
+    },
+    "lbl_license_statement": {
+        "de": "Außer wo es anders spezifiziert wird, ist diese Website unter CC-BY lizenziert.",
+        "en": "Except where otherwise noted, this website is licensed under a CC-BY license."
+    },
+    "lbl_dbis_short_description":  {
+        "de": "DBIS ist ein kooperativ organisierter Onlineservice zur Nutzung von wissenschaftlichen Datenbanken",
+        "en": "DBIS is a cooperatively organized online service for the use of scientific databases"
+    },
+    "h_mission": {
+        "de": "Über DBIS",
+        "en": "About DBIS"
+    },
+    "h_recommended_databases": {
+        "de": "Häufig genutzte Datenbanken",
+        "en": "Frequently used databases"
+    },
+    "lbl_menu_nav_superadministration": {
+        "de": "Superadministration",
+        "en": "Super Administration"
+    },
+    "lbl_menu_nav_administration": {
+        "de": "Administration",
+        "en": "Administration"
+    },
+    "lbl_menu_nav_collections": {
+        "de": "Sammlungen",
+        "en": "Collections"
+    },
+    "lbl_dbis_admin": {
+        "de": "DBIS Administration",
+        "en": "DBIS Administration"
+    },
+    "lbl_menu_nav_superadministration_manage_orgs": {
+        "de": "Organisationen verwalten",
+        "en": "Manage organizations"
+    },
+    "lbl_menu_nav_superadministration_manage_orgs_create": {
+        "de": "Organisation erstellen",
+        "en": "Create organization"
+    },
+    "lbl_menu_nav_superadministration_manage_orgs_edit_or_delete": {
+        "de": "Organisation bearbeiten",
+        "en": "Edit organization"
+    },
+    "lbl_menu_nav_administration_manage_res_create": {
+        "de": "Datenbank erstellen",
+        "en": "Create databases"
+    },
+    "lbl_menu_nav_superadministration_manage_res_create": {
+        "de": "Datenbank erstellen",
+        "en": "Create databases"
+    },
+    "lbl_menu_nav_superadministration_manage_relationships": {
+        "de": "Datenbanken verknüpfen",
+        "en": "Manage database relationships"
+    },
+    "lbl_menu_nav_superadministration_manage_keywords": {
+        "de": "Schlagwörter bearbeiten",
+        "en": "Edit keywords"
+    },
+    "lbl_menu_nav_superadministration_manage_subjects": {
+        "de": "Fachgebiete verwalten",
+        "en": "Edit subjects"
+    },
+    "h_res_create": {
+        "de": "DBIS - Datenbank erstellen",
+        "en": "DBIS - Create database"
+    },
+    "h_res_edit": {
+        "de": "DBIS - Datenbank bearbeiten",
+        "en": "DBIS - Edit database"
+    },
+    "h_res_manage": {
+        "de": "DBIS - Datenbanken verwalten",
+        "en": "DBIS - Manages databases"
+    },
+    "lbl_menu_nav_administration_manage_res": {
+        "de": "Datenbanken suchen",
+        "en": "Search databases"
+    },
+    "lbl_menu_nav_superadministration_manage_res": {
+        "de": "Datenbanken suchen",
+        "en": "Search databases"
+    },
+    "lbl_resource_title": {
+        "de": "Titel",
+        "en": "Title"
+    },
+    "lbl_resource_action": {
+        "de": "Aktion",
+        "en": "Action"
+    },
+    "lbl_resource_shortdescription": {
+        "de": "Kurzbeschreibung",
+        "en": "Short description"
+    },
+    "lbl_logout": {
+        "de": "Ausloggen",
+        "en": "Logout"
+    },
+    "lbl_collections": {
+        "de": "Sammlungen",
+        "en": "Collections"
+    },
+    "lbl_information_exchange": {
+        "de": "Information & Austausch",
+        "en": "Information & Exchange"
+    },
+    "lbl_keywords": {
+        "de": "Schlagwörter",
+        "en": "Keywords"
+    },
+    "lbl_quality_management": {
+        "de": "Qualitätsmanagement",
+        "en": "Quality management"
+    },
+    "lbl_statistics": {
+        "de": "Statistik",
+        "en": "Statistics"
+    },
+    "lbl_menu_nav_administration_edit_keywords": {
+        "de": "Schlagwörter bearbeiten",
+        "en": "Edit keywords"
+    },
+    "lbl_menu_nav_administration_edit_cleanup": {
+	 "de":"Datenbereinigung",
+	 "en":"Data cleanup"
+    }, 
+    "lbl_menu_nav_administration_daily_statistics": {
+	 "de":"Tagesstatistik",
+	 "en":"Daily statistics"
+    },
+    "lbl_menu_nav_administration_selectable_statistics": {
+	 "de":"Wählbarer Zeitraum",
+	 "en":"Selectable period of time"
+    },
+    "lbl_menu_nav_administration_edit_profile": {
+         "de":"DBIS-Profil",
+         "en":"DBIS Profile"
+    },
+    "lbl_menu_nav_administration_edit_first_steps": {
+         "de":"Erste Schritte",
+         "en":"First Steps"
+    },
+    "lbl_menu_nav_administration_edit_contact": {
+         "de":"Kontakt",
+         "en":"Contact"
+    },
+    "lbl_menu_nav_administration_manage_collections": {
+        "de": "Sammlungen verwalten",
+        "en": "Manage collections"
+    },
+    "lbl_menu_nav_administration_manage_collection_create": {
+        "de": "Sammlung erstellen",
+        "en": "Create collection"
+    },
+    "lbl_link_to_collection": {
+        "de": "Die Sammlung kann unter folgenden Link aufgerufen werden: ",
+        "en": "The collection can be accessed via the following link: "
+    },
+    "h_collection_manage": {
+        "de": "DBIS - Sammlungen verwalten",
+        "en": "DBIS - Manage collections"
+    },
+    "h_keywords_manage": {
+        "de": "DBIS - Schlagwörter verwalten",
+        "en": "DBIS - Manage keywords"
+    },
+    "h_selectable_statistics": {
+        "de": "DBIS - Wählbarer Zeitraum",
+        "en": "DBIS - Selectable period of time"
+    },
+    "h_daily_statistics": {
+        "de": "DBIS - Tagesstatistik",
+        "en": "DBIS - Daily statistics"
+    },
+    "h_labels": {
+        "de": "DBIS - Labels",
+        "en": "DBIS - Labels"
+    },
+    "h_subjects_manage": {
+        "de": "Fächer verwalten",
+        "en": "Manage subjects"
+    },
+    "h_drafts_manage": {
+        "de": "DBIS - Datenbankentwürfe",
+        "en": "DBIS - Database drafts"
+    },
+    "lbl_drafts_manage": {
+        "de": "Datenbankentwürfe",
+        "en": "Database drafts"
+    },
+    "lbl_labels": {
+        "de": "Labels bearbeiten",
+        "en": "Edit labels"
+    },
+    "lbl_labels_extended": {
+        "de": "Zugangsbeschriftungen bearbeiten",
+        "en": "Edit access labels"
+    },
+    "lbl_labels_id": {
+        "de": "Zugangsbeschriftung-ID",
+        "en": "Label-ID"
+    },
+    "h_collection_edit": {
+        "de": "DBIS - Sammlung bearbeiten",
+        "en": "DBIS - Edit collection"
+    },
+    "h_collection_create": {
+        "de": "DBIS - Sammlung erstellen",
+        "en": "DBIS - Create collection"
+    },
+    "lbl_heading_edit_collection": {
+        "de": "Sammlung bearbeiten",
+        "en": "Manage collection"
+    },
+    "lbl_heading_create_collection": {
+        "de": "Sammlung erstellen",
+        "en": "Create collection"
+    },
+    "lbl_collections_shortdescription": {
+        "de": "Kurzbeschreibung",
+        "en": "Short description"
+    },
+    "lbl_collection_title": {
+        "de": "Titel",
+        "en": "Title"
+    },
+    "lbl_collection_sort_by": {
+        "de": "Sortierung",
+        "en": "Sort by"
+    },
+    "lbl_collection_is_visible": {
+        "de": "Sichtbar",
+        "en": "Visible"
+    },
+    "lbl_default_labels_for_accesses": {
+        "de": "Default-Texte für Zugänge einfügen",
+        "en": "Insert default texts for accesses"
+    },
+    "lbl_empty_labels_for_accesses": {
+        "de": "Zugangsbeschriftung löschen",
+        "en": "Delete access labels"
+    },
+    "lbl_label_is_not_referenced": {
+        "de": "Die Zugangsbeschriftung wird aktuell nicht genutzt",
+        "en": "Label is currently not used"
+    },
+    "lbl_label_is_referenced": {
+        "de": "Die Zugangsbeschriftung wird in Zugängen genutzt",
+        "en": "Label is currently used"
+    },
+    "lbl_resources_without_access_label": {
+        "de": "Datenbanken ohne Zugangsbeschriftungen",
+        "en": "Databases without access labels"
+    },
+    "lbl_access_labels_of_own_organisation": {
+        "de": "Zugangsbeschriftungen der eigenen Einrichtung",
+        "en": "Access labels of own organisation"
+    },
+    "lbl_add_default_label_for_access": {
+        "de": "Default-Text einsetzen",
+        "en": "Insert default text"
+    },
+    "save_local_data": {
+        "de": "Lokale Daten speichern",
+        "en": "Save local data"
+    },
+    "lbl_hide_resource": {
+        "de": "Diese Datenbank ausblenden",
+        "en": "Hide this databases"
+    },
+    "lbl_hide_subject": {
+        "de": "Fachgebiet ausblenden",
+        "en": "Hide this subject"
+    },
+    "lbl_collection_is_subject": {
+        "de": "Soll als Fach dargestellt werden",
+        "en": "Should be displayed as a subject"
+    },
+    "lbl_total_inventory": {
+        "de": "Gesamtbestand",
+        "en": "Total inventory"
+    },
+    "lbl_days": {
+        "de": "Tage",
+        "en": "Days"
+    },
+    "lbl_collection_databases_available": {
+        "de": "Verfügbare Datenbanken",
+        "en": "Available databases"
+    },
+    "lbl_collection_databases_selected": {
+        "de": "Ausgewählte Datenbanken",
+        "en": "Selected databases"
+    },
+    "page_title_manage_organizations": {
+        "de": "DBIS - Organisationen verwalten",
+        "en": "DBIS - Manage organizations"
+    },
+    "page_title_manage_licenses": {
+        "de": "DBIS - Lizenzen verwalten",
+        "en": "DBIS - Manage licenses"
+    },
+    "page_title_create_license": {
+        "de": "DBIS - Lizenz erstellen",
+        "en": "DBIS - Create license"
+    },
+    "page_title_edit_license": {
+        "de": "DBIS - Lizenz bearbeiten",
+        "en": "DBIS - Edit license"
+    },
+    "h1_manage_organizations": {
+        "de": "Organisationen verwalten",
+        "en": "Manage organizations"
+    },
+    "page_title_create_organization": {
+        "de": "DBIS - Organisation erstellen",
+        "en": "DBIS - Create organization"
+    },
+    "page_title_start": {
+        "de": "DBIS",
+        "en": "DBIS"
+    },
+    "lbl_heading_create_organization": {
+        "de": "Organisation erstellen",
+        "en": "Create organization"
+    },
+    "lbl_heading_create_database": {
+        "de": "Datenbank erstellen",
+        "en": "Create database"
+    },
+    "lbl_heading_edit_database": {
+        "de": "Datenbank bearbeiten",
+        "en": "Edit database"
+    },
+    "lbl_heading_edit_organization": {
+        "de": "Organisationsdaten bearbeiten",
+        "en": "Edit organization data"
+    },
+    "lbl_ubr_id": {
+        "de": "Dummy URL-BIBID",
+        "en": "Dummy URL BIBID"
+    },
+    "lbl_resource_id": {
+        "de": "Ressourcen-ID",
+        "en": "Resource id"
+    },
+    "lbl_dbis_active": {
+        "de": "DBIS-Sicht?",
+        "en": "DBIS view?"
+    },
+    "lbl_ezb_active": {
+        "de": "EZB-Sicht?",
+        "en": "EZB view?"
+    },
+    "lbl_created_at": {
+        "de": "Mitglied seit",
+        "en": "Member since"
+    },
+    "lbl_resource_created_at": {
+        "de": "Erstellt am",
+        "en": "Created at"
+    },
+    "lbl_modified_at_global": {
+        "de": "Globale Daten zuletzt geändert am",
+        "en": "Global data was modified at"
+    },
+    "lbl_modified_at_local": {
+        "de": "Lokale Daten zuletzt geändert am",
+        "en": "Local data was modified at"
+    },
+    "lbl_org_city": {
+        "de": "Stadt",
+        "en": "City"
+    },
+    "lbl_org_name": {
+        "de": "Name",
+        "en": "Name"
+    },
+    "lbl_edit": {
+        "de": "Bearbeiten",
+        "en": "Edit"
+    },
+    "lbl_show": {
+        "de": "Anzeigen",
+        "en": "Show"
+    },    
+    "lbl_reuse": {
+        "de": "Nachnutzen",
+        "en": "Reuse"
+    },
+    "lbl_edit_metadata": {
+        "de": "Metadaten",
+        "en": "Metadata"
+    },
+    "lbl_edit_license": {
+        "de": "Lizenzen",
+        "en": "Licenses"
+    },
+    "lbl_delete": {
+        "de": "Löschen",
+        "en": "Delete"
+    },
+    "lbl_delete_for_all": {
+        "de": "Für alle Einrichtungen löschen",
+        "en": "Delete for all institutions"
+    },
+    "lbl_delete_for_my_institution": {
+        "de": "Für meine Einrichtung löschen",
+        "en": "Delete for my institution"
+    },
+    "lbl_merge_labels": {
+        "de": "Beschriftungen zusammenführen",
+        "en": "Merge labels"
+    },
+    "lbl_merge_to_labels": {
+        "de": "Zugangsbeschriftung-ID, die erhalten bleiben und in die zusammengeführt werden soll",
+        "en": "Label-ID that should be kept"
+    },
+    "lbl_more": {
+        "de": "Mehr laden",
+        "en": "Load more"
+    },
+    "lbl_create_organization": {
+        "de": "Organisation erstellen",
+        "en": "Create organization"
+    },
+    "lbl_edit_organization": {
+        "de": "Einstellung bearbeiten",
+        "en": "Edit settings"
+    },
+    "lbl_search": {
+        "de": "Suchen",
+        "en": "Search"
+    },
+    "lbl_search_syntax": {
+        "de": "Nutzen Sie die <a href='https://lucene.apache.org/core/5_1_0/queryparser/org/apache/lucene/queryparser/simple/SimpleQueryParser.html' target=_blank>vereinfachte Abfragesyntax</a> ('+' = AND, '|' = OR, '\"Phrase\"', etc.), um die Suche zu erweitern oder einzuschränken.",
+        "en": "Use the <a href='https://lucene.apache.org/core/5_1_0/queryparser/org/apache/lucene/queryparser/simple/SimpleQueryParser.html' target=_blank>simple query syntax</a> ('+' = AND, '|' = OR, '\"Phrase\"', etc.) to broaden or narrow the search."
+    },
+    "lbl_elastic_search": {
+        "de": "Suchen per ElasticSearch",
+        "en": "Search via ElasticSearch"
+    },
+    "lbl_manage_organizations_search": {
+        "de": "Stadt, Organisationsname oder -Identifier",
+        "en": "City, Organization name or identifier"
+    },
+    "lbl_org_data": {
+        "de": "Organisationsdaten",
+        "en": "Organization data"
+    },
+    "lbl_org_view": {
+        "de": "DBIS-Sicht",
+        "en": "DBIS view"
+    },
+    "lbl_results_found": {
+        "de": "Ergebnisse gefunden",
+        "en": "results found"
+    },
+    "lbl_result_found": {
+        "de": "Ergebnis gefunden",
+        "en": "result found"
+    },
+    "lbl_no_result_found": {
+        "de": "Kein Ergebnis gefunden",
+        "en": "No result found"
+    },
+    "lbl_orgaform_ubrid": {
+        "de": "URL-BIBID",
+        "en": "URL BIBID"
+    },
+    "lbl_orgaform_link": {
+        "de": "Einrichtungs-URL",
+        "en": "Organization URL"
+    },
+    "lbl_orgaform_link_text": {
+        "de": "URL-Label",
+        "en": "URL label"
+    },        
+    "lbl_help": {
+        "de": "Hilfe",
+        "en": "Help"
+    },
+    "help_orgaform_ubrid": {
+        "de": "Sprechendes Kürzel für die Einrichtung, z.B. 'UBR'",
+        "en": "Semantic abbreviation of the organization, e.g. 'UBR'"
+    },
+    "lbl_orgaform_dbisid": {
+        "de": "DBIS-BIBID",
+        "en": "DBIS BIBID"
+    },
+    "lbl_cancel": {
+        "de": "Abbrechen",
+        "en": "Cancel"
+    },
+    "lbl_yes": {
+        "de": "ja",
+        "en": "yes"
+    },
+    "lbl_no": {
+        "de": "nein",
+        "en": "no"
+    },
+    "lbl_info_delete": {
+        "de": "Möchten Sie diese Einrichtung wirklich löschen? Sie können diese Aktion nicht mehr rückgängig machen!",
+        "en": "Do you really want to delete this organization? This action cannot be undone!"
+    },
+    "help_orgaform_dbisid": {
+        "de": "Wenn vorhanden: Bestehende DBIS-BIBID, z.B. 'ub_r'",
+        "en": "If available: Existing DBIS BIBID, e.g. 'ub_r'"
+    },
+
+    "lbl_orgaform_orgname": {
+        "de": "Organisationsname",
+        "en": "Organization name"
+    },
+    "help_orgaform_orgname": {
+        "de": "Name der Einrichtung, z.B. 'Universität Regensburg'",
+        "en": "Name of the organization, e.g. 'University of Regensburg'"
+    },
+
+    "lbl_orgaform_country": {
+        "de": "Land",
+        "en": "Country"
+    },
+
+    "lbl_orgaform_zipcode": {
+        "de": "Postleitzahl",
+        "en": "Zipcode"
+    },
+    "help_orgaform_zipcode": {
+        "de": "Postleitzahl der Einrichtung, z.B. '93051'",
+        "en": "Zipcode of the organization, e.g. '93051'"
+    },
+
+    "lbl_orgaform_region": {
+        "de": "Region",
+        "en": "Region"
+    },
+    "help_orgaform_region": {
+        "de": "Bundesland oder Region der Einrichtung, z.B. 'Bayern'",
+        "en": "State, county or region of the organization, e.g. 'Bavaria'"
+    },
+
+    "lbl_orgaform_city": {
+        "de": "Stadt",
+        "en": "City"
+    },
+    "help_orgaform_city": {
+        "de": "Stadt der Einrichtung, z.B. 'Regensburg'",
+        "en": "City of the organization, e.g. 'Regensburg'"
+    },
+
+    "lbl_orgaform_adress": {
+        "de": "Anschrift",
+        "en": "Address"
+    },
+    "help_orgaform_adress": {
+        "de": "Anschrift der Einrichtung, z.B. 'Universitätsstr. 1'",
+        "en": "Address of the organization, e.g. 'University Street 1'"
+    },
+
+    "lbl_orgaform_contactmail": {
+        "de": "E-Mail-Adresse der Organisation / Kontaktperson",
+        "en": "Email address of organization / contact person"
+    },
+    "lbl_orgaform_contactmail_infotext": {
+        "de": "Diese E-Mail-Adresse wird in der Nutzendensicht zur Kontaktaufnahme, z.B. bei Fragen zu Datenbanken und Lizenzierung angezeigt.",
+        "en": "This e-mail address is displayed in the user view for contacting, e.g. for questions about databases and licensing."
+    },    
+    "help_orgaform_contactmail": {
+        "de": "E-Mail-Adresse einer Kontaktperson für DBIS",
+        "en": "Email address of a contact person for DBIS"
+    },
+    "lbl_orgaform_homepage": {
+        "de": "Homepage der Organisation",
+        "en": "Organization homepage"
+    },
+    "help_orgaform_homepage": {
+        "de": "Homepage der Organisation",
+        "en": "Homepage of the organization"
+    },
+    "lbl_autoaddflag": {
+        "de": "Logo hochladen",
+        "en": "Upload logo"
+    },
+    "lbl_orgaform_upload_icon": {
+        "de": "Logo hochladen",
+        "en": "Upload logo"
+    },
+    "lbl_autoadd_resources": {
+        "de": "Neu eingetragene freie Datenbanken in die eigene Bibliothekssicht übernehmen",
+        "en": "Transfer newly registered freely available databases to your own library view"
+    },
+    "lbl_choose_file": {
+        "de": "Datei auswählen",
+        "en": "Choose file"
+    },
+    "lbl_generate_statistics": {
+        "de": "Statistik generieren",
+        "en": "Generate statistics"
+    },
+    "lbl_no_file_selected": {
+        "de": "Keine Datei gewählt!",
+        "en": "No file selected!"
+    },
+
+    "create_orgaform_submit_create": {
+        "de": "Erstellen",
+        "en": "Create"
+    },
+    "lbl_create_license": {
+        "de": "Neue Lizenz erstellen",
+        "en": "Create new license"
+    },
+    "lbl_create_license_access": {
+        "de": "Neue Lizenz und Zugang erstellen",
+        "en": "Create licence and access"
+    },
+    "lbl_create_license_access_without_new": {
+        "de": "Lizenz und Zugang erstellen",
+        "en": "Create licence and access"
+    },
+    "lbl_existing_licenses": {
+        "de": "Bestehende Lizenzen",
+        "en": "Existing licenses"
+    },
+    "create_orgaform_submit_save": {
+        "de": "Speichern",
+        "en": "Save"
+    },
+    "lbl_save": {
+        "de": "Speichern",
+        "en": "Save"
+    },
+    "lbl_today": {
+        "de": "Heute",
+        "en": "Today"
+    },
+    "lbl_no_icon_selected": {
+        "de": "Bislang kein Bild vorhanden!",
+        "en": "No image available!"
+    },
+    "lbl_consortial": {
+        "de": "Konsortium",
+        "en": "Consortial"
+    },
+    "lbl_kfl": {
+        "de": "KfL",
+        "en": "KfL"
+    },
+    "lbl_delete_organization": {
+        "de": "Einrichtung löschen",
+        "en": "Delete organization"
+    },
+    "lbl_delete_license": {
+        "de": "Lizenz löschen",
+        "en": "Delete license"
+    },
+    "lbl_delete_organization_hint": {
+        "de": "Bitte geben Sie im unteren Feld noch einmal die URL-BIBID der Einrichtung ein:",
+        "en": "Please enter the URL BIBID of the organization below:"
+    },
+    "lbl_delete_license_hint": {
+        "de": "Wollen Sie die Lizenz wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden!",
+        "en": "Do you really want to delete this license? This action cannot be undone."
+    },
+    "lbl_database_title": {
+        "de": "Titel",
+        "en": "Title"
+    },
+    "lbl_database_costs": {
+        "de": "Preistyp",
+        "en": "Price type"
+    },
+    "lbl_database_description": {
+        "de": "Beschreibung",
+        "en": "Description"
+    },
+    "lbl_resource_requirements": {
+        "de": "Anforderungen",
+        "en": "Requirements"
+    },
+    "lbl_database_short_description": {
+        "de": "Kurzbeschreibung",
+        "en": "Short description"
+    },
+    "lbl_database_subjects": {
+        "de": "Fachgebiete",
+        "en": "Subjects"
+    },
+    "lbl_database_types": {
+        "de": "Datenbanktypen",
+        "en": "Database types"
+    },
+    "lbl_database_keywords": {
+        "de": "Schlagwörter",
+        "en": "Keywords"
+    },
+    "lbl_database_report_time_start": {
+        "de": "Beginn Berichtszeitraum",
+        "en": "Report time start"
+    },
+    "lbl_database_report_time_end": {
+        "de": "Ende Berichtszeitraum",
+        "en": "Report time end"
+    },
+    "lbl_database_publication_date_start": {
+        "de": "Beginn Veröffentlichungszeitraum",
+        "en": "Publication time start"
+    },
+    "lbl_database_publication_date_end": {
+        "de": "Ende Veröffentlichungszeitraum",
+        "en": "Publication time end"
+    },
+    "lbl_database_entry_date": {
+        "de": "Eintragungsdatum",
+        "en": "Entry date"
+    },
+    "lbl_database_entry_date_start": {
+        "de": "Beginn Eintragungsdatum",
+        "en": "Entry date start"
+    },
+    "lbl_database_entry_date_end": {
+        "de": "Ende Eintragungsdatum",
+        "en": "Entry date end"
+    },
+    "lbl_database_still_updated_yes": {
+        "de": "Noch aktualisiert",
+        "en": "Still updated"
+    },
+    "lbl_database_still_updated_no": {
+        "de": "Nicht mehr aktualisiert",
+        "en": "Not updated anymore"
+    },
+    "lbl_database_still_updated_unknown": {
+        "de": "Unbekannt",
+        "en": "Unknown"
+    },
+    "lbl_database_hide": {
+        "de": "In ALLEN DBIS-Sichten ausblenden",
+        "en": "Hide for all DBIS views"
+    },
+    "lbl_database_hide_local": {
+        "de": "In eigener DBIS-Sicht ausblenden",
+        "en": "Hide for own DBIS view"
+    },
+    "lbl_database_update": {
+        "de": "Aktualisierung",
+        "en": "Updating"
+    },
+    "lbl_database_update_frequency": {
+        "de": "Aktualisierungsfrequenz",
+        "en": "Update frequency"
+    },
+    "lbl_database_author": {
+        "de": "Herausgeber",
+        "en": "Editor"
+    },
+    "lbl_database_type": {
+        "de": "Typ",
+        "en": "Type"
+    },
+    "lbl_publication_form": {
+        "de": "Formaltyp",
+        "en": "Formal type"
+    },
+    "lbl_additional_license_terms": {
+        "de": "Zusätzliche Lizenz-Informationen",
+        "en": "Additional license information"
+    },
+    "h_fid_information": {
+        "de": "FID-Informationen",
+        "en": "FID details"
+    },
+    "lbl_license_provided_by_fid": {
+        "de": "Lizenzgebender FID",
+        "en": "License provided by FID"
+    },
+    "lbl_hosting_privileges_by_fid": {
+        "de": "Hosting und Archivierung",
+        "en": "Hosting and archiving"
+    },
+    "lbl_hosting_privilege": {
+        "de": "Hosting-Rechte",
+        "en": "Hosting rights"
+    },
+    "lbl_database_title_placeholder": {
+        "de": "Titel des neuen Eintrags",
+        "en": "Title of the entry"
+    },
+    "lbl_database_description_placeholder": {
+        "de": "Beschreibung des neuen Titels",
+        "en": "Description of the new title"
+    },
+    "lbl_database_description_short_placeholder": {
+        "de": "Kurzbeschreibung des neuen Titels",
+        "en": "Short description of the new title"
+    },
+    "msg_database_created_successfully": {
+        "de": "Datenbank erfolgreich erstellt. Sie finden die Datenbank in Datenbankentwürfe und können bis 20 Uhr des gleichen Tages noch Änderungen vornehmen oder den Eintrag wieder löschen. Um etwa 7 Uhr des Folgetages ist die Datenbank indexiert und such- und findbar. Bitte erstellen Sie im nächsten Schritt Lizenzen und Zugänge zu dieser Datenbank",
+        "en": "Database successfully created. You will find the database in database drafts and can make changes or delete the entry until 8 p.m. on the same day. The database is indexed and searchable and findable at around 7 a.m. the following day. In the next step, please create licenses and access to this database"
+    },
+    "msg_license_reused_successfully": {
+        "de": "Erfolgreich an Lizenz gehängt. Bitte beachten Sie, dass die Lizenz über Nacht indexiert wird und ab ca. 7 Uhr des Folgetages such- und sichtbar wird",
+        "en": "Successfully attached to license. Please note that the license is indexed overnight and becomes searchable and visible from around 7 a.m. the following day"
+    },
+    "msg_license_updated_successfully": {
+        "de": "Änderungen erfolgreich gespeichert. Bitte beachten Sie, dass die Änderungen über Nacht indexiert werden und ab ca. 7 Uhr des Folgetages in der Nutzendensicht sichtbar werden.",
+        "en": "Changes saved successfully. Please note that the changes are indexed overnight and will be visible in the user view from around 7 a.m. the following day."
+    },
+    "msg_license_created_successfully": {
+        "de": "Lizenz und Zugang erfolgreich erstellt. Bitte beachten Sie, dass die Lizenz über Nacht indexiert wird und ab ca. 7 Uhr des Folgetages such- und sichtbar wird",
+        "en": "Licence and access successfully created. Please note that the license is indexed overnight and becomes searchable and visible from around 7 a.m. the following day"
+    },
+    "msg_database_updated_successfully": {
+        "de": "Änderungen erfolgreich gespeichert. Bitte beachten Sie, dass die Lizenz über Nacht neu indexiert wird und die Änderungen ab ca. 7 Uhr des Folgetages such- und sichtbar werden.",
+        "en": "Changes saved successfully. Please note that the license will be re-indexed overnight and the changes will be searchable and visible from around 7 a.m. the following day."
+    },
+    "msg_top_database_updated_successfully": {
+        "de": "Änderungen erfolgreich gespeichert. Bitte beachten Sie, dass diese Änderung über Nacht indexiert wird und ab ca. 7 Uhr des Folgetages such- und sichtbar wird.",
+        "en": "Changes saved successfully. Please note that this change will be indexed overnight and will be searchable and visible from approx. 7 a.m. the following day."
+    },    
+    "msg_database_deleted_successfully": {
+        "de": "Datenbank erfolgreich gelöscht.",
+        "en": "Database was successfully deleted."
+    },
+    "msg_license_deleted_successfully": {
+        "de": "Lizenz erfolgreich gelöscht.",
+        "en": "License was successfully deleted."
+    },
+    "msg_collection_created_successfully": {
+        "de": "Sammlung erfolgreich erstellt",
+        "en": "Collection successfully created"
+    },
+    "msg_collection_updated_successfully": {
+        "de": "Änderungen erfolgreich gespeichert. Bitte beachten Sie, dass es einigen Minuten dauert, bis Ihre Änderungen in der Nutzendensicht angezeigt werden.",
+        "en": "Changes saved successfully. Please note that it will take a few minutes for your changes to be displayed in the user interface."
+    },
+    "msg_updated_successfully": {
+        "de": "Änderungen erfolgreich gespeichert.",
+        "en": "Changes saved successfully."
+    },
+    "msg_relationships_updated_successfully": {
+        "de": "Änderungen erfolgreich gespeichert. Bitte beachten Sie, dass es einigen Minuten dauert, bis Ihre Änderungen in der Nutzendensicht angezeigt werden.",
+        "en": "Changes saved successfully. Please note that it will take a few minutes for your changes to be displayed in the user interface."
+    },
+    "msg_collection_deleted_successfully": {
+        "de": "Sammlung erfolgreich gelöscht",
+        "en": "Collection deleted successfully."
+    },
+    "msg_label_deleted_successfully": {
+        "de": "Zugangsbeschreibung erfolgreich gelöscht",
+        "en": "Access label deleted successfully."
+    },
+    "msg_label_merged_successfully": {
+        "de": "Zugangsbeschreibung erfolgreich zusammengeführt",
+        "en": "Access label merged successfully."
+    },
+    "msg_relationships_is_related": {
+        "de": "Ist verwandt mit",
+        "en": "Is related to"
+    },
+    "msg_relationships_is_parent": {
+        "de": "Enthält",
+        "en": "Contains"
+    },
+    "msg_relationships_is_child": {
+        "de": "Ist enthalten in",
+        "en": "Is part of"
+    },
+    "msg_contact": {
+        "de": "Bei Fragen zur Datenbank oder zur Lizenzierung wenden Sie sich gerne an ",
+        "en": "If you have any questions about the database or licensing, please contact "
+    },
+    "lbl_clear_field": {
+        "de": "Löschen",
+        "en": "Clear"
+    },
+    "lbl_clear_form": {
+        "de": "Leeren",
+        "en": "Clear"
+    },
+    "lbl_accesses": {
+        "de": "Zugänge",
+        "en": "Accesses"
+    },
+    "lbl_access": {
+        "de": "Neuer Zugang",
+        "en": "New Access"
+    },
+    "lbl_access_create": {
+        "de": "Zugang anlegen",
+        "en": "Add access"
+    },
+    "lbl_access_type": {
+        "de": "Zugangstyp",
+        "en": "Access Type"
+    },
+    "lbl_access_types": {
+        "de": "Zugangsarten",
+        "en": "Access Types"
+    },
+    "lbl_access_link": {
+        "de": "Zugangslink",
+        "en": "Access link"
+    },
+    "lbl_manual_link": {
+        "de": "Link zum Handbuch",
+        "en": "Manual link"
+    },
+    "lbl_default_access_label": {
+        "de": "Zugang",
+        "en": "Access"
+    },
+    "lbl_404_link": {
+        "de": "URL der 404-Fehlerseite",
+        "en": "URL for 404-Error"
+    },
+    "lbl_text_mining": {
+        "de": "Text Mining erlaubt",
+        "en": "Text mining allowed"
+    },
+    "lbl_invalid_urls": {
+        "de": "Ungültige Links",
+        "en": "Invalid urls"
+    },
+    "lbl_invalid_url": {
+        "de": "Ungültiger Link",
+        "en": "Invalid url"
+    },
+    "lbl_administrate_database": {
+        "de": "zur Administration (nur für Bibliotheksmitarbeitende aus DBIS-Teilnehmereinrichtungen)",
+        "en": "for administration (only for library staff in DBIS participating institutions)"
+    },
+    "lbl_state_ok": {
+        "de": "Status okay",
+        "en": "State okay"
+    },
+    "lbl_state": {
+        "de": "Status",
+        "en": "State"
+    },
+    "msg_invalid_email": {
+        "de": "Ungültige E-Mail Adresse",
+        "en": "Invalid email address"
+    },
+    "msg_invalid_url": {
+        "de": "Ungültige URL",
+        "en": "Invalid URL"
+    },
+    "msg_invalid_icon_format": {
+        "de": "Ungültiges Dateiformat (DBIS unterstützt nur .jpg und .png)",
+        "en": "Invalid file format (DBIS supports .jpg and .png)"
+    },
+    "msg_required": {
+        "de": "Dieses Feld darf nicht leer bleiben",
+        "en": "This field must not be empty"
+    },
+    "msg_form_errors": {
+        "de": "Das Formular enthält Fehler. Bitte prüfen Sie die Felder mit rot markierten Text auf Vollständigkeit und Korrektheit.",
+        "en": "The form contains errors. Please check the fields with text marked in red for completeness and correctness."
+    },
+    "msg_no_access_url": {
+        "de": "Bitte tragen Sie eine für alle Bibliotheken geltende URL ein",
+        "en": "Please enter a URL that applies to all organisations"
+    },
+    "msg_invalid_notation": {
+        "de": "Notation existiert nicht",
+        "en": "Notation does not exist"
+    },
+    "msg_contact_dbis": {
+        "de": "DBIS-Kontakt",
+        "en": "CONTACT DBIS"
+    },
+    "msg_search_highlighting": {
+        "de": "Übereinstimmungen in",
+        "en": "Matches in"
+    },
+    "msg_top_database":{
+        "de": "TOP-DATENBANK",
+        "en": "TOP DATABASE"
+    },
+    "msg_only_licensed_data_for_statistic": {
+        "de": "Bitte beachten Sie, dass die Statistik auch für frühere Zeiträume immer auf dem Stand der derzeitig lizenzierten Datenbanken erfolgt. Wir empfehlen deshalb die Statistikzahlen jeweils zeitnah zu ziehen und die csv-Datei abzuspeichern.",
+        "en": "Please note that the statistics for earlier periods are always based on the status of the currently licensed databases. We therefore recommend that you pull the statistical figures promptly and save the csv file."
+    },
+    "h_external_identifiers": {
+        "de": "Externe Identifier",
+        "en": "External identifiers"
+    },
+    "h_clean_up": {
+        "de": "Datenbereinigung",
+        "en": "Cleanup"
+    },
+    "lbl_daily_statistics": {
+        "de": "Tagesstatistik",
+        "en": "Daily statistics"
+    },
+    "lbl_selectable_statistics": {
+        "de": "Wählbarer Zeitraum",
+        "en": "Selectable time period"
+    },
+    "lbl_all_organisations": {
+        "de": "Daten aller Organisationen abfragen",
+        "en": "Request data of all organisations"
+    },
+    "lbl_timeframe": {
+        "de": "Zeitraum",
+        "en": "Time period"
+    },
+    "lbl_external_identifiers": {
+        "de": "Externe Identifier",
+        "en": "External identifiers"
+    },
+    "lbl_external_identifier_namespaces": {
+        "de": "Namensraum",
+        "en": "Namespace"
+    },
+    "lbl_external_identifier_key": {
+        "de": "Identifier",
+        "en": "Identifier"
+    },
+    "lbl_external_key_placeholder": {
+        "de": "Identifier im externen Namespace",
+        "en": "Identifier within the external namespace"
+    },
+    "lbl_btn_add": {
+        "de": "Hinzufügen",
+        "en": "Add"
+    },
+    "lbl_is_creating_new_view": {
+        "de": "DBIS-Sicht für Organisation erstellen",
+        "en": "Create DBIS view for organization"
+    },
+    "hint_is_creating_new_view": {
+        "de": "Ist der Haken gesetzt, wird automatisch eine neue DBIS-Sicht für die Einrichtung erstellt. Sie können der Einrichtung auch jederzeit später eine Sicht hinzufügen.",
+        "en": "If checked, a new DBIS view will automatically be created. You will be able to add a new DBIS view at any time after this step."
+    },
+    "title_manage_views": {
+        "de": "DBIS-Sichten verwalten",
+        "en": "Manage DBIS views"
+    },
+    "lbl_delete_view": {
+        "de": "DBIS-Sicht löschen",
+        "en": "Delete view"
+    },
+    "lbl_delete_view_for": {
+        "de": "Sicht löschen für",
+        "en": "Delete view for"
+    },
+    "lbl_add_view": {
+        "de": "Sicht hinzufügen",
+        "en": "Add view"
+    },
+    "msg_view_added_successfully": {
+        "de": "DBIS-Sicht wurde erfolgreich erstellt",
+        "en": "DBIS view has been successfully generated"
+    },
+    "msg_view_deleted_successfully": {
+        "de": "DBIS Sicht wurde erfolgreich gelöscht",
+        "en": "DBIS view has been successfully deleted"
+    },
+    "msg_lost_statistics": {
+        "de": "Leider sind die Statistikdaten von Juli bis einschließlich September 2024 verloren gegangen und nicht in dieser Abfrage enthalten.",
+        "en": "Unfortunately, the statistical data from July to September 2024 inclusive has been lost and is not included."
+    },
+    "msg_hint_for_incorrect_numbers": {
+        "de": "Hinweis: Aufsummierte Ergebnisse müssen nicht in jedem Fall mit den Einzelergebnissen übereinstimmen. Dies ist auf Katalogisierungsfehler zurück zu führen.",
+        "en": "Note: Summed results may not always correspond to the individual results. This is due to cataloguing errors."
+    },
+    "lbl_info_delete_view": {
+        "de": "Möchten Sie die DBIS-Sicht der Einrichtung wirklich löschen? Diese Aktion kann nicht mehr rückgängig gemacht werden!",
+        "en": "Do you really want to delete the DBIS view of this organization? This action cannot be undone!"
+    },
+    "lbl_info_confirm_delete": {
+        "de": "Tippen Sie bitte noch einmal die URL-BIBID der Einrichtung ein",
+        "en": "Please enter the URL BIBID of the organization below"
+    },
+    "heading_name": {
+        "de": "Organisationsname",
+        "en": "Organization name"
+    },
+    "heading_identifiers": {
+        "de": "Identifier",
+        "en": "Identifiers"
+    },
+    "heading_address_info": {
+        "de": "Adressinformationen",
+        "en": "Address information"
+    },
+    "heading_contact_info": {
+        "de": "Kontaktinformationen",
+        "en": "Contact information"
+    },
+    "heading_autoadd_free_resources": {
+        "de": "Automatisches Hinzufügen freier Datenbanken",
+        "en": "Automatic addition of freely available databases"
+    },
+    "heading_icon": {
+        "de": "Logo",
+        "en": "Logo"
+    },
+    "heading_organizational_form": {
+        "de": "Organisationsform",
+        "en": "Organizational form"
+    },
+    "heading_links": {
+        "de": "Linkliste",
+        "en": "Link list"
+    },
+    "heading_colorpickjer": {
+        "de": "Farbe",
+        "en": "Color"
+    },
+    "msg_no_dbis_view_for_org": {
+        "de": "Diese Organisation hat keine DBIS-Sicht!",
+        "en": "This organization currently has no DBIS view!"
+    },
+    "msg_no_dbis_view_for_org_expl": {
+        "de": "Angehörige der Organisation können keine Sicht der Organisation aufrufen und keine von der Organisation lizenzierten Datenbanken einsehen.",
+        "en": "Members of this organization will not be able to visit the view of the organization or browse its licensed databases."
+    },
+    "msg_org_has_dbis_view": {
+        "de": "DBIS-Sicht verfügbar",
+        "en": "DBIS view available"
+    },
+    "hint_delete_dbis_view": {
+        "de": "Nutzende können die DBIS-Sicht der Organisation dann nicht mehr aufrufen.",
+        "en": "Users of the organization will not be able to open the DBIS view of the organization."
+    },
+    "organization": {
+        "de": "Organisation",
+        "en": "Organization"
+    },
+    "placeholder_please_select_org": {
+        "de": "Organisation wählen",
+        "en": "Select organization"
+    },
+    "lbl_nav_edit_org": {
+        "de": "Organisation bearbeiten",
+        "en": "Edit organization"
+    },
+    "page_title_search": {
+        "de": "DBIS - Suche",
+        "en": "DBIS - Search"
+    },
+    "msg_no_results": {
+        "de": "Da konnten wir leider nichts finden. Oft hilft es, erst einmal allgemeiner zu suchen.",
+        "en": "Unfortunately, we couldn't find anything there. It often helps to search more generally first."
+    },
+    "msg_no_drafts": {
+        "de": "Heute gibt es bisher keine Entwürfe.",
+        "en": "There are currently no drafts today."
+    },
+    "refine_search": {
+        "de": "Suche verfeinern",
+        "en": "Refine search"
+    },
+    "lbl_start": {
+        "de": "Die richtige Datenbank für die Recherche finden.",
+        "en": "Find the right database for your research."
+    },
+    "lbl_select_option": {
+        "de": "Wählen Sie eine Option...",
+        "en": "Select an option..."
+    },
+    "lbl_parallel_users": {
+        "de": "Parallele Zugriffe",
+        "en": "Synchronous clients"
+    },
+    "lbl_internal_notes": {
+        "de": "Interne Bemerkungen",
+        "en": "Internal notes"
+    },
+    "lbl_internal_notes_for_org": {
+        "de": "Interne Bemerkungen für",
+        "en": "Internal notes for"
+    },
+    "lbl_external_notes": {
+        "de": "Externe Bemerkungen",
+        "en": "External notes"
+    },
+    "lbl_external_notes_for_org": {
+        "de": "Externe Bemerkungen für",
+        "en": "External notes of"
+    },
+    "lbl_last_check": {
+        "de": "Datum der letzten Kontrolle",
+        "en": "Date of the last control"
+    },
+    "licenses": {
+        "de": "Lizenzen",
+        "en": "Licenses"
+    },
+    "h_create_db": {
+        "de": "DBIS - Neue Datenbank anlegen",
+        "en": "DBIS - Create new Database"
+    },
+    "h_manage_licenses": {
+        "de": "Lizenzen verwalten",
+        "en": "Manage Licenses"
+    },
+    "h_edit_license": {
+        "de": "Lizenz bearbeiten",
+        "en": "Edit license"
+    },
+    "h_edit_license_access": {
+        "de": "Lizenz und Zugang bearbeiten",
+        "en": "Edit license and access"
+    },
+    "h_create_license": {
+        "de": "Lizenz erstellen",
+        "en": "Create license"
+    },
+    "lbl_license_form": {
+        "de": "Lizenzform",
+        "en": "License form"
+    },
+    "lbl_license_for": {
+        "de": "Verfügbarkeit",
+        "en": "Availability"
+    },
+    "lbl_tag_test_license": {
+        "de": "test",
+        "en": "trial"
+    },
+    "lbl_tag_nl_license": {
+        "de": "deutschlandweit frei, DFG-geförderte Lizenz",
+        "en": "Germany-wide free, DFG-funded license"
+    },
+    "lbl_tag_fid_nl_campus_license": {
+        "de": "DFG-geförderte Lizenz",
+        "en": "DFG-funded license"
+    },
+    "lbl_tag_single_user_registration": {
+        "de": "Einzelnutzer-Registrierung möglich",
+        "en": "single-user registration possible"
+    },
+    "lbl_please_select": {
+        "de": "Bitte auswählen",
+        "en": "Please choose"
+    },
+    "lbl_please_select_country": {
+        "de": "Länder wählen ...",
+        "en": "Choose countries ..."
+    },
+    "availability": {
+        "de": "Verfügbarkeit",
+        "en": "Availability"
+    },
+    "visibility": {
+        "de": "Ausgeblendete Einträge",
+        "en": "Hidden entries"
+    },
+    "lbl_license_global": {
+        "de": "Global",
+        "en": "Global"
+    },
+    "lbl_license_local": {
+        "de": "Lokal",
+        "en": "Local"
+    },
+    "lbl_license_type": {
+        "de": "Lizenztyp",
+        "en": "License type"
+    },
+    "lbl_license_types": {
+        "de": "Lizenztypen",
+        "en": "License types"
+    },
+    "lbl_license_id": {
+        "de": "Lizenz-ID",
+        "en": "License id"
+    },
+    "lbl_access_form": {
+        "de": "Zugangsform",
+        "en": "Access form"
+    },
+    "lbl_hits": {
+        "de": "Zugriffe",
+        "en": "Hits"
+    },
+    "lbl_none": {
+        "de": "Leer",
+        "en": "None"
+    },
+    "lbl_not_specified": {
+        "de": "Keine Angabe",
+        "en": "Not specified"
+    },
+    "lbl_save_accesses": {
+        "de": "Zugänge speichern",
+        "en": "Save accesses"
+    },
+    "lbl_license_active": {
+        "de": "Lizenz aktiv",
+        "en": "Active license"
+    },
+    "lbl_is_oa": {
+        "de": "Open Access",
+        "en": "Open access"
+    },
+    "lbl_global_access": {
+        "de": "Zugang wird für ALLE Bibliotheken angezeigt",
+        "en": "Access is displayed for ALL libraries "
+    },
+    "lbl_local_access": {
+        "de": "Zugang wird nur für meine Bibliothek angezeigt",
+        "en": "Access is only displayed for my library"
+    },
+    "lbl_main_access": {
+        "de": "Hauptlink zur Verlinkung 'Zur Datenbank'",
+        "en": "Main link to the link 'To the database'"
+    },
+    "lbl_is_visible": {
+        "de": "Zugang ist für meine Institution ausgeblendet",
+        "en": "Access is hidden for my institution"
+    },
+    "lbl_is_allowing_walking": {
+        "de": "Walkin-User erlaubt",
+        "en": "Walkin-User allowed"
+    },
+    "h_navtab_metadata": {
+        "de": "Metadaten",
+        "en": "Metadata"
+    },
+    "h_navtab_licenses": {
+        "de": "Lizenzen und Zugänge",
+        "en": "Licenses and access"
+    },
+    "h_browse_collections": {
+        "de": "Sammlungen",
+        "en": "Collections"
+    },
+    "h_browse_subjects": {
+        "de": "Datenbanken nach Fachgebiet",
+        "en": "Databases by subject"
+    },
+    "h_unsafe_link": {
+        "de": "Unsicherer Link",
+        "en": "Unsafe link"
+    },
+    "h_xml_output": {
+        "de": "XML-Ausgabe",
+        "en": "XML output"
+    },
+    "page_title_browse_by_subjects": {
+        "de": "DBIS Fachgebiete",
+        "en": "DBIS Subjects"
+    },
+    "page_title_dbis_services": {
+        "de": "DBIS-Services",
+        "en": "DBIS-Services"
+    },
+    "th_collection_name": {
+        "de": "Name der Sammlung",
+        "en": "Collection name"
+    },
+    "th_subject_name": {
+        "de": "Fachgebiet",
+        "en": "Subject"
+    },
+    "th_entries": {
+        "de": "Einträge",
+        "en": "Entries"
+    },
+    "page_title_browse_subjects": {
+        "de": "DBIS - Fachgebiete",
+        "en": "DBIS - Subjects"
+    },
+    "page_title_browse_collections": {
+        "de": "Sammlungen",
+        "en": "Collections"
+    },
+    "lbl_browse_by_subjects": {
+        "de": "Datenbanken nach Fachgebiete",
+        "en": "Databases by subjects"
+    },
+    "lbl_all_subjects": {
+        "de": "Alle Fachgebiete",
+        "en": "All subjects"
+    },
+    "field_hint_subject_search": {
+        "de": "Fachgebietsname, z.B. 'Soziologie'",
+        "en": "Subject name, e.g. 'Sociology'"
+    },
+    "lbl_host": {
+        "de": "Host",
+        "en": "Host"
+    },
+    "lbl_host_new": {
+        "de": "Neuer Host",
+        "en": "New Host"
+    },
+    "lbl_create_host": {
+        "de": "Neuen Host anlegen",
+        "en": "Create new host"
+    },
+    "lbl_return_to_host_selection": {
+        "de": "Stattdessen bestehenden Host auswählen",
+        "en": "Select existing host instead"
+    },
+    "lbl_next_page": {
+        "de": "Nächste Seite",
+        "en": "Next page"
+    },
+    "lbl_previous_page": {
+        "de": "Vorherige Seite",
+        "en": "Previous page"
+    },
+    "alt_goto_page": {
+        "de": "Gehe zu Seite",
+        "en": "Go to page"
+    },
+    "lbl_all": {
+        "de": "Alle",
+        "en": "All"
+    },
+    "lbl_results_per_page": {
+        "de": "Ergebnisse pro Seite",
+        "en": "Results per page"
+    },
+    "lbl_open": {
+        "de": "Öffnen",
+        "en": "Open"
+    },
+    "lbl_open_in_userview": {
+        "de": "In der Nutzendensicht zeigen",
+        "en": "Show the users' view"
+    },
+    "lbl_access_possibilities": {
+        "de": "Wie kann ich darauf zugreifen?",
+        "en": "How can I access this?"
+    },
+    "lbl_access_provided_by": {
+        "de": "Zugang über",
+        "en": "Access provided by"
+    },
+    "lbl_no_access": {
+        "de": "Keine Organisation ausgewählt",
+        "en": "No organization selected"
+    },
+    "alt_dbis_logo": {
+        "de": "Das DBIS-Logo - drei überlappende Kreise der Schriftzug DBIS",
+        "en": "The DBIS logo - three overlapping circles and the letters DBIS"
+    },
+    "alt_german_lang": {
+        "de": "Deutsch",
+        "en": "German"
+    },
+    "alt_english_lang": {
+        "de": "Englisch",
+        "en": "English"
+    },
+    "lbl_without_organization": {
+        "de": "Keine Organisation wählen",
+        "en": "Choose no organization"
+    },
+    "lbl_organisations_with_licenses": {
+        "de": "Verfügbarkeit in anderen Organisationen",
+        "en": "Availability in other organisations"
+    },
+    "msg_organisations_with_licenses": {
+        "de": "Diese anderen Organisationen haben eine Lizenz",
+        "en": "These other organisations have a licence"
+    },
+    "msg_resource_global_visibility": {
+        "de": "Es hängen noch Lizenzen an der Datenbanken.",
+        "en": "Licences are still attached to the databases."
+    },
+    "msg_resource_cant_be_deleted": {
+        "de": "Da noch Lizenzen an der Datenbanken hängen, kann diese nicht gelöscht werden.",
+        "en": "As licences are still attached to the databases, they cannot be deleted."
+    },
+    "msg_org_created_successfully": {
+        "de": "Organisation erfolgreich erstellt!",
+        "en": "Organization created successfully!"
+    },
+    "msg_org_updated_successfully": {
+        "de": "Organisation erfolgreich geändert!",
+        "en": "Organization updated successfully!"
+    },
+    "msg_org_deleted_successfully": {
+        "de": "Organisation erfolgreich gelöscht!",
+        "en": "Organization deleted successfully!"
+    },
+    "tab_view": {
+        "de": "DBIS - Sicht bearbeiten",
+        "en": "DBIS - Edit view"
+    },
+    "msg_view_created_successfully": {
+        "de": "Sicht erfolgreich erstellt",
+        "en": "View created successfully"
+    },
+    "aria_de": {
+        "de": ", deutsch",
+        "en": ", german"
+    },
+    "aria_en": {
+        "de": ", englisch",
+        "en": ", english"
+    },
+    "aria_form_organization": {
+        "de": "Einrichtungsdaten",
+        "en": "Organization data"
+    },
+    "aria_main_menu": {
+        "de": "DBIS Menüleiste",
+        "en": "DBIS menu bar"
+    },
+    "aria_side_menu": {
+        "de": "DBIS Seitennavigation",
+        "en": "DBIS side navigation"
+    },
+    "aria_link_to_main": {
+        "de": "Link zur Startseite",
+        "en": "Link to home page"
+    },
+    "aria_set_language_to_de": {
+        "de": "Seitensprache auf Deutsch setzen",
+        "en": "Set language of page to german"
+    },
+    "aria_set_language_to_en": {
+        "de": "Seitensprache auf Englisch setzen",
+        "en": "Set language of page to english"
+    },
+    "aria_select_language": {
+        "de": "Seitensprache wählen",
+        "en": "Select language of page"
+    },
+    "aria_search_databases": {
+        "de": "Suchfeld für die Suche nach Datenbanken",
+        "en": "Input field to search for databases"
+    },
+    "aria_search_title_or_description": {
+        "de": "Suchfeld für die Suche nach Datenbanken",
+        "en": "Input field to search for databases"
+    },
+    "aria_search_subjects": {
+        "de": "Suchfeld für die Suche nach Fachgebieten",
+        "en": "Input field to search for subjects"
+    },
+    "aria_select_subjects": {
+        "de": "Auswahl der Fachgebiete",
+        "en": "Subjects selection"
+    },
+    "aria_search_authors": {
+        "de": "Suchfeld für die Suche nach Autoren",
+        "en": "Input field to search for authors"
+    },
+    "aria_search_countries": {
+        "de": "Suchfeld für die Suche nach Ländern",
+        "en": "Input field to search for countries"
+    },
+    "aria_select_authors": {
+        "de": "Auswahl der Autoren",
+        "en": "Authors selection"
+    },
+    "aria_search_hots": {
+        "de": "Suchfeld für die Suche nach Hosts",
+        "en": "Input field to search for hosts"
+    },
+    "aria_search_keywords": {
+        "de": "Suchfeld für die Suche nach Schlagwörtern",
+        "en": "Input field to search for keywords"
+    },
+    "aria_search_keyword": {
+        "de": "Suchfeld für die Suche nach Schlagwörtern",
+        "en": "Input field to search for keywords"
+    },
+    "aria_select_keywords": {
+        "de": "Auswahl der Schlagwörter",
+        "en": "Keywords selection"
+    },
+    "aria_search_publication_forms": {
+        "de": "Suchfeld für die Suche nach Veröffentlichungsformen",
+        "en": "Input field to search for publication forms"
+    },
+    "aria_select_publication_forms": {
+        "de": "Auswahl der Veröffentlichungsformen",
+        "en": "Publication forms selection"
+    },
+    "aria_search_publishers": {
+        "de": "Suchfeld für die Suche nach Verlagen",
+        "en": "Input field to search for publishers"
+    },
+    "aria_search_publisher": {
+        "de": "Suchfeld für die Suche nach Verlagen",
+        "en": "Input field to search for publishers"
+    },
+    "aria_select_publishers": {
+        "de": "Auswahl der Verlage",
+        "en": "Publishers selection"
+    },
+    "aria_search_resource_types": {
+        "de": "Suchfeld für die Suche nach Datenbank-Typen",
+        "en": "Input field to search for database types"
+    },
+    "aria_select_countries": {
+        "de": "Auswahl der Länder",
+        "en": "Countries selection"
+    },
+    "aria_select_resource_types": {
+        "de": "Auswahl der Datenbank-Typen",
+        "en": "Database types selection"
+    },
+    "aria_select_license_types": {
+        "de": "Auswahl der Lizenz-Typen",
+        "en": "License types selection"
+    },
+    "aria_select_license_forms": {
+        "de": "Auswahl der Lizenz-Formen",
+        "en": "License forms selection"
+    },
+    "aria_select_access_forms": {
+        "de": "Auswahl der Zugangs-Formen",
+        "en": "Access forms selection"
+    },
+    "aria_search_lower_publication_time": {
+        "de": "Eingabefeld für die Suche nach der unteren Datumsgrenze für den Publikationszeitraum",
+        "en": "Input field to define the lower date part"
+    },
+    "aria_search_higher_publication_time": {
+        "de": "Eingabefeld für die Suche nach der oberen Datumsgrenze für den Publikationszeitraum",
+        "en": "Input field to define the upper date part"
+    },
+    "aria_search_lower_report_time": {
+        "de": "Eingabefeld für die Suche nach der unteren Datumsgrenze für den Veröffentlichungszeitraum",
+        "en": "Input field to define the lower date part"
+    },
+    "aria_search_higher_report_time": {
+        "de": "Eingabefeld für die Suche nach der oberen Datumsgrenze für den Veröffentlichungszeitraum",
+        "en": "Input field to define the upper date part"
+    },
+    "aria_search_date_of_entry_lower": {
+        "de": "Eingabefeld für die Untergrenze des Eintragedatums",
+        "en": "Input field to define the lower date part of the entry date"
+    },
+    "aria_search_date_of_entry_higher": {
+        "de": "Eingabefeld für die Obergrenze des Eintragedatums",
+        "en": "Input field to define the upper date part of the entry date"
+    },
+    "aria_search_license_types": {
+        "de": "Auswahl der Lizenz-Typen",
+        "en": "License types selection"
+    },
+    "aria_search_license_forms": {
+        "de": "Auswahl der Lizenz-Formen",
+        "en": "License forms selection"
+    },
+    "aria_search_access_forms": {
+        "de": "Auswahl der Zugangs-Formen",
+        "en": "Access forms selection"
+    },
+    "aria_hidden_element": {
+        "de": "Unsichtbares Element, welches ausschließlich für die Funktionalität der Seite verantwortlich ist.",
+        "en": "Invisible element that is solely responsible for the functionality of the page."
+    },
+    "alt_url_logo": {
+        "de": "Logo der UR Library Services, Services angeboten von der Universitätsbliothek Regensburg",
+        "en": "Logo of UR Library Services, services provided by the University Library of Regensburg"
+    },
+    "lbl_not_gnd_keyword": {
+        "de": "Kein GND-Schlagwort",
+        "en": "Not a GND keyword"
+    },
+    "lbl_english": {
+        "de": "Englisch",
+        "en": "English"
+    },
+    "lbl_german": {
+        "de": "Deutsch",
+        "en": "German"
+    },
+    "lbl_german_short": {
+        "de": "de",
+        "en": "ger"
+    },
+    "lbl_english_short": {
+        "de": "en",
+        "en": "en"
+    },
+    "lbl_other_languages":  {
+        "de": "Originalsprachlich, weitere Sprachen, etc.",
+        "en": "Original language, other languages, etc."
+    },
+    "aria_dropdown_accountsettings": {
+        "de": "Dropdown Accounteinstellungen",
+        "en": "Dropdown acccount settings"
+    },
+    "aria_accountsettings": {
+        "de": "Accounteinstellungen",
+        "en": "Acccount settings"
+    },
+    "aria_select_organization": {
+        "de": "Organisation auswählen",
+        "en": "Select organization"
+    },
+    "aria_open_dropdown_organizations": {
+        "de": "Dropdown zur Organisationswahl öffnen",
+        "en": "Open dropdown for selecting organization"
+    },
+    "aria_dropdown_organizations": {
+        "de": "Dropdown zur Organisationswahl",
+        "en": "Dropdown for selecting organization"
+    },
+    "aria_dropdown_organizations_search": {
+        "de": "Nach Organisationsnamen suchen",
+        "en": "Search for organization by name"
+    },
+    "hint_search_organization_by_name": {
+        "de": "Name, z.B. 'Universität Linz'",
+        "en": "Name, e.g. 'University of Linz'"
+    },
+    "aria_section_form_organizations": {
+        "de": "Organisationsdaten",
+        "en": "Organization data"
+    },
+    "aria_section_delete_organization": {
+        "de": "Einrichtung löschen",
+        "en": "Delete organization"
+    },
+    "aria_namespace": {
+        "de": "Namensraum",
+        "en": "Namespace"
+    },
+    "aria_namespace_id": {
+        "de": "Id für Namensraum",
+        "en": "Id for Namespace"
+    },
+    "aria_add_keyword": {
+        "de": "Schlagwort hinzufügen",
+        "en": "Add keyword"
+    },
+    "aria_add_alttitle": {
+        "de": "Alternativen Titel hinzufügen",
+        "en": "Add alternative title"
+    },
+    "aria_add_author": {
+        "de": "Herausgeber hinzufügen",
+        "en": "Add editor"
+    },
+    "aria_add_link": {
+        "de": "Link hinzufügen",
+        "en": "Add link"
+    },
+    "aria_add_api_url": {
+        "de": "API-URL hinzufügen",
+        "en": "Add api url"
+    },
+    "h_basics": {
+        "de": "Grundinformationen",
+        "en": "Basic information"
+    },
+    "h_subjectindexing": {
+        "de": "Sacherschließung",
+        "en": "Subject indexing"
+    },
+    "h_indexedtime": {
+        "de": "Zeiträume",
+        "en": "Time periods"
+    },
+    "h_reuse_licenses": {
+        "de": "Lizenzen nachnutzen",
+        "en": "Reuse licenses"
+    },
+    "h_organisations_with_license": {
+        "de": "Organisationen mit Bestand",
+        "en": "Organizations with holdings"
+    },
+    "h_misc": {
+        "de": "Sonstige Informationen",
+        "en": "Miscellaneous"
+    },
+    "h_search_results": {
+        "de": "Suchergebnisse",
+        "en": "Search results"
+    },
+    "aria_edit_license": {
+        "de": "Lizenz bearbeiten",
+        "en": "Edit license"
+    },
+    "aria_create_license": {
+        "de": "Neue Lizenz erstellen",
+        "en": "Create new license"
+    },
+    "h_license_general": {
+        "de": "Allgemeines",
+        "en": "General"
+    },
+    "h_license_notes": {
+        "de": "Bemerkungen",
+        "en": "Notes"
+    },
+    "h_license_local_data": {
+        "de": "Lokale Daten",
+        "en": "Local data"
+    },
+    "h_license_last_check": {
+        "de": "Letzte Lizenzkontrolle",
+        "en": "Last license check"
+    },
+    "h_license_other_dates": {
+        "de": "Daten zu nachnutzbaren Lizenzen (für nachnutzende Einrichtungen sichtbar)",
+        "en": "Data on reusable licenses (visible to reusing institutions)"
+    },
+    "h_license_other_dates_local": {
+        "de": "Weitere Daten",
+        "en": "Further dates"
+    },    
+    "lbl_page_not_found": {
+        "de": "Leider wurde die gewünschte Seite auf DBIS nicht gefunden",
+        "en": "Sorry, the requested page was not found on DBIS"
+    },  
+    "lbl_error_occured": {
+        "de": "Leider ist ein Fehler aufgetreten",
+        "en": "Unfortunately an error has occurred"
+    },
+    "lbl_switch_to_organisation": {
+        "de": "Zur Organisation wechseln",
+        "en": "Switch to organisation"
+    },
+    "lbl_switch_to_user_view": {
+        "de": "Zur Datenbank-Ansicht der Organisation wechseln",
+        "en": "Switch to database view of the organisation"
+    },
+    "lbl_please_select_value_if_necessary": {
+        "de": "Bitte wählen Sie bei Bedarf einen Wert aus",
+        "en": "Please select a value if necessary"
+    },
+    "lbl_aquired": {
+        "de": "Angeschafft am",
+        "en": "Aquired on"
+    },
+    "lbl_cancelled": {
+        "de": "Abbestellt am",
+        "en": "Cancelled on"
+    },
+    "lbl_founded_by_fid": {
+        "de": "Lizenziert durch",
+        "en": "Licensed by"
+    },
+    "aria_label_save_license": {
+        "de": "Lizenz speichern",
+        "en": "Save license"
+    },
+    "aria_label_delete_license": {
+        "de": "Lizenz löschen",
+        "en": "Delete license"
+    },
+    "lbl_language_select": {
+        "de": "Sprache",
+        "en": "Language"
+    },
+    "breadcrumb_admin": {
+        "de": "Administration",
+        "en": "Admin"
+    },
+    "breadcrumb_resources": {
+        "de": "Datenbanken",
+        "en": "Databases"
+    },
+    "breadcrumb_search_resources": {
+        "de": "Datenbanken suchen",
+        "en": "Search databases"
+    },
+    "breadcrumb_resources_results": {
+        "de": "Ergebnisse",
+        "en": "Results"
+    },
+    "breadcrumb_new": {
+        "de": "Neu",
+        "en": "New"
+    },
+    "breadcrumb_licenses_access": {
+        "de": "Lizenzen und Zugänge",
+        "en": "Licenses and access"
+    },
+    "breadcrumb_organizations": {
+        "de": "Organisationen",
+        "en": "Organizations"
+    },
+    "breadcrumb_superadmin_settings": {
+        "de": "Allgemeine Einstellungen",
+        "en": "General settings"
+    },
+    "breadcrumb_superadmin_free_resources": {
+        "de": "Freie Datenbanken verwalten",
+        "en": "Organize free resources"
+    },
+    "lbl_access_via": {
+        "de": "Zugang -",
+        "en": "Access -"
+    },
+    "hint_search_host": {
+        "de": "Name eines bestehenden Host (z.B. 'OVID')",
+        "en": "Name of an existing host (e.g. 'OVID')"
+    },
+    "hint_select_entry": {
+        "de": "Eintrag auswählen",
+        "en": "Select entry"
+    },
+    "lbl_subjects_list": {
+        "de": "Fachgebiete",
+        "en": "Subjects"
+    },
+    "msg_no_contact_mail": {
+        "de": "Leider wurde von der Einrichtung noch keine Kontakt-Mailadresse hinterlegt.",
+        "en": "Unfortunately, the organisation has not yet provided a contact email address."
+    },
+    "msg_find_access": {
+        "de": "Vielleicht haben andere Bibliotheken in der Nähe Zugriff - wenn nicht, einfach bei der eigenen Bibliothek nachfragen: ",
+        "en": "Maybe there is access via another library? If not, reach out to your library: "
+    },
+    "msg_find_access_in_org": {
+        "de": "Fragen Sie gerne an der eigenen Bibliothek nach: ",
+        "en": "Reach out to your library: "
+    },
+    "msg_find_access_no_org": {
+        "de": "Vielleicht haben andere Bibliotheken in der Nähe Zugriff - wenn nicht, einfach bei uns nachfragen: ",
+        "en": "Maybe there is access via another library? If not, reach out to us: "
+    },
+    "breadcrumb_subjects": {
+        "de": "Fachgebiete",
+        "en": "Subjects"
+    },
+    "breadcrumb_subjects_top": {
+        "de": "Top-Datenbanken",
+        "en": "Top Databases"
+    },
+    "h_topdbs": {
+        "de": "Top-Datenbanken",
+        "en": "Top Databases"
+    },
+    "lbl_hide_topdbs": {
+        "de": "Top-Datenbanken verbergen",
+        "en": "Hide Top Databases"
+    },
+    "lbl_show_topdbs": {
+        "de": "Top-Datenbanken einblenden",
+        "en": "Show Top Databases"
+    },            
+    "lbl_select_subject": {
+        "de": "Bitte wählen Sie ein Fach, für das Sie Top-Datenbanken festlegen möchten.",
+        "en": "Please select a subject for which you want to define top databases."
+    },
+    "lbl_available": {
+        "de": "Verfügbar",
+        "en": "Available"
+    },
+    "lbl_added": {
+        "de": "Hinzugefügt",
+        "en": "Added"
+    },
+    "hint_drag_sort": {
+        "de": "Mit Klick auf die Pfeile können Sie ein Element nach oben oder unten verschieben.",
+        "en": "Click on the arrows to move an item up or down in the hierarchy."
+    },
+    "tab_label_topdb": {
+        "de": "DBIS - Top-Datenbanken",
+        "en": "DBIS - Top-Databases"
+    },
+    "aria_added_resources": {
+        "de": "Hinzugefügte Datenbanken",
+        "en": "Added databases"
+    },
+    "aria_available_resources": {
+        "de": "Verfügbare Datenbanken",
+        "en": "Available databases"
+    },
+    "lbl_databases_available": {
+        "de": "Verfügbare Datenbanken",
+        "en": "Available databases"
+    },
+    "lbl_databases_selected": {
+        "de": "Ausgewählte Datenbanken",
+        "en": "Selected databases"
+    },
+    "aria_movedown": {
+        "de": "Eintrag nach unten bewegen",
+        "en": "Move entry down"
+    },
+    "aria_moveup": {
+        "de": "Eintrag nach oben verschieben",
+        "en": "Move entry up"
+    },
+    "aria_addtoselection": {
+        "de": "Eintrag zur Auswahl hinzufügen",
+        "en": "Add entry to selection"
+    },
+    "aria_removefromselection": {
+        "de": "Eintrag aus Auswahl entfernen",
+        "en": "Remove resource form selection"
+    },
+    "aria_search_entries": {
+        "de": "Einträge durchsuchen",
+        "en": "Search entries"
+    },
+    "nav_manage_subjects": {
+        "de": "Fachgebiete verwalten",
+        "en": "Manage subjects"
+    },
+    "nav_manage_topresources": {
+        "de": "Top-Datenbanken verwalten",
+        "en": "Manage top databases"
+    },
+    "login_welcome": {
+        "de": "DBIS-Administration",
+        "en": "DBIS Administration"
+    },
+    "login_welcome_back": {
+        "de": "DBIS-Administration",
+        "en": "DBIS Administration"
+    },
+    "hi":{
+	"de":"Guten Tag",
+	"en":"Hello"
+    },
+    "login_go": {
+        "de": "Nach der Anmeldung kann es losgehen.",
+        "en": "Log in and you are ready to go."
+    },
+    "login_info": {
+        "de": "Die DBIS-Administration für Bibliotheks-Mitarbeitende aus DBIS-Teilnehmereinrichtungen - Datenbanken anlegen und bearbeiten, Lizenzen verknüpfen, alle Einstellungen zur Organisation der DBIS-Sicht, zu eigenen Sammlungen und mehr bearbeiten. Noch keine eigene DBIS-Sicht? Wir freuen uns auf jedes neue Community-Mitglied.",
+        "en": "DBIS administration for library staff from DBIS participating institutions - create and edit databases, link licenses, edit all settings for organization, DBIS view, own collections and more. Don't have your own DBIS view yet? We are looking forward to every new community member."
+    },
+    "login_register_info": {
+        "de": "Zur Registrierung",
+        "en": "Register"
+    },
+    "lbl_email_or_uid": {
+        "de": "E-Mail oder URL-UserID",
+        "en": "Email or URL UserID"
+    },
+    "lbl_password": {
+        "de": "Passwort",
+        "en": "Password"
+    },
+    "lbl_forgot_password": {
+        "de": "Passwort vergessen?",
+        "en": "Forgot passwort?"
+    },
+    "msg_error_login": {
+        "de": "Zugangsdaten ungültig!",
+        "en": "Credentials invalid!"
+    },
+    "msg_err_enter_login": {
+        "de": "Bitte URL-UserID oder E-Mail eingeben!",
+        "en": "Please enter URL UserID or email!"
+    },
+    "msg_err_enter_password": {
+        "de": "Bitte Passwort eingeben!",
+        "en": "Please enter password!"
+    },
+    "h_lbl_alternative_titles": {
+        "de": "Alternative Titel",
+        "en": "Alternative titles"
+    },
+    "title_users_detail_page": {
+        "de": "DBIS - ",
+        "en": "DBIS - "
+    },
+    "h_about_database": {
+        "de": "Über diese Datenbank",
+        "en": "About this database"
+    },
+    "lbl_open_database": {
+        "de": "Zur Datenbank",
+        "en": "Go to database"
+    },
+    "lbl_more_information": {
+        "de": "Mehr Informationen",
+        "en": "More information"
+    },
+    "lbl_other_accesses": {
+        "de": "Verfügbare Zugänge",
+        "en": "Available Access Methods"
+    },
+    "lbl_other_metadata": {
+        "de": "Weitere Informationen",
+        "en": "Further information"
+    },
+    "lbl_other_titles": {
+        "de": "Weitere Titel",
+        "en": "Other titles"
+    },
+    "lbl_report_time": {
+        "de": "Berichtszeitraum",
+        "en": "Report time"
+    },
+    "to": {
+        "de": "bis",
+        "en": "to"
+    },
+    "lbl_authors": {
+        "de": "Herausgeber",
+        "en": "Editors"
+    },
+    "today": {
+        "de": "heute",
+        "en": "current"
+    },
+    "btn_back_to_results": {
+        "de": "Zurück zur Ergebnisliste",
+        "en": "Back to results"
+    },
+    "lbl_published_by": {
+        "de": "Verlegt bei",
+        "en": "Published by"
+    },
+    "showmore": {
+        "de": "Mehr zeigen",
+        "en": "Show more"
+    },
+    "showless": {
+        "de": "Weniger zeigen",
+        "en": "Show less"
+    },
+    "btn_more_info_for_access": {
+        "de": "Infos zum Zugang",
+        "en": "Access information"
+    },
+    "description": {
+        "de": "Beschreibung",
+        "en": "Description"
+    },
+    "publication_time": {
+        "de": "Veröffentlichungszeitraum",
+        "en": "Public time"
+    },
+    "lbl_access_label": {
+        "de": "Zugangsbeschriftung",
+        "en": "Access label"
+    },
+    "lbl_access_label_long": {
+        "de": "Nutzung",
+        "en": "Usage"
+    },
+    "lbl_access_label_longest": {
+        "de": "Nutzung (lange Erklärung)",
+        "en": "Usage (long description)"
+    },
+    "lbl_no_access_from_organization": {
+        "de": "Ihre Einrichtung kann Ihnen momentan leider keinen Zugriff auf diese Datenbank anbieten.",
+        "en": "Your organization cannot provide you access to the selected database."
+    },
+    "lbl_no_free_access": {
+        "de": "Leider können Sie ohne eine Heimatbibliothek mit Zugang nicht auf diese Datenbank zugreifen.",
+        "en": "You cannot access this database without a home library with a proper access."
+    },
+    "lbl_tips_no_access": {
+        "de": "Kontakt zu Ihrer Einrichtung",
+        "en": "Contact your organization"
+    },
+    "h_privileges_select_users": {
+        "de": "Rechteverwaltung",
+        "en": "Rights management"
+    },
+    "h_super_settings": {
+        "de": "Allgemeine Einstellungen",
+        "en": "General settings"
+    },
+    "h_super_free_resources": {
+        "de": "Freie Datenbanken verwalten",
+        "en": "Organize free resources"
+    },
+    "hint_privileges_select_users": {
+        "de": "Name, URL-UserID, URL-BIBID oder E-Mail",
+        "en": "Name, URL UserID, URL BIBID or email"
+    },
+    "lbl_name_and_id": {
+        "de": "Name und ID",
+        "en": "Name and ID"
+    },
+    "lbl_privileges": {
+        "de": "Privilegien",
+        "en": "Privileges"
+    },
+    "lbl_no_privileges": {
+        "de": "Keine",
+        "en": "None"
+    },
+    "lbl_user": {
+        "de": "User",
+        "en": "User"
+    },
+    "lbl_granted_privileges": {
+        "de": "Vergebene Rechte",
+        "en": "Granted privileges"
+    },
+    "lbl_privilege_type": {
+        "de": "Rechtetyp",
+        "en": "Privilege type"
+    },
+    "lbl_privilege_addon": {
+        "de": "Zusätzliche Rechte",
+        "en": "Additional rights"
+    },
+    "aria_delete_privilege": {
+        "de": "Berechtigung löschen",
+        "en": "Delete privilege"
+    },
+    "aria_info_privilege_type": {
+        "de": "Mehr Informationen zum Rechtetyp",
+        "en": "More information on this privilege type"
+    },
+    "btn_new_privilege": {
+        "de": "Neue Berechtigung",
+        "en": "New privilege"
+    },
+    "label_new_privilege": {
+        "de": "Berechtigung erstellen",
+        "en": "Create privilege"
+    },
+    "close": {
+        "de": "Schließen",
+        "en": "Close"
+    },
+    "hint_enter_id_or_name": {
+        "de": "Name, Vorname, URL-UserID, Stadt oder Organisationsname",
+        "en": "Surname, prename, URL UserID, city or organization name"
+    },
+    "lbl_access_legend": {
+        "de": "Welche Zugriffsmöglichkeiten habe ich?",
+        "en": "What are my access options?"
+    },
+    "lbl_alt_title_time": {
+        "de": "Gültig",
+        "en": "Valid"
+    },
+    "to": {
+        "de": "bis",
+        "en": "to"
+    },
+    "resource_type": {
+        "de": "Datenbanktyp",
+        "en": "Database type"
+    },
+    "apply_filter": {
+        "de": "Filter anwenden",
+        "en": "Apply filter"
+    },
+    "availability_free": {
+        "de": "Frei verfügbar",
+        "en": "Freely available"
+    },
+    "top_databases_filter": {
+        "de": "Top-Datenbanken",
+        "en": "Top databases"
+    },
+    "availability_licensed": {
+        "de": "Lizenziert an meiner Einrichtung",
+        "en": "Licensed at my institution"
+    },
+    "visibility_hidden": {
+        "de": "Ausgeblendete Einträge anzeigen",
+        "en": "Show hidden entries"
+    },
+    "lbl_display": {
+        "de": "Anzeige",
+        "en": "Display"
+    },
+    "availability_organization_internet": {
+        "de": "Über das Internet",
+        "en": "Via the internet"
+    },
+    "availability_organization_local": {
+        "de": "Vor Ort an meiner Einrichtung",
+        "en": "Locally at my institution"
+    },
+    "availability_none": {
+        "de": "Nicht frei verfügbar",
+        "en": "Not freely available"
+    },
+    "availability_at_organization_none": {
+        "de": "Nicht an meiner Einrichtung verfügbar",
+        "en": "Unavailable at my institution"
+    },
+    "please_separate_comma": {
+        "de": "Einzelne Schlagwörter mit Komma abtrennen",
+        "en": "Separate individual keywords by comma"
+    },
+    "lbl_next_result": {
+        "de": "Nächstes Ergebnis",
+        "en": "Next result"
+    },
+    "lbl_previous_result": {
+        "de": "Vorheriges Ergebnis",
+        "en": "Previous result"
+    },
+    "lbl_time_filter": {
+        "de": "Zeiträume",
+        "en": "Time range"
+    },
+    "lbl_database_publication_date": {
+        "de": "Veröffentlichungszeitraum",
+        "en": "Publication time"
+    },
+    "lbl_database_report_date": {
+        "de": "Berichtszeitraum",
+        "en": "Report time"
+    },
+    "lbl_database_is_free": {
+        "de": "Diese Datenbank ist frei im Internet verfügbar",
+        "en": "This database is freely available on the Internet"
+    },
+    "lbl_database_is_not_free": {
+        "de": "Diese Datenbank ist lizenzpflichtig",
+        "en": "This database is subject to licence"
+    },
+    "lbl_entry_date": {
+        "de": "Eintragungsdatum",
+        "en": "Entry date"
+    },
+    "lbl_entry_date_since": {
+        "de": "Neu eingetragen seit",
+        "en": "Newly created since"
+    },
+    "lbl_filter_host": {
+        "de": "Host",
+        "en": "Host"
+    },
+    "lbl_countries": {
+      "de": "Länder",
+      "en": "Countries"
+    },
+    "lbl_vendor": {
+        "de": "Verkäufer",
+        "en": "Vendor"
+    },
+    "lbl_publisher": {
+        "de": "Verlag",
+        "en": "Publisher"
+    },
+    "lbl_further_license_information": {
+        "de": "Weitere Informationen",
+        "en": "Additional information"
+    },
+    "hint_search_vendor": {
+        "de": "Name eines bestehenden Verkäufers (z.B. 'Clarivate')",
+        "en": "Name of an existing vendor (e.g. 'Clarivate')"
+    },
+    "hint_search_publisher": {
+        "de": "Name eines bestehenden Verlags (z.B. 'Clarivate')",
+        "en": "Name of an existing publisher (e.g. 'Clarivate')"
+    },
+    "lbl_create_vendor": {
+        "de": "Neuen Verkäufer anlegen",
+        "en": "Create new vendor"
+    },
+    "lbl_create_publisher": {
+        "de": "Neuen Verlag anlegen",
+        "en": "Create new publisher"
+    },
+    "lbl_vendor_new": {
+        "de": "Neuer Verkäufer",
+        "en": "New vendor"
+    },
+    "lbl_publisher_new": {
+        "de": "Neuer Verlag",
+        "en": "New publisher"
+    },
+    "lbl_return_to_vendor_selection": {
+        "de": "Stattdessen bestehenden Verkäufer auswählen",
+        "en": "Select existing vendor instead"
+    },
+    "lbl_return_to_publisher_selection": {
+        "de": "Stattdessen bestehenden Verlag auswählen",
+        "en": "Select existing publisher instead"
+    },
+    "dbis_is_part_of_url": {
+        "de": "DBIS ist Teil der",
+        "en": "DBIS is part of the"
+    },
+    "ur_library_services": {
+        "de": "UR Library Services",
+        "en": "UR Library Services"
+    },
+    "ezb": {
+        "de": "EZB | Elektronische Zeitschriftenbibliothek",
+        "en": "EZB | Electronic Journals Library"
+    },
+    "rvk": {
+        "de": "RVK | Regensburger Verbundklassifikation",
+        "en": "RVK | Regensburger Verbundklassifikation"
+    },
+    "url_homepage": {
+        "de": "Unsere Homepage",
+        "en": "Our homepage"
+    },
+    "url_homepage_link": {
+	"de": "https://www.ur-library.de",
+	"en": "https://www.uni-regensburg.de/library/about-us/ur-library-services"
+    },
+    "might_help": {
+        "de": "Das könnte helfen...",
+        "en": "This might help..."
+    },
+    "lbl_advanced_search": {
+        "de": "Erweiterte Suche",
+        "en": "Advanced search"
+    },
+    "lbl_search_for": {
+        "de": "Suchen nach...",
+        "en": "Search for..."
+    },
+    "lbl_search_for_start_page": {
+        "de": "Nach tausenden Datenbanken suchen ...",
+        "en": "Search for thousands of databases ..."
+    },
+    "lbl_add_filters": {
+        "de": "Einschränken auf...",
+        "en": "Filter for..."
+    },
+    "lbl_bool_and": {
+        "de": "und",
+        "en": "and"
+    },
+    "lbl_bool_or": {
+        "de": "oder",
+        "en": "or"
+    },
+    "lbl_bool_not": {
+        "de": "aber nicht",
+        "en": "but not"
+    },
+    "lbl_from": {
+        "de": "von",
+        "en": "from"
+    },
+    "lbl_to": {
+        "de": "bis",
+        "en": "to"
+    },
+    "placeholder_fulltext_search": {
+        "de": "Suche über alles",
+        "en": "Search in everything"
+    },
+    "placeholder_fulltext_search_admin": {
+        "de": "Suche über alles oder direkt per ID",
+        "en": "Search in everything or via title id"
+    },
+    "lbl_search_alttitle": {
+        "de": "(Alternative) Titel",
+        "en": "(Alternative) Title"
+    },
+    "lbl_search_title": {
+        "de": "Titel",
+        "en": "Title"
+    },
+    "lbl_notes": {
+        "de": "Hinweise",
+        "en": "Notes"
+    },
+    "lbl_local_note": {
+        "de": "Zusätzlicher Hinweis für eigene Sicht",
+        "en": "Additional note for own view"
+    },
+    "lbl_add_local_note": {
+        "de": "Zusätzlichen Hinweis für eigene Sicht hinzufügen",
+        "en": "Add additional note for own view"
+    },
+    "lbl_remove_local_note": {
+        "de": "Zusätzlichen Hinweis für eigene Sicht entfernen",
+        "en": "Remove additional note for own view"
+    },
+    "lbl_add_short_description": {
+        "de": "Kurzbeschreibung hinzufügen",
+        "en": "Add short description"
+    },
+    "lbl_remove_short_description": {
+        "de": "Kurzbeschreibung entfernen",
+        "en": "Remove short description"
+    },
+    "lbl_isbnissn": {
+        "de": "ISBN/ISSN",
+        "en": "ISBN/ISSN"
+    },
+    "lbl_api_url": {
+        "de": "API",
+        "en": "API"
+    },
+    "lbl_instructions": {
+        "de": "Anleitung",
+        "en": "Instructions"
+    },
+    "lbl_note_placeholder": {
+        "de": "Hinweise, z.B. zur Benutzung der Datenbank",
+        "en": "Notes, e.g. regarding the use of the database"
+    },
+    "lbl_local_note_placeholder": {
+        "de": "Zusätzliche Hinweise für die eigene Sicht",
+        "en": "Additional notes for own view"
+    },
+    "lbl_instructions_placeholder": {
+        "de": "Anleitung zur Benutzung der Datenbank",
+        "en": "Instructions regarding the use of the database"
+    },
+    "lbl_isbnissn_placeholder": {
+        "de": "ISBN/ISSN",
+        "en": "ISBN/ISSN"
+    },
+    "lbl_api_url_placeholder": {
+        "de": "URL",
+        "en": "URL"
+    },
+    "lbl_zdb_id_placeholder": {
+        "de": "ZDB-ID",
+        "en": "ZDB-ID"
+    },
+    "lbl_fidelio_ppn_placeholder": {
+        "de": "FIDELIO-PPN",
+        "en": "FIDELIO-PPN"
+    },
+    "lbl_fidelio_id_placeholder": {
+        "de": "FIDELIO-PPN",
+        "en": "FIDELIO-PPN"
+    },
+    "lbl_shelfmark": {
+        "de": "RVK-Notation",
+        "en": "RVK notation"
+    },
+    "lbl_shelfmark_group": {
+        "de": "Notationsgruppe",
+        "en": "Notation group"
+    },
+    "lbl_shelfmark_numbers": {
+        "de": "Notationsnummern",
+        "en": "Notation numbers"
+    },
+    "lbl_shelfmark_description": {
+        "de": "Benennung ...",
+        "en": "Description ..."
+    },
+    "lbl_shelfmark_access": {
+        "de": "Signatur",
+        "en": "Shelfmark"
+    },
+    "lbl_change_to_local": {
+        "de": "lokal überschreiben",
+        "en": "overwrite locally"
+    },
+    "lbl_change_to_global": {
+        "de": "überschrieben - aufheben?",
+        "en": "overwritten - repeal?"
+    },
+    "lbl_shelfmark_placeholder": {
+        "de": "Notation, z.B. nach RVK",
+        "en": "Notation, e.g. with DDC"
+    },
+    "lbl_add_search_field": {
+        "de": "Zusätzliches Suchfeld",
+        "en": "Additional search field"
+    },
+    "lbl_searched_for": {
+        "de": "Gesucht nach",
+        "en": "Searched for"
+    },
+    "lbl_remove_all_filters": {
+        "de": "Alle entfernen",
+        "en": "Remove all"
+    },
+    "lbl_funded_by_dfg": {
+        "de": "Gefördert durch die Deutsche Forschungsgemeinschaft (DFG)",
+        "en": "Funded by the German Research Foundation (DFG)"
+    },
+    "lbl_funded_by_dfg_project_number": {
+        "de": "Projektnummer 440516279",
+        "en": "project number 440516279"
+    },
+    "external_id_zdb_id": {
+        "de": "ZDB-ID",
+        "en": "ZDB ID"        
+    },
+    "external_id_zdb_id_placeholder": {
+        "de": "z.B. 123456-1",
+        "en": "e.g. 123456-1"        
+    },    
+    "external_id_zdb_produktsigel": {
+        "de": "ZDB-Produktsigel / ISIL",
+        "en": "ZDB Product code / ISIL"
+    },
+    "external_id_zdb_produktsigel_placeholder": {
+        "de": "z.B. ZDB-12-ABC",
+        "en": "e.g. ZDB-12-ABC"
+    },    
+    "external_id_fidelio_ppn": {
+        "de": "PICA-Produktionsnummer (PPN)",
+        "en": "PICA Production Number (PPN)"
+    },
+    "external_id_fidelio_ppn_placeholder": {
+        "de": "z.B. 123456789",
+        "en": "e.g. 123456789"
+    },    
+    "external_id_ezb_paket_id": {
+        "de": "Paket-ID",
+        "en": "Package ID"
+    },
+    "external_id_ezb_paket_id_placeholder": {
+        "de": "z.B. ABCD",
+        "en": "e.g. ABCD"
+    },    
+    "external_id_ezb_kollektions_id": {
+        "de": "Kollektions-ID",
+        "en": "Collection ID"
+    },
+    "external_id_ezb_kollektions_id_placeholder": {
+        "de": "z.B. EZB-ABCD-00001",
+        "en": "e.g. EZB-ABCD-00001"
+    }    
+
+}

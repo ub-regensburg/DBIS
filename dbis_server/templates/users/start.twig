@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+        <title>{{ pageTitle }}</title>
+        {% set asset = page|default('users_base') %}
+        {% block css %}
+            {% webpack_entry_css 'users_base' %}
+        {% endblock %}
+        <script>
+            var config = {
+                org_id: "{{ organization.ubrId }}",
+                lang: "{{ language }}"
+        };
+        </script>
+    </head>
+
+    <body class="start">
+        <nav class="navbar main-menu pt-3 pb-3 pr-5 pl-5">
+            <div class="navbar-brand">
+                <a class="navbar-item is-size-4" href="{{ organization ? "/" ~ organization.ubrId ~ "/" : "/" }}">
+                    {% if language == "en" %}
+                        <img id="dbis-logo" src="/img/logo/logo_expanded_english.png" alt="{{ i18n.alt_dbis_logo }}">
+                    {% endif %}
+                    {% if language == "de" %}
+                        <img id="dbis-logo" src="/img/logo/logo_expanded.png" alt="{{ i18n.alt_dbis_logo }}">
+                    {% endif %}
+
+                </a>
+            </div>
+
+            <div class="navbar-start ml-3 has-text-weight-bold">
+                <a class="navbar-item"
+                   href="{{ organization ? "/" ~ organization.ubrId : "" }}/search">
+                  {{ i18n.lbl_search }}
+                </a>
+                <a class="navbar-item" href="{{ organization ? "/" ~ organization.ubrId : "" }}/browse/subjects/">
+                  {{ i18n.lbl_database_subjects }}
+                </a>
+                {% if organization.ubrId is defined and organization.ubrId and doesOrganizationHasCollections == 1 %}
+                    {% set collectionsUrl = url_for('collectionsWithinOrganization', {'organizationId': organization.ubrId}) %}
+                    <a class="navbar-item" href=" {{ collectionsUrl }} ">
+                        {{ i18n.lbl_menu_nav_collections }}
+                    </a>
+                {% endif %}
+                <form action="/user/language"
+                      id="switch-language" class="language"
+                      method="POST">
+                    {% if language == "en" %}
+                    <button name="language"
+                            class="button language"
+                            value="de"
+                            type="submit">
+                        DE
+                    </button>
+                    {% endif %}
+                    {% if language == "de" %}
+                    <button name="language"
+                            value="en"
+                            class="button language"
+                            type="submit">
+                        EN
+                    </button>
+                    {% endif %}
+                </form>
+            </div>
+        </nav>
+
+        <div class="pb-6" style="background: linear-gradient(to right, #0083B0, #00B4DB)">
+	    <div class="container has-text-centered pt-6 pb-6">
+                <h1 class="title has-text-white mt-6" style="font-size: 3rem; font-weight: 800; width: 80%; margin: auto;">{{ i18n.lbl_start }}</h1>
+	    </div>
+	</div>
+	<div class="search-container-start container has-text-right">
+            <form class="field is-grouped box p-3"
+                  action="{{ organization ? '/' ~ organization.ubrId : ''}}/results"
+                  method="get">
+                <input class="is-hidden" type="checkbox" name="availability-filter-free" checked aria-label="{{ i18n.aria_hidden_element }}">
+                <input class="is-hidden" type="checkbox" name="availability-filter-local" checked aria-label="{{ i18n.aria_hidden_element }}">
+                <p class="control is-expanded has-text-right">
+                    <span class="control field has-icons-left">
+                        <input name="q" style="font-weight: 600; box-shadow: none; border: none;"
+                            class="input is-medium"
+                            type="text"
+                            placeholder="{{ i18n.lbl_search_for_start_page }}"
+                            value="{{ q }}" title="{{ i18n.aria_search_databases }}" aria-label="{{ i18n.aria_search_databases }}"
+			    autofocus />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </span>
+		    <br>
+                </p>
+                <p class="control">
+                    <button type="submit" class="button is-primary is-medium" id="main-search-button">
+                        {{ i18n.lbl_search }}
+                    </button>
+                </p>
+            </form>
+	    <div class="level mb-0 is-flex">
+            <div class="org-chooser org-chooser--start has-text-left has-text-grey-dark p-1">
+                <div class="dropdown searchable has-text-left">
+                    <div class="dropdown-trigger">
+                        <button class="is-flex is-align-items-center has-text-grey-dark is-size-6" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span class="icon-text">
+                                {% if organization %}
+                                    {{ i18n.lbl_access_provided_by }}
+                                {% endif %}
+                            </span>
+                            <span class="icon-text has-text-weight-bold is-align-items-center">
+                                {% if organization %}
+                                    {% if organization.publicIconPath %}
+                                        <img src="{{ organization.publicIconPath }}" alt="{{ organization.name }}" class="pl-1 pr-1">
+                                    {% endif %}
+                                    <span class="pl-1">{{ organization.name }}</span>
+                                {% else %}
+                                    <span class="icon">
+                                        <i class="fas fa-home"></i>
+                                    </span>
+                                    <span>
+                                        {{ i18n.lbl_no_access }}
+                                    </span>
+                                {% endif %}
+                            </span>
+                            <span class="icon is-small">
+                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <div class="searchfield-container">
+                                <input type="text" class="searchfield input dropdown-item has-text-grey-dark" title="{{ i18n.aria_search_databases }}" aria-label="{{ i18n.aria_search_databases }}">
+                                </input>
+                            </div>
+
+                            <form method="POST" action="/user/organization">
+                                <button name="ubrId" class="dropdown-item has-text-grey-dark" value="ALL" type="submit">
+                                    {{ i18n.lbl_without_organization }}
+                                </button>
+
+                                <input type="hidden"
+                                    name="previousUbrId"
+                                    value="{{ organization.ubrId }}"/>
+
+                                <hr class="dropdown-divider">
+
+                                <div class="dropdown-items">
+                                    {% for city, organizations in organizationsGroupedByCity %}
+                                    <div class="city-group">
+                                        <p class="city has-text-grey-dark">
+                                            <strong>{{ city }}</strong>
+                                        </p>
+
+                                        {% for org in organizations %}
+                                            <button name="ubrId" value="{{ org.ubrId }}" data-city="{{org.city}}" class="dropdown-item has-text-grey-dark" type="submit" role="menuitem">
+                                                {{ org.name }}
+                                            </button>
+                                        {% endfor %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="link-advanced-search has-text-primary mr-2" href="{{ organization ? "/" ~ organization.ubrId : ""}}/search">{{ i18n.lbl_advanced_search }}</a>
+        </div>
+            {% if organization.links|length > 0 %}
+                <nav class="navbar sub-menu navbar--organisation pt-1 pb-3 pr-5">
+                    <div class="navbar-start">
+                        {% for link in organization.links %}
+                            <a class="has-text-primary navbar-item pl-2"
+                            href="{{ link.url[language] }}" target="_blank">
+                                {{ link.text[language]|raw }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </nav>
+            {% endif  %}
+
+            <div class="content is-small has-text-left mt-3">
+                {% if language == 'de' %}
+                    <p class="content" style="padding-left: 8px;">
+                        <a href="https://mediathek2.uni-regensburg.de/playthis/672bb1cef18ca3.07528910" target="_blank">Videotutorial: erste Schritte im neuen DBIS</a></p>
+                {% else %}
+
+                {% endif %}
+            </div>
+        
+
+<div class="content is-small has-text-left mt-3 is-hidden">
+        {% if language == 'de' %}
+            <p class="content">
+                <span class="emojii">&#x1F4E2;</span> <b>DBIS erstrahlt im neuen Design!</b> Wir haben DBIS für Sie modernisiert und freuen uns auf Ihr Feedback: <a href="https://evasys.uni-regensburg.de/evasys/online.php?p=Eva.DBIS" target="_blank">Zur Umfrage</a></p>
+        {% else %}
+            <p class="content">
+                <span class="emojii">&#x1F4E2;</span> <b>DBIS shines in a new design!</b> We have modernized DBIS for you and would like to get your feedback: <a href="https://evasys.uni-regensburg.de/evasys/online.php?p=Eva.DBIS" target="_blank">To the survey (in German)</a></p>
+        {% endif %}
+</div>
+
+        </div>
+
+	<div class="section"></div>
+
+{% block footer %}
+    {{ include('users/footer.twig') }}
+{% endblock %}
+{% block js %}
+    {% if asset == 'users_browse_subjects' %}
+        {% webpack_entry_js 'users_browse_subjects' %}
+    {% elseif asset == 'users_resources_for_subject' %}
+        {% webpack_entry_js 'users_resources_for_subject' %}
+    {% elseif asset == 'users_detail' %}
+        {% webpack_entry_js 'users_details' %}
+    {% elseif asset == 'users_search' %}
+        {% webpack_entry_js 'users_search' %}
+    {% elseif asset == 'users_results' %}
+        {% webpack_entry_js 'users_results' %}
+    {% else %}
+        {% webpack_entry_js 'users_base' %}
+    {% endif  %}
+{% endblock %}
+
+    </body>
+</html>

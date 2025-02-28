@@ -1,0 +1,442 @@
+{% embed "users/base.twig" with { page: 'users_search' } %}
+    {% block content %}
+        <div class="container container--advanced-search">
+            <form class="field advanced-search-form search-loading-element"
+                  id="query-form"
+                  action="{{ organization ? "/" ~ organization.ubrId : ""}}/results"
+                  method="get">
+
+                <div id="advanced-search-container" class="container">
+
+                    <h1 class="title is-1">{{ i18n.lbl_advanced_search }}</h1>
+
+                    <p class="help">{{ i18n.lbl_search_syntax | raw }}</p>
+                    <div class="field is-grouped">
+                        <p class="control is-expanded">
+                          <input name="q"
+                                 class="input"
+                                 type="text"
+                                 placeholder="{{ i18n.placeholder_fulltext_search }}"
+                                 value="{{ q }}"
+                                 aria-label="{{ i18n.aria_search_databases }}">
+                        </p>
+                    </div>
+
+                    <div class="container mb-3">
+                        <div id="availability-tags" class="is-fullwidth mb-2"></div>
+                        <div id="subject-tags" class="is-fullwidth mb-2"></div>
+                        <div id="keyword-tags" class="is-fullwidth mb-2"></div>
+                        <div id="resource-type-tags" class="is-fullwidth mb-2"></div>
+                        <div id="host-tags" class="is-fullwidth mb-2"></div>
+                        <div id="country-tags" class="is-fullwidth mb-2"></div>
+                        <div id="author-tags" class="is-fullwidth"></div>
+                    </div>
+
+                    <div class="field is-grouped ml-6 mb-2">
+                        <div class="select mr-2">
+                            <select name="bool[]">
+                                <option value="and" {% if additional_fields[0].bool and additional_fields[0].bool == "and" %} selected {% endif %}>{{ i18n.lbl_bool_and }}</option>
+                                <option value="or" {% if additional_fields[0].bool and additional_fields[0].bool == "or" %} selected {% endif %}>{{ i18n.lbl_bool_or }}</option>
+                                <option value="not" {% if additional_fields[0].bool and additional_fields[0].bool == "not" %} selected {% endif %}>{{ i18n.lbl_bool_not }}</option>
+                            </select>
+                        </div>
+                        <div class="select mr-2">
+                            <select name="field[]">
+                                <option value="title" {% if additional_fields[0].field and additional_fields[0].field == "title" %} selected {% endif %}>{{ i18n.lbl_search_title }}</option>
+                                <option value="description" {% if additional_fields[0].field and additional_fields[0].field == "description" %} selected {% endif %}>{{ i18n.lbl_database_description }}</option>
+                            </select>
+                        </div>
+                        <input name="search[]"
+                               class="input"
+                               type="text"
+                               placeholder=""
+                               aria-label="{{ i18n.aria_search_title_or_description }}"
+                        value="{{ additional_fields[0].search }}">
+                    </div>
+
+                    <div class="field is-grouped ml-6 mb-2">
+                        <div class="select mr-2">
+                            <select name="bool[]">
+                                <option value="and" {% if additional_fields[1].bool and additional_fields[1].bool == "and" %} selected {% endif %}>{{ i18n.lbl_bool_and }}</option>
+                                <option value="or" {% if additional_fields[1].bool and additional_fields[1].bool == "or" %} selected {% endif %}>{{ i18n.lbl_bool_or }}</option>
+                                <option value="not" {% if additional_fields[1].bool and additional_fields[1].bool == "not" %} selected {% endif %}>{{ i18n.lbl_bool_not }}</option>
+                            </select>
+                        </div>
+                        <div class="select mr-2">
+                            <select name="field[]">
+                                <option value="title" {% if additional_fields[1].field and additional_fields[1].field == "title" %} selected {% endif %}>{{ i18n.lbl_search_title }}</option>
+                                <option value="description" {% if (additional_fields[1].field and additional_fields[1].field == "description") or additional_fields[1] is null %} selected {% endif %}>{{ i18n.lbl_database_description }}</option>
+                            </select>
+                        </div>
+                        <input name="search[]"
+                               class="input"
+                               type="text"
+                               placeholder=""
+                               aria-label="{{ i18n.aria_search_title_or_description }}"
+                               value="{{ additional_fields[1].search }}">
+                    </div>
+                    <!--
+                    <button id="add-search-field" class="button ml-6 is-primary is-inverted has-text-weight-semibold is-small" type="button">
+                        <span class="icon mr-1">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        {{ i18n.lbl_add_search_field }}
+                    </button>
+                    -->
+                </div>
+
+                <div class="container mt-5">
+                    <div class="columns ml-6 mt-2">
+                        <div class="column">
+                            <div class="filter mb-2 keep-open box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.availability}}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/availability_filter.twig', {filtered_availability: filters.availability, organization: organization, no_tags: true, no_apply: true, search_start: search_start}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters.subjects|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_database_subjects }}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/subjects_filter.twig', {subjects: subjects, filteredSubjects: filters.all_subjects, no_tags: true, no_apply: true}) }}
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    </div>                 
+
+                     <div class="columns ml-6">
+
+                    
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters['keywords']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_database_keywords}}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/keywords_filter.twig', {filteredKeywords: filters['keywords'], no_tags: true, no_apply: true}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters['resource-types']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2t
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.resource_type}}
+                                </button>
+                                <div class="filter-body
+                                     p-2">
+                                    {{ include('users/filters/resource_type_filter.twig', {resource_types: resource_types, selectedResourceTypes: filters['resource-types'], no_tags: true, no_apply: true}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="columns ml-6">
+
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters['countries']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_countries }}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/countries_filter.twig', {filteredCountries: filters['countries'], no_tags: true, no_apply: true}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters['license-types']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_license_type}}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/license_filter.twig', { selectedLicenseTypes: filters['license-types'] }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="columns ml-6">
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters['license-forms']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_license_form }}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/license_form_filter.twig', { selectedLicenseForms: filters['license-forms'] }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters['access-forms']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_access_form }}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/access_form_filter.twig', { selectedAccessForms: filters['access-forms'] }) }}
+                                </div>
+                            </div>
+                        </div>
+                     </div>         
+                     
+                     <div class="columns ml-6">
+
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters['entry-date']['start']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_entry_date }}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('admin/filters/entry_date_filter.twig', {filteredEntryDate: filters['entry-date'], no_tags: true, no_apply: true}) }}
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="column">
+                            <div class="filter mb-2 {% if
+                                filters['publication-time']['start'] or
+                                filters['publication-time']['end'] or
+                                filters['report-time']['start'] or
+                                filters['report-time']['end'] %}keep-open{% endif %} box">
+                                {{ include('users/filters/components/filter-activator-button-component.twig', {title: i18n.lbl_time_filter }) }}
+                                <div class="filter-body
+                                     p-2">
+                                    {{ include('users/filters/time_filter.twig', {no_apply: true}) }}
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>                     
+
+                    <div class="columns ml-6">
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters['publication-forms']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_publication_form }}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/publication_form_filter.twig', { publicationForms: publicationForms, selectedPublicationForms: filters['publication-forms'] }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <!--<div class="column">
+                            <div class="filter mb-2 {% if filters['hosts']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_filter_host }}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {#{ include('users/filters/host_filter.twig', {filteredHosts: filters.hosts, no_tags: true, no_apply: true}) }#}
+                                </div>
+                            </div>
+                        </div>-->
+
+                    </div>                        
+
+                    <div class="columns ml-6">
+
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters['publishers']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_publisher }}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/publisher_filter.twig', { publishers: publishers, filteredPublishers: filters['publishers'], no_tags: true, no_apply: true }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="filter mb-2 {% if filters['authors']|length > 0 %}keep-open{% endif %} box">
+                                <button
+                                    class="button
+                                        mb-2
+                                        pb-4
+                                        pl-0
+                                        filter-activator
+                                        is-fullwidth
+                                        is-justify-content-flex-start"
+                                    type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.lbl_authors}}
+                                </button>
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/author_filter.twig', {filteredAuthors: filters.authors, no_tags: true, no_apply: true, search_start: true}) }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+
+                <br>
+
+                <div class="container container--advanced-search-buttons has-text-right mt-6">
+                    <!--<input type="reset" class="button is-secondary" value="{{ i18n.lbl_clear_form }}">-->
+                    <a class="button is-secondary" href="{{ organization ? "/" ~ organization.ubrId : ""}}/search">{{i18n.lbl_clear_form}}</a>
+                    <button type="submit" class="button is-primary" id="main-search-button" name="main-search-button">
+                        {{ i18n.lbl_search }}
+                    </button>
+                </div>
+
+                <br>
+
+                <template id="search-field-template">
+                    <div class="field level is-grouped ml-6 mb-2">
+                        <div class="select mr-2">
+                            <select name="bool[]">
+                                <option value="and">{{ i18n.lbl_bool_and }}</option>
+                                <option value="or">{{ i18n.lbl_bool_or }}</option>
+                                <option value="not">{{ i18n.lbl_bool_not }}</option>
+                            </select>
+                        </div>
+                        <div class="select mr-2">
+                            <select name="field[]">
+                                <option value="title">{{ i18n.lbl_search_alttitle }}</option>
+                                <option value="description">{{ i18n.lbl_database_description }}</option>
+                            </select>
+                        </div>
+                        <input name="search[]"
+                               class="input"
+                               type="text"
+                               placeholder=""
+                               aria-label="{{ i18n.aria_search_title_or_description }}">
+                        <btn class="delete ml-3"></btn>
+                    </div>
+                </template>
+            </form>
+        </div>
+    {% endblock %}
+{% endembed %}

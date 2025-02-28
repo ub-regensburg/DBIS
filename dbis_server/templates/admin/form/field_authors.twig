@@ -1,0 +1,165 @@
+{% if resourceLocal.authors|length > 0 %}
+    {% set isLocalized = true %}
+{% else %}
+    {% set isLocalized = false %}
+{% endif %}
+
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ i18n.lbl_database_author }}</h3>
+    {%  if selectedOrganization.ubrId is not empty %}
+    <div class="tags has-addons is-clickable is-unselectable localization-tag" data-id="field-author">
+        {% if not resourceLocal.authors|length > 0 %}
+            <span class="tag global-tag">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light is-hidden">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-grey-lighter">&nbsp;</span>
+        {% else %}
+            <span class="tag global-tag is-hidden">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-info">&nbsp;</span>
+        {% endif %}
+        <input type="checkbox" name="authors-local" class="localization-checkbox" hidden {% if isLocalized %} checked {% endif %}>
+    </div>
+    {% endif %}
+</div>
+<div class="columns">
+    <div class="column">
+        <!-- GLOBAL -->
+        <div class="field field-author global
+             {% if resourceLocal.authors|length > 0 %}
+                 is-hidden
+             {% endif %}
+             ">
+            {# ENTRIES #}
+            <div class="author-entries">
+
+                {% if resourceGlobal is not null and resourceGlobal is defined and resourceGlobal.authors|length > 0 %}
+
+                    {% for author in resourceGlobal.authors %}
+                        <div class="columns author-entry">
+                            <div class="column">
+                                <div class="author-list author-list">
+                                    <div class="field">
+                                        <div class="level">
+                                            <div class="control is-flex-grow-1">
+                                                <input name="author_global[]" class="input" type="text" placeholder=""
+                                                       autocomplete="off" value="{{ author.title }}">
+                                            </div>
+                                            <btn class="delete ml-3"></btn>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="columns author-entry">
+                        <div class="column">
+                            <div class="author-list author-list">
+                                <div class="field">
+                                    <div class="level">
+                                        <div class="control is-flex-grow-1">
+                                            <input name="author_global[]" class="input" type="text" placeholder=""
+                                                   autocomplete="off" value="">
+                                        </div>
+                                        <btn class="delete ml-3"></btn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+            
+            
+            
+        <!-- LOCAL -->
+        <div class="field field-author local
+             {% if not resourceLocal.authors|length > 0 %}
+                 is-hidden
+             {% endif %}
+             ">
+            {# ENTRIES #}
+            <div class="author-entries">
+
+                {% if resourceLocal is not null and resourceLocal is defined and resourceLocal.authors|length > 0 %}
+
+                    {% for author in resourceLocal.authors %}
+                        <div class="columns author-entry">
+                            <div class="column">
+                                <div class="author-list author-list">
+                                    <div class="field">
+
+                                        <div class="level">
+                                            <div class="control is-flex-grow-1">
+                                                <input name="author_local[]" class="input" type="text" placeholder=""
+                                                       autocomplete="off" value="{{ author.title }}">
+                                            </div>
+                                            <btn class="delete ml-3"></btn>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="columns author-entry">
+                        <div class="column">
+                            <div class="author-list">
+                                <div class="field">
+                                    <div class="level">
+                                        <div class="control is-flex-grow-1">
+                                            <input name="author_local[]" class="input" type="text" placeholder=""
+                                                   autocomplete="off" value="">
+                                        </div>
+                                        <btn class="delete ml-3"></btn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+            
+<div class="columns field-author-add-button-container global
+     {% if resourceLocal.authors|length > 0 %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <button id="btn_add_database_author_global"
+                class="button is-primary is-inverted has-text-weight-semibold is-small" 
+                aria-label="{{ i18n.aria_add_author }}"
+                type="button">
+            <span class="icon mr-1">
+                <i class="fas fa-plus"></i>
+            </span>
+            {{ i18n.lbl_btn_add }}
+        </button>
+    </div>
+</div>
+        
+<div class="columns field-author-add-button-container local
+     {% if not resourceLocal.authors|length > 0 %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">        
+        <button id="btn_add_database_author_local"
+                class="button is-primary is-inverted has-text-weight-semibold is-small" 
+                aria-label="{{ i18n.aria_add_author }}"
+                type="button">
+            <span class="icon mr-1">
+                <i class="fas fa-plus"></i>
+            </span>
+            {{ i18n.lbl_btn_add }}
+        </button>
+    </div>
+</div>

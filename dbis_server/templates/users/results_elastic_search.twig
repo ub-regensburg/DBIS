@@ -1,0 +1,181 @@
+{% embed "users/base.twig" with { page: 'users_results' } %}
+    {% block content %}
+        <div class="container">
+            <h1 class="title is-1">{{ i18n.h_search_results}}</h1>
+            <form class="field"
+                  id="query-form"
+                  action="{{ organization ? "/" ~ organization.ubrId : "" }}/results"
+                  method="get">
+
+                {% for additional_field in additional_fields %}
+                    <input type="hidden" name="bool[]" value="{{ additional_field.bool }}" aria-hidden="true">
+                    <input type="hidden" name="field[]" value="{{ additional_field.field }}" aria-hidden="true">
+                    <input type="hidden" name="search[]" value="{{ additional_field.search }}" aria-hidden="true">
+                {% endfor %}
+
+                <div class="field is-grouped mb-1">
+                    <p class="control is-expanded">
+                        <input name="q"
+                               class="input"
+                               type="text"
+                               placeholder=""
+                               value="{{ q }}" aria-label="{{ i18n.aria_search_databases }}">
+                    </p>
+
+                    <p class="control">
+                        <button type="submit" class="button is-primary" id="main-search-button">
+                            {{ i18n.lbl_search }}
+                        </button>
+                    </p>
+                </div>
+                <p class="help">{{ i18n.lbl_search_syntax | raw }}</p>
+                {% if additional_search_string != "" %}
+                    <p class="ml-3">{{ additional_search_string }}</p>
+                {% endif %}
+                <div id="remove-all-tag" class="is-hidden mt-2 ml-3">
+                    <span class="tag is-warning is-light mr-2">
+                        <span class="is-uppercase">{{ i18n.lbl_remove_all_filters }}</span>
+                        <btn class="delete is-small"></btn>
+                    </span>
+                </div>
+                <div id="tag-section" class="mt-2 ml-3">
+                    <div id="availability-tags" class="is-fullwidth mb-2"></div>
+                    <div id="subject-tags" class="is-fullwidth mb-2"></div>
+                    <div id="keyword-tags" class="is-fullwidth mb-2"></div>
+                    <div id="resource-type-tags" class="is-fullwidth mb-2"></div>
+                    <div id="host-tags" class="is-fullwidth mb-2"></div>
+                    <div id="country-tags" class="is-fullwidth mb-2"></div>
+                    <div id="author-tags" class="is-fullwidth"></div>
+                </div>
+
+                <br>
+
+                <template id="search-field-template">
+                    <div class="field level is-grouped ml-6 mb-2">
+                        <div class="select mr-2">
+                            <select name="bool[]">
+                                <option value="and">{{ i18n.lbl_bool_and }}</option>
+                                <option value="or">{{ i18n.lbl_bool_or }}</option>
+                                <option value="not">{{ i18n.lbl_bool_not }}</option>
+                            </select>
+                        </div>
+                        <div class="select mr-2">
+                            <select name="field[]">
+                                <option value="title">{{ i18n.lbl_search_alttitle }}</option>
+                                <option value="description">{{ i18n.lbl_database_description }}</option>
+                            </select>
+                        </div>
+                        <input name="search[]"
+                               class="input"
+                               type="text"
+                               placeholder="">
+                        <btn class="delete ml-3"></btn>
+                    </div>
+                </template>
+
+                <div class="columns">
+                    {# Filter Bar #}
+                    {{ include('users/filters/filter_bar.twig') }}
+
+                    <div class="column is-four-fifths">
+
+                        <div class="container">
+                            <div class="columns filter-options">
+                                <div class="column is-two-thirds">
+                                    <div class="is-flex is-flex-direction-row is-flex-wrap-nowrap is-align-items-center">
+                                        <div class="mr-3">
+                                            <p class="field-label">
+                                                <label class="label">{{ total_nr }} {{ i18n.lbl_results_found }}</label>
+                                            </p>
+                                        </div>
+                                        {% if resources|length > 0 %}
+                                        <div class="field level mb-0">
+                                            <div class="mr-2">
+                                                <label class="label has-text-weight-normal"
+                                                       for="sort_by">{{ i18n.lbl_collection_sort_by }}</label>
+                                            </div>
+                                            <div class="field-body">
+                                                <div class="field">
+                                                    <div class="control">
+                                                        <div class="select is-small">
+                                                            <select id="sort_by" name="sort_by" class="">
+                                                                {% for sort_type in sort_types %}
+                                                                    {% if sort_type.id == sort_by %}
+                                                                        <option value="{{ sort_type.id }}"
+                                                                                selected="selected">{{ sort_type.title }}</option>
+                                                                    {% else %}
+                                                                        <option value="{{ sort_type.id }}">{{ sort_type.title }}</option>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ml-5">
+                                            <p class="field-label">
+                                                <button class="button is-small" name="csvoutput" value="1">CSV-Export</button>
+                                            </p>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    {{ include('shared/pagination.twig', {size: 'is-small', alignment: 'is-right', only_pages: true}) }}
+                                </div>
+                            </div>
+
+                            <div class="search-loading-element">
+
+                                {% if resources|length < 1 %}
+                                    <p>{{ i18n.msg_no_results }}</p>
+                                    {% if organizationId %}
+                                        <p>
+                                            <a class="" href="{{ "/" ~ organizationId ~ "/search?" ~ query_string }}">
+                                            {{ i18n.refine_search }}
+                                            </a>
+                                        </p>
+                                    {% else %}
+                                        <p>
+                                            <a class="" href="/search?{{ query_string }}">{{ i18n.refine_search }}
+                                            </a>
+                                        </p>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% for resource in resources %}
+                                    {% embed "users/results/result_item_elastic_search.twig" with {resource: resource, organizationId: organizationId } %}
+                                    {% endembed %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+
+                        <br><br>
+
+                        {{ include('users/results/result_footer.twig') }}
+                    </div>
+                </div>
+
+                <div class="modal" id="access-modal">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">{{ i18n.lbl_access_legend }}</p>
+                            <button type="button" class="delete" aria-label="close"></button>
+                        </header>
+                        <section class="modal-card-body">
+                            {% for access in accesses %}
+                                <div class="single-access-info" data-value="{{ access.id }}">
+                                    <strong>{{ access.title }}</strong><br>
+                                    <p>{{ access.description }}</p><br><br>
+                                </div>
+                            {% endfor %}
+                        </section>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endblock %}
+{% endembed %}

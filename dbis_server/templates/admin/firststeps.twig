@@ -1,0 +1,181 @@
+{% embed "admin/base.twig" %}
+    {%  block content %}
+	{%  if lang=='de' %}
+		<h1 class="title is-1">Erste Schritte</h1>
+	{% else %}
+		<h1 class="title is-1">First Steps</h1>
+	{% endif %}
+{% if lang=='de' %}
+<div class="container">
+    <h2 class="title is-2">FAQs</h2>
+    <div class="columns m-3">
+      <div class="column">
+        <h3 class="subtitle">Antworten auf häufig gestellte Fragen (FAQs) 
+            (<a href="https://nbn-resolving.org/urn:nbn:de:bvb:355-epub-750027" target="_blank">Dokument ansehen</a>)</h3>
+      </div>
+    </div>
+    <h2 class="title is-2">Schulungsunterlagen</h2>
+      <div class="columns m-3">
+        <div class="column">
+            <div>
+                <h3 class="subtitle">Einführung in die neue DBIS-Version Teil 1 
+(<a href="https://nbn-resolving.org/urn:nbn:de:bvb:355-epub-750280" target="_blank">Folien</a>)</h3>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>Login, Rollen und Rechtesystem</li>
+                    <li>Organisationsdaten bearbeiten</li>
+                    <li>DBIS-Profil, neue Datenbanktypen</li>
+                    <li>Ampel, neue Lizenztypen</li>
+                    <li>Lizenzen und Zugänge</li>
+                    <li>Datenbanken erstellen</li>
+                    <li>Datenbanken suchen</li>
+                    <li>Datenbanken bearbeiten</li>
+                </ul>
+                </div>
+                </div>
+                <div class="column">
+                <div>
+                <h3 class="subtitle">Einführung in die neue DBIS-Version Teil 2 (<a href="/media/DBIS_Einführung_Teil2_v2.pdf" target="_blank">Folien</a>)</h3> 
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>Datenbanken verknüpfen</li>
+                    <li>Sammlung erstellen</li>
+                    <li>Sammlungen verwalten</li>
+                    <li>Top-Datenbanken verwalten</li>
+                    <li>Fachgebiete verwalten</li>
+                    <li>Qualitätsmanagement</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <h2 class="title is-2">Erste Bearbeitungsschritte im neuen DBIS</h2>
+    <div class="columns m-3">
+        <div class="column">
+            <div>
+		<h3 class="subtitle">Erste Schritte: Organisationsdaten bearbeiten 
+(<a href="https://nbn-resolving.org/urn:nbn:de:bvb:355-epub-750291" target="_blank">Folien</a>)</h3>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>Organisationsname de/en</li>
+                    <li>Identifier</li>
+                    <li>Adressinformationen</li>
+                    <li>Kontaktinformationen</li>
+                    <li>Spezielle Organisationsformen (FID, Konsortium, KfL)</li>
+                    <li>Automatisches Hinzufügen freier Datenbanken</li>
+                    <li>Logo </li>
+                    <li>Linkliste</li>
+                    <li>Farbe</li>
+                    <li>(in Kürze: IP Bereich einfügen)</li>
+                </ul>
+		</div>
+		</div>
+		<div class="column">
+		<div>
+                <h3 class="subtitle">Erste Schritte: Datenbanken erstellen, suchen und bearbeiten 
+(<a href="/media/DBIS_Erste-Schritte_Datenbanken-erstellen-v3.pdf" target="_blank">Folien</a>)</h3>
+                <p>Das Erstellen von Datenbanken erfolgt in zwei Schritten:</p>
+                <ol style="list-style-type: decimal; padding-left: 20px;">
+                    <li>Erfassen der Grundinformationen/ Metadaten</li>
+                    <li>Erfassen der Lizenzen</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <h2 class="title is-2">Community-Workshops</h2>
+    <div class="columns m-3">
+        <div class="column">
+            <div>
+                <h3 class="subtitle">Materialien Community-Workshops 
+                    (<a href="https://epub.uni-regensburg.de/cgi/search/advanced?screen=Search&documents_merge=ALL&documents=&title_merge=ALL&title=&creators_name_merge=ALL&creators_name=&creators_id_merge=ALL&creators_id=&creators_orcid=&editors_name_merge=ALL&editors_name=&editors_id_merge=ALL&editors_id=&editors_orcid=&date=&doi=&pubmed_id=&pubmedcentral_id=&wok_id_merge=ALL&wok_id=&abstract_merge=ALL&abstract=&keywords_merge=ALL&keywords=&publication_merge=ALL&publication=&publisher_merge=ALL&publisher=&book_title_merge=ALL&book_title=&series_rgbg_merge=ALL&series_rgbg=&series_merge=ALL&series=&teaching_series_merge=ALL&teaching_series=&subjects_merge=ANY&institutions_merge=ANY&projects_id%2Fprojects_title_merge=ALL&projects_id%2Fprojects_title=&historical_projects_merge=ALL&historical_projects=&network_merge=ANY&research_group_merge=ANY&department_merge=ALL&department=&referee_merge=ALL&referee=&isbn_merge=ALL&isbn=&classification_name_merge=ALL&classification_name=&own_doi_merge=ALL&own_doi=&ranking_merge=ANY&own_properties_merge=ALL&own_properties=DBIS+Community-Workshop&satisfyall=ALL&order=-date%2Fcreators_name%2Ftitle&_action_search=Suchen" target="_blank">Folien</a>)</h3>
+                                    <!--<ul style="list-style-type: disc; padding-left: 20px;">
+                                        <li>...</li>
+                                    </ul>-->                
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <h2 class="title is-2">FAQs</h2>
+    <div class="columns m-3">
+      <div class="column">
+        <h3 class="subtitle">Frequently Asked Questions (FAQs) 
+            (<a href="https://nbn-resolving.org/urn:nbn:de:bvb:355-epub-750027" target="_blank">view document, available in German only</a>)</h3>
+      </div>
+    </div>    
+    <h2 class="title is-2">Training Materials</h2>
+    <div class="columns m-3">
+        <div class="column">
+            <div>
+                <h3 class="subtitle">Introduction to the new DBIS version Part 1 (<a href="https://nbn-resolving.org/urn:nbn:de:bvb:355-epub-750280" target="_blank">Slides</a>)</h3>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>Login, roles, and rights system</li>
+                    <li>Edit organizational data</li>
+                    <li>DBIS profile, new database types</li>
+                    <li>Traffic light, new license types</li>
+                    <li>Licenses and access</li>
+                    <li>Create databases</li>
+                    <li>Search databases</li>
+                    <li>Edit databases</li>
+                </ul>
+             </div>
+        </div>
+        <div class="column">
+             <div>
+                <h3 class="subtitle">Introduction to the new DBIS version Part 2 (<a href="#" target="_blank">Slides</a>)</h3>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>Link databases</li>
+                    <li>Create collection</li>
+                    <li>Manage collections</li>
+                    <li>Manage top databases</li>
+                    <li>Manage subjects</li>
+                    <li>Quality management</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <h2 class="title is-2">Initial steps in the new DBIS</h2>
+    <div class="columns m-3">
+        <div class="column">
+            <div>
+                <h3 class="subtitle">First Steps: Edit Organizational Data 
+(<a href="https://nbn-resolving.org/urn:nbn:de:bvb:355-epub-750291" target="_blank">Slides</a>)</h3>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>Organization name de/en</li>
+                    <li>Identifier</li>
+                    <li>Address information</li>
+                    <li>Contact information</li>
+                    <li>Special organizational forms (FID, consortium, KfL)</li>
+                    <li>Automatic addition of free databases</li>
+                    <li>Logo</li>
+                    <li>Link list</li>
+                    <li>Color</li>
+                    <li>(coming soon: add IP range)</li>
+                </ul>
+                </div>
+                </div>
+                <div class="column"
+                <div>
+                <h3 class="subtitle">First Steps: Create, Search, and Edit Databases
+(<a href="#" target="_blank">Slides</a>)</h3>
+                <p>Creating databases involves two steps:</p>
+                <ol style="list-style-type: decimal; padding-left: 20px;">
+                    <li>Entering basic information/metadata</li>
+                    <li>Entering license</li>
+                </ol>
+            </div>
+        </div>
+    <h2 class="title is-2">Community Workshops</h2>
+    <div class="columns m-3">
+        <div class="column">
+            <div>
+                <h3 class="subtitle">Community workshop materials" 
+                    (<a href="https://epub.uni-regensburg.de/cgi/search/advanced?screen=Search&documents_merge=ALL&documents=&title_merge=ALL&title=&creators_name_merge=ALL&creators_name=&creators_id_merge=ALL&creators_id=&creators_orcid=&editors_name_merge=ALL&editors_name=&editors_id_merge=ALL&editors_id=&editors_orcid=&date=&doi=&pubmed_id=&pubmedcentral_id=&wok_id_merge=ALL&wok_id=&abstract_merge=ALL&abstract=&keywords_merge=ALL&keywords=&publication_merge=ALL&publication=&publisher_merge=ALL&publisher=&book_title_merge=ALL&book_title=&series_rgbg_merge=ALL&series_rgbg=&series_merge=ALL&series=&teaching_series_merge=ALL&teaching_series=&subjects_merge=ANY&institutions_merge=ANY&projects_id%2Fprojects_title_merge=ALL&projects_id%2Fprojects_title=&historical_projects_merge=ALL&historical_projects=&network_merge=ANY&research_group_merge=ANY&department_merge=ALL&department=&referee_merge=ALL&referee=&isbn_merge=ALL&isbn=&classification_name_merge=ALL&classification_name=&own_doi_merge=ALL&own_doi=&ranking_merge=ANY&own_properties_merge=ALL&own_properties=DBIS+Community-Workshop&satisfyall=ALL&order=-date%2Fcreators_name%2Ftitle&_action_search=Suchen" target="_blank">Slides</a>)</h3>
+                                    <!--<ul style="list-style-type: disc; padding-left: 20px;">
+                                        <li>...</li>
+                                    </ul>-->                
+            </div>
+        </div>
+    </div>    
+</div>
+{% endif %}
+    {%  endblock %}
+{% endembed %}

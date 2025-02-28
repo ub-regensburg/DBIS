@@ -1,0 +1,58 @@
+{% embed "admin/base.twig" with { page: 'superadmin_free_resources' } %}
+    {%  block content %}
+        {% if is_updated_successfully %}
+            <article class="message is-success">
+                <div class="message-body">
+                    {{ i18n.msg_database_updated_successfully }}
+                </div>
+            </article>
+        {% endif %}
+
+<section aria-labelledby="h-manage-orgs">
+    <ul class="breadcrumbs mb-1 is-size-7">
+        <li><a href="/admin">{{ i18n.breadcrumb_admin }}</a></li>
+        <li>{{ i18n.breadcrumb_superadmin_free_resources}}</li>
+    </ul>
+
+    <h1 id="h-manage-resources"
+                class="title is-1">{{ i18n.breadcrumb_superadmin_free_resources }}</h1>
+    <section>
+        <div class="notification">
+            Für die ausgewählte Organisation werden alle freien Datenbanken der jeweiligen Fachgebiete <strong>einmalig importiert</strong>.</br>In den Einstellungen der Orgsanisation kann zusätzlich aktiviert werden, dass zukünftig freie Datenbanken automatisch übernommen werden. 
+        </div>
+        <form method="POST">
+            <div>
+                <div class="field">
+                    <div class="control is-expanded">
+                        <div class="select is-fullwidth">
+                        <select name="ubr-id">
+                            {% for organization in organizations %}
+                                <option value="{{ organization.ubrId }}">{{ organization.name }}</option>
+                            {% endfor %}
+                        </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    {% for subject in subjects %}
+                    <div class="field">
+                        <label class="checkbox">
+                            <input type="checkbox" name="subjects[]" value="{{ subject.id }}" checked />
+                            {{ subject.title }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="field is-grouped mt-3">
+                <div class="control">
+                        <button class="button is-primary" type="submit"
+                                name="save">{{ i18n.lbl_save }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+    {%  endblock %}
+{% endembed %}

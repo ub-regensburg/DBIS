@@ -1,0 +1,134 @@
+{% embed "admin/base.twig" %}
+    {%  block content %}
+        <section aria-labelledby="h-edit-view">
+            {% if is_deleted_successfully %}
+                <article class="message is-success">
+                    <div class="message-body">
+                        {{ i18n.msg_view_deleted_successfully }}
+                    </div>
+                </article>
+            {% elseif is_created_successfully %}
+                <article class="message is-success">
+                    <div class="message-body">
+                        {{ i18n.msg_view_created_successfully }}
+                    </div>
+                </article>
+            {% endif %}
+            
+            <ul class="breadcrumbs mb-1 is-size-7">
+                <li><a href="/admin">{{ i18n.breadcrumb_admin }}</a></li>
+                {% if is_superadmin %}
+                    <li><a href="/superadmin/organizations/">{{ i18n.breadcrumb_organizations}}</a></li>
+                {% else %}
+                    <li>{{ i18n.breadcrumb_organizations}}</li>
+                {% endif %}
+                <li>{{ organization.name }}</li>            
+            </ul>
+       
+            <h1 id="h-edit-view"
+                class="title is-1">{{ i18n.lbl_heading_edit_organization|replace({':org_name': organization.name}) }}</h1>
+              
+            <div class="tabs">
+                <ul role="navigation">
+                    <li>
+                        <a href="/superadmin/organizations/{{ organization.ubrId }}/">
+                            <span class="icon is-small">
+                                <i class="fas fa-home"></i>
+                            </span>
+                            {{ i18n.lbl_org_data }}
+                        </a>
+                    </li>
+                    <li class="is-active">
+                        <a>
+                            <span class="icon is-small">
+                                <i class="fas fa-columns"></i>
+                            </span>
+                            {{ i18n.lbl_org_view }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            {%  if organization.dbisView == null %}
+                <section aria-labelledby="h-create-dbisview">
+                    <h2 title="h-create-dbisview"
+                        class="title is-2">{{ i18n.msg_org_has_dbis_view}}</h2>
+                    <p class="body">{{ i18n.msg_no_dbis_view_for_org_expl }}</p>
+                    <br>
+                    <form class="form is-fullwidth"
+                          method="POST">
+                        <button class="button submit is-primary">{{ i18n.lbl_is_creating_new_view }}</button>            
+                    </form>
+                </section>
+            {%  else %}
+                <section aria-labelledby="h-delete-dbisview">
+                    <form id="delete-view-form"
+                          action="/superadmin/organizations/{{ organization.ubrId }}/views/?confirmDelete"
+                          method="get">            
+                        <!-- 
+                            see https://www.slimframework.com/docs/v2/routing/delete.html 
+                        -->
+                        <h2 class="title is-2"
+                            id="h-delete-dbisview">{{ i18n.lbl_delete_view }}</h2>
+                        <p>{{ i18n.hint_delete_dbis_view }}</p>
+                        <br>
+                        <p>{{ i18n.lbl_delete_organization_hint|replace({':ubr_id': organization.ubrId}) }}</p>
+                        <br>
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <input id="confirm_ubrid"
+                                       class="input" 
+                                       type="text"
+                                       data-expected-value="{{ organization.ubrId }}"
+                                       placeholder="{{ organization.ubrId }}"
+                                       >
+                            </div>           
+                            <input type="hidden" name="show_confirm" value="1"/>
+                            <div class="control">
+                                <button id="delete-organization-button" 
+                                        class="button is-danger" 
+                                        type="submit" disabled>
+                                    {{ i18n.lbl_delete_view }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Modal dialog for confirming deletion of organization -->
+                <section aria-labelledby="h-delete-modal"
+                    aria-hidden="{{ 'show_confirm' in queryParams|keys ? "false": "true" }}">
+                    <div id="confirm-delete-view-modal" class="modal" 
+                         {% if 'show_confirm' in queryParams|keys %} 
+                             style="display:flex"
+                         {% endif %}>
+                      <div class="modal-background"></div>
+                      <div class="modal-card">
+                        <header class="modal-card-head">
+                          <p id="h-delete-modal"
+                              class="modal-card-title">{{ i18n.lbl_delete_view }}</p>
+                          <button class="delete" aria-label="close"></button>
+                        </header>
+                        <section class="modal-card-body">
+                          {{ i18n.lbl_info_delete_view}}
+                        </section>
+                        <!--<footer class="modal-card-foot">-->
+                            <form
+                                class="modal-card-foot"
+                                method="POST">
+                                <input type="hidden" name="_METHOD" value="DELETE"/>
+                                <button class="button is-danger submit">{{ i18n.lbl_delete }}</button> 
+                                <a class="button cancel" href="/superadmin/organizations/{{ organization.ubrId }}/views/">{{ i18n.lbl_cancel }}</a>                       
+                            </form>
+                        <!--</footer>-->
+                      </div>
+                    </div>
+                </section>
+
+                <!-- ----------------------------------------------------  -->
+            {% endif %}
+        </section>
+    {%  endblock %}
+{% endembed %}
+{% block js %}
+    {%  webpack_entry_js 'admin_manage_dbis_views' %} 
+{% endblock %}

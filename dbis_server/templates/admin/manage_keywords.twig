@@ -1,0 +1,134 @@
+{% embed "admin/base.twig" with { page: 'manage_keywords' } %}
+    {% block content %}
+        <section aria-labelledby="h-manage-resources">
+            <h1 id="h-manage-resources"
+                class="title is-1">{{ i18n.lbl_menu_nav_superadministration_manage_keywords }}</h1>
+            <div class="container">
+                <div class="notification">
+                    Alle hier gelisteten Schlagwörter sind <strong>nicht konform mit der GND</strong> und sollen dahingehend angepasst werden.
+                    </br>
+                    </br>
+                    {% if keywords|length > 0 %}
+                        Insgesamt wurden {{ keywords[0].total }} nicht GND-konforme Schlagwörter gefunden. Angezeigt werden {{ ps }}.
+                    {% endif %}
+                </div>
+                <div class="field-keywords">
+                        {% for keyword in keywords %}
+                        {% if keyword.id is defined and keyword.id is not empty %}
+                            <div class="card mb-4">
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        {{ keyword.title }}
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <div class="keyword-entries">
+                                            {# ENTRIES #}
+                                                <div class="keyword-entry c-translate">
+                                                    <input name="keyword_id[]"
+                                                           type="hidden"
+                                                           value="{{ keyword.keyword_id }}">
+                                                    <input name="resource_id[]"
+                                                           type="hidden"
+                                                           value="{{ keyword.id }}">
+                                                    <div class="columns">
+                                                        <div class="column is-45">
+                                                            <div class="keyword-list keyword-list-de">
+                                                                <div class="field">
+                                                                    <label class="label level-left">
+                                                    <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                                {{ i18n.lbl_german }}
+                                                    </span>
+                                                                    </label>
+                                                                    <div class="control">
+                                                                        <div class="keyword-typeahead keyword-typeahead--de">
+                                                                            <input name="keyword_de[]"
+                                                                                   class="input search dropdown-list-search jsonly-enabled translate language--german"
+                                                                                   type="text"
+                                                                                   autocomplete="off"
+                                                                                   aria-labelledby="keyword_de"
+                                                                                   value="{{ keyword.keyword_title.de }}">
+                                                                            <div class="dropdown-list hidden p-2 jsonly-enabled">
+                                                                                <ul>
+
+                                                                                </ul>
+                                                                            </div>
+                                                                            <input name="keyword_system[]"
+                                                                                   type="hidden"
+                                                                                   class="keyword_system"
+                                                                                   value="{{ keyword.keyword_system }}">
+                                                                            <input name="external_id[]"
+                                                                                   type="hidden"
+                                                                                   class="external_id"
+                                                                                   value="">
+                                                                            <template id="template-dropdown-entry" class="dropdown-entry">
+                                                                                <li class="pt-1 pb-1 dropdown-value">
+                                                                                    <button class="button is-fullwidth has-text-left" type="button">
+                                                                                    </button>
+                                                                                </li>
+                                                                            </template>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="column is-auto">
+                                                            <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                                                <button class="level-item icon button is-text translate language--german">
+                                                                    <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                                                </button>
+                                                                <button class="icon button is-text translate language--english">
+                                                                    <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="column is-45">
+                                                            <div class="keyword-list keyword-list-en">
+                                                                <label class="label level-left">
+                                                    <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                                                {{ i18n.lbl_english }}
+                                                    </span>
+                                                                </label>
+                                                                <div class="level">
+                                                                    <div class="control is-flex-grow-1">
+                                                                        <div class="keyword-typeahead keyword-typeahead--en">
+                                                                            <input name="keyword_en[]"
+                                                                                   class="input search dropdown-list-search jsonly-enabled translate language--english"
+                                                                                   type="text"
+                                                                                   autocomplete="off"
+                                                                                   aria-labelledby="keyword_en"
+                                                                                   value="{{ keyword.keyword_title.en }}">
+                                                                            <div class="dropdown-list hidden p-2 jsonly-enabled">
+                                                                                <ul>
+
+                                                                                </ul>
+                                                                            </div>
+                                                                            <template id="template-dropdown-entry" class="dropdown-entry">
+                                                                                <li class="pt-1 pb-1 dropdown-value">
+                                                                                    <button class="button is-fullwidth has-text-left" type="button">
+                                                                                    </button>
+                                                                                </li>
+                                                                            </template>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <footer class="card-footer">
+                                    <a href="#" class="card-footer-item save-keyword">{{ i18n.lbl_save }}</a>
+                                    <a href="/resources/{{ keyword.id }}" class="card-footer-item" target="_blank">{{ i18n.lbl_open_database }}</a>
+                                </footer>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endblock %}
+{% endembed %}

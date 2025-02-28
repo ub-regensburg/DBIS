@@ -1,0 +1,14 @@
+<div id="access-form-filter" 
+    class="">
+    {% for accessForm in accessForms %}
+        <div class="control">
+            <label class="checkbox">
+                <input type="checkbox"
+                    class="mr-2"
+                    name="filter-access-forms[]"
+                    value="{{ accessForm.id }}" {% if accessForm.id in selectedAccessForms %}checked="true"{% endif %}>
+                {{ accessForm.title }}
+            </label>
+        </div>
+    {% endfor %}
+</div>

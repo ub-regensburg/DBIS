@@ -1,0 +1,6 @@
+{
+    "require-dev": {
+        "asm89/twig-lint": "^1.0",
+        "squizlabs/php_codesniffer": "*"
+    }
+}

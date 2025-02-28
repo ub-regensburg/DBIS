@@ -1,0 +1,57 @@
+<div id="time-filter" 
+     class="select is-multiple is-fullwidth">
+    <label class="label has-text-weight-normal has-text-weight-semibold"
+           for="filter-publication-date-start">
+        {{ i18n.lbl_database_publication_date }}
+    </label>
+    
+    <div class="field-body is-block">
+        <div class="field mr-0">
+            <input class="input" 
+                value="{{ filters['publication-time']['start'] }}"
+                id="filter-publication-date-start"
+                name="filter-publication-date-start"
+                type="date" aria-label="{{ i18n.aria_search_lower_publication_time }}">
+        </div>
+        <div class="ml-2 mr-2 mt-2">
+            {{ i18n.to }}
+        </div>
+        <div class="field">
+            <input class="input"
+                value="{{ filters['publication-time']['end'] }}"
+                id="filter-publication-date-end"
+                name="filter-publication-date-end"
+                type="date" aria-label="{{ i18n.aria_search_higher_publication_time }}">
+        </div>
+    </div>
+        
+
+    <label class="label has-text-weight-normal mt-4 has-text-weight-semibold"
+           for="filter-report-date-start">
+        {{ i18n.lbl_database_report_date }}
+    </label>
+    
+    <div class="field-body is-block">
+        <div class="field mr-0">
+            <input class="input"
+                value="{{ filters['report-time']['start'] }}"
+                id="filter-report-date-start"
+                name="filter-report-date-start"
+                type="date" aria-label="{{ i18n.aria_search_higher_report_time }}">
+        </div>
+        <div class="ml-2 mr-2 mt-2">
+            {{ i18n.to }}
+        </div>
+        <div class="field">
+            <input class="input"
+                value="{{ filters['report-time']['end'] }}"
+                id="filter-report-date-end"
+                name="filter-report-date-end"
+                type="date" aria-label="{{ i18n.aria_search_higher_report_time }}">
+        </div>
+    </div>
+
+    <button class="button is-outlined is-fullwidth mt-4">
+        {{ i18n.apply_filter }}
+    </button>
+</div>

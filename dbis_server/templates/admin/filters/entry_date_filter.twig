@@ -1,0 +1,23 @@
+<div id="entry-date-filter" 
+     class="select is-multiple is-fullwidth">
+    <label class="label has-text-weight-normal"
+           for="filter-entry-date-start">
+        {{ i18n.lbl_entry_date_since }}
+    </label>
+    
+    <div class="field-body">
+        <div class="field mr-0">
+            <input class="input" 
+                value="{{ filteredEntryDate.start }}"
+                type="date"
+                id="filter-entry-date-start"
+                name="filter-entry-date-start">
+        </div>
+    </div>
+
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

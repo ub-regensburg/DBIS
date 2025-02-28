@@ -1,0 +1,46 @@
+{% embed "admin/base.twig" with { page: 'superadmin_settings' } %}
+    {%  block content %}
+        {% if is_updated_successfully %}
+            <article class="message is-success">
+                <div class="message-body">
+                    {{ i18n.msg_database_updated_successfully }}
+                </div>
+            </article>
+        {% endif %}
+
+<section aria-labelledby="h-manage-orgs">
+
+    <ul class="breadcrumbs mb-1 is-size-7">
+        <li><a href="/admin">{{ i18n.breadcrumb_admin }}</a></li>
+        <li>{{ i18n.breadcrumb_superadmin_settings}}</li>
+    </ul>
+
+    <div>
+        <form method="POST">
+            {% if settings.id %}
+                <input type="hidden" name="_METHOD" value="PUT"/>
+                <input type="hidden" name="id" value="{{ settings.id }}">
+            {% endif %}
+
+            <div class="columns c-translate">
+                <div class="column is-full">
+                    <div class="field">
+                        <label class="label"><i>Google Translate</i> URL</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="" name="translate_url" value="{{ settings.translate_url }}">
+                        </div>
+                        <p class="help"><a href="https://github.com/thedaviddelta/lingva-translate#instances" target="_blank">Mögliche API-URLs</a>, die hier eingefügt werden können (<em>https://eine-url-von-github-und-dann/api/v1/</em>).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                        <button class="button is-primary" type="submit"
+                                name="save">{{ i18n.lbl_save }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+    {%  endblock %}
+{% endembed %}

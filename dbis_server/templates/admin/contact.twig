@@ -1,0 +1,58 @@
+{% embed "admin/base.twig" %}
+    {%  block content %}
+	{%  if lang=='de' %}
+		<h1 class="title is-1">Kontakt</h1>
+	{% else %}
+		<h1 class="title is-1">Contact</h1>
+	{% endif %}
+{% if lang=='de' %}
+<div class="container">
+    <h2 class="title is-2">DBIS-Team</h2>
+    <div class="columns m-3">
+        <div class="column">
+            <div>
+                <p class="content">Wenn Sie Fragen oder Anregungen haben, können Sie uns gerne per E-Mail kontaktieren:</p>
+                <p class="content"><strong>info.dbis@ur.de</strong></p>
+            </div>
+        </div>
+    </div>
+   <h2 class="title is-2">DBIS-Mailinglisten</h2>
+   <div class="columns m-3">
+        <div class="column">
+            <div>
+    <p class="content">Hier können Sie sich für die DBIS-Mailinglisten eintragen:</p>
+    <ul>
+        <li><a href="https://www.listserv.dfn.de/sympa/subscribe/ur-ub-dbis" target="_blank">Zur DBIS-Info-Mailingliste</a></li>
+        <li><a href="https://www.listserv.dfn.de/sympa/subscribe/ur-ub-dbis-update" target="_blank">Zur DBIS-Update-Mailingliste</a></li>
+    </ul>   </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+<div class="container">
+    <h2 class="title is-2">DBIS Team</h2>
+    <div class="columns m-3">
+        <div class="column">
+            <div>
+                <p class="content">If you have any questions or suggestions, feel free to contact us via email:</p>
+                <p class="content"><strong>info.dbis@ur.de</strong></p>
+            </div>
+        </div>
+    </div>
+   <h2 class="title is-2">DBIS-Mailinglisten</h2>
+   <div class="columns m-3">
+        <div class="column">
+            <div>
+    <p class="content">You can subscribe to the DBIS mailing lists here:</p>
+    <ul>
+        <li><a href="https://www.listserv.dfn.de/sympa/subscribe/ur-ub-dbis" target="_blank">Subscribe to the DBIS Info Mailing List</a></li>
+        <li><a href="https://www.listserv.dfn.de/sympa/subscribe/ur-ub-dbis-update" target="_blank">Subscribe to the DBIS Update Mailing List</a></li>
+    </ul>
+</div>
+            </div>
+        </div>
+</div>
+{% endif %}
+
+    {%  endblock %}
+{% endembed %}

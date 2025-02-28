@@ -1,0 +1,54 @@
+<div id="availability-filter"
+     class="select is-multiple is-fullwidth">
+
+    {% if not no_tags %}
+        <div id="availability-tags" class="tags is-fullwidth mt-2"></div>
+    {% endif %}
+
+    <div class="control">
+        <label class="checkbox">
+            <input type="checkbox"
+                    class="mr-2"
+                   name="availability-filter-free"
+                   {{ filters.availability.free ? "checked" }}>
+                   <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_green.svg" alt=""></span>
+            {{ i18n.availability_free }}
+        </label>
+    </div>
+
+    {%  if organization and organization.ubrId != 'ALL' %}
+    <div class="control">
+        <label class="checkbox">
+            <input type="checkbox"
+                   class="mr-2"
+                   name="availability-filter-local"
+                    {{ filters.availability.local ? "checked" }} >
+                    <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_yellow.svg" alt=""></span>
+            {{ i18n.availability_licensed }}
+        </label>
+    </div>
+    {% endif %}
+
+    {# {%  if (not organization) or not_local.licensed.doc_count %} #}
+    <div class="control">
+        <label class="checkbox">
+            <input type="checkbox"
+                    class="mr-2"
+                   name="availability-filter-none"
+                   {{ filters.availability.none or none ? "checked" }}>
+                   <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_red.svg" alt=""></span>
+            {%  if organization.ubrId != 'ALL' %}
+                {{ i18n.availability_at_organization_none }}
+            {% else %}
+                {{ i18n.availability_none }}
+            {% endif %}
+        </label>
+    </div>
+    {# {% endif %} #}
+
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

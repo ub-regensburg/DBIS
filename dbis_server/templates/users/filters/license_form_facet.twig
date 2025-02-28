@@ -1,0 +1,64 @@
+<div id="license-form-filter" 
+    class="select is-multiple">
+
+    <input class="input jsonly search-field"
+           placeholder="{{ i18n.lbl_search }}" aria-label="{{ i18n.aria_search_license_forms }}" />
+    
+    <select name="filter-license-forms[]" 
+        id="filter-license-forms" 
+        class="is-small is-fullwidth"
+        multiple aria-label="{{ i18n.aria_select_license_forms }}">
+
+        {% for license_form in license_forms %}
+        {% for filtered_license_form in filtered_license_forms %}
+            {% if license_form.key == filtered_license_form.title %}
+                {# Check if license_form.key exists in the forms_sorted array #}
+                {% set is_sorted = false %}
+                {% set sorted_doc_count = 0 %}
+                {% for sorted_form in forms_sorted %}
+                    {% if sorted_form.key == license_form.key %}
+                        {% set is_sorted = true %}
+                        {% set sorted_doc_count = sorted_form.doc_count %}
+                    {% endif %}
+                {% endfor %}
+
+                <option value="{{ license_form.key }}" selected="true" {% if not is_sorted %}disabled{% endif %}>
+                    {{ license_form.key }}
+                    {% if license_form.doc_count %} <span>({{ sorted_doc_count }}<!--/{{ license_form.doc_count }}-->)</span> {% endif %}
+                </option>
+            {% endif %}
+        {% endfor %}
+        {% endfor %}
+
+        {% for license_form in license_tforms %}
+            {% set is_selected = false %}
+            {% for filtered_license_form in filtered_license_forms %}
+                {% if license_form.key == filtered_license_form.title %}
+                    {% set is_selected = true %}
+                {% endif %}
+            {% endfor %}
+            {% if not is_selected  %}        
+                {% set is_sorted = false %}
+                {% set sorted_doc_count = 0 %}
+                {% for sorted_form in forms_sorted %}
+                    {% if sorted_form.key == license_form.key %}
+                        {% set is_sorted = true %}
+                        {% set sorted_doc_count = sorted_form.doc_count %}
+                    {% endif %}
+                {% endfor %}
+
+                <option value="{{ license_form.key }}" {% if not is_sorted %}disabled{% endif %}>
+                    {{ license_form.key }}
+                    {% if license_form.doc_count %} <span>({{ sorted_doc_count }}<!--/{{ license_form.doc_count }}-->)</span> {% endif %}
+                </option>
+            {% endif %}
+        {% endfor %}
+        
+    </select>
+    
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

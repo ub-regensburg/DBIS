@@ -1,0 +1,256 @@
+{% embed "admin/base.twig" with { page: 'manage_licenses' }%}
+    {% block content %}
+        <section aria-labelledby="h-main">
+            {% if reused_license %}
+                <article class="message is-success is-light">
+                    <p class="message-body">
+                        {{ i18n.msg_license_reused_successfully }}.
+                    </p>
+                </article>
+            {% endif %}
+
+            {% if deleted_successfully %}
+                <article class="message is-success is-light">
+                    <p class="message-body">
+                        {{ i18n.msg_license_deleted_successfully }}
+                    </p>
+                </article>
+            {% endif %}
+
+            <ul class="breadcrumbs mb-1 is-size-7">
+                <li><a href="../../..">{{ i18n.breadcrumb_admin }}</a></li>
+                <li><a href="../..">{{ i18n.breadcrumb_resources}}</a></li>
+                {% if resource==null %}
+                    <li><span>{{ i18n.breadcrumb_new}}</span></li>
+                {% else %}
+                    <li><span>{{ resource.title }}</span></li>
+                {% endif %}
+            </ul>
+
+            <h1 id="h-main"
+                class="title is-1">{{ i18n.h_manage_licenses }}</h1>
+
+            <div class="tabs"
+                 role="navigation">
+                <ul>
+                    <li><a href="..">{{ i18n.h_navtab_metadata }}</a></li>
+                    <li class="is-active"><a>{{ i18n.h_navtab_licenses }}</a></li>
+                </ul>
+            </div>
+            <div class="mt-6">
+                <h2 class="title is-2">{{ i18n.lbl_existing_licenses }}</h2>
+                <table class="table is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>
+                            {{ i18n.lbl_license_id }}
+                        </th>
+                        <th>
+                            {{ i18n.lbl_license_type }}
+                        </th>
+                        <th>
+                            {{ i18n.lbl_license_form }}
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for license in resource.licenses %}
+                        <tr>
+                            <td>
+                                {{ license.id }}
+                            </td>
+                            <td>
+                                {{ license.type.title }}
+                            </td>
+                            <td>
+                                {% if license.form %}
+                                    {{ license.form.title }}
+                                {% else %}
+                                    <span class="inactive">
+                                            ({{ i18n.lbl_none }})
+                                        </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a class="
+                                    button
+                                    is-primary
+                                    is-outlined
+                                    has-icon
+                                    is-pulled-right"
+                                aria-label="{{ i18n.aria_edit_license }}"
+                                href="./{{ license.id }}/">
+                                        <span class="icon">
+                                            <i class="fas fa-edit"></i>
+                                        </span>
+                                    <span>{{ i18n.lbl_edit }}</span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% if isAdmin or isSuperAdmin %}
+                    <a aria-label="{{ i18n.aria_create_license }}"
+                    class="button is-primary"
+                    href="./new/">
+                        {{ i18n.lbl_create_license_access }}
+                    </a>
+                {% endif %}
+
+            </div>
+
+            {% if additional_licenses|length > 0 %}
+                <div class="mt-6">
+                    <h2 class="title is-2">{{ i18n.h_reuse_licenses }}</h2>
+                    {% for license in additional_licenses %}
+                    <div class="mb-5">
+                        <table class="table is-fullwidth mb-0">
+                            <thead>
+                            <tr>
+                                <th>
+                                    {{ i18n.lbl_license_id }}
+                                </th>
+                                <th>
+                                    {{ i18n.lbl_license_type }}
+                                </th>
+                                <th>
+                                    {{ i18n.lbl_license_form }}
+                                </th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        {{ license.id }}
+                                    </td>
+                                    <td>
+                                        {{ license.license_type.title[lang] }}
+                                    </td>
+                                    <td>
+                                        {% if license.form %}
+                                            {{ license.form.title[lang] }}
+                                        {% else %}
+                                            <span class="inactive">
+                                            ({{ i18n.lbl_none }})
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                    {% if isAdmin or isSuperAdmin %}
+                                        <form method="POST">
+                                            <input type="hidden" name="license_id" value="{{ license.id }}">
+                                            <button class="
+                                        button
+                                        is-primary
+                                        is-outlined
+                                        has-icon
+                                        is-pulled-right"
+                                                    aria-label="{{ i18n.lbl_reuse }}">
+                                            <span class="icon">
+                                                <i class="fas fa-recycle"></i>
+                                            </span>
+                                                <span>{{ i18n.lbl_reuse }}</span>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                    </td>
+                                </tr>                       
+                            </tbody>
+                        </table>
+                        <div class="pl-3">
+                            <h5 class="has-text-weight-bold">{{ i18n.lbl_additional_info }}</h5>
+                            <dl class="notification">
+                                <dt class="has-text-weight-semibold">{{ i18n.lbl_publication_form }}</dt>
+                                <dd class="ml-3">{{ license.publication_form.title }}</dd>
+
+                                <dt class="has-text-weight-semibold">{{ i18n.lbl_parallel_users }}</dt>
+                                <dd class="ml-3">{{ license.number_of_concurrent_users }}</dd>
+
+                                <dt class="has-text-weight-semibold">{{ i18n.lbl_is_allowing_walking }}</dt>
+                                <dd class="ml-3">{% if license.is_allowing_walking %} {{ i18n.lbl_yes }} {% else %}{{ i18n.lbl_no }}{% endif %}</dd>
+
+                                <dt class="has-text-weight-semibold">{{ i18n.lbl_text_mining }}</dt>
+                                <dd class="ml-3">{% if license.is_allowing_data_mining %} {{ i18n.lbl_yes }} {% else %}{{ i18n.lbl_no }}{% endif %}</dd>
+
+                                <dt class="has-text-weight-semibold">{{ i18n.lbl_publisher }}</dt>
+                                <dd class="ml-3">{{ license.publisher_obj.title }}</dd>
+
+                                <dt class="has-text-weight-semibold">{{ i18n.lbl_vendor }}</dt>
+                                <dd class="ml-3">{{ license.vendor_obj.title }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if organisations_with_license|length > 0 %}
+                <div class="mt-6">
+                    <h2 class="title is-2">{{ i18n.h_organisations_with_license }}</h2>
+                    <!--
+                    <div class="">
+                        <div class="select">
+                            <select id="orgs-with-holdings">
+                                {% for organisation_with_license in organisations_with_license %}
+                                    <option value="{{organisation_with_license.organization.ubrId}}">{{ organisation_with_license.organization.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        {% if isSuperAdmin %}
+                            <a id="link-to-org" data-resource-id="{{ resource_id }}" class="link-to button" target="_blank">{{ i18n.lbl_switch_to_organisation }}</a>
+                        {% else %}
+                            <a id="link-to-user" data-resource-id="{{ resource_id }}" class="link-to button" target="_blank">{{ i18n.lbl_switch_to_user_view }}</a>
+                        {% endif %}
+                    </div>
+                    -->
+                    <div class="">
+                        <div class="dropdown searchable is-fullwidth"
+                                aria-label="{{ i18n.aria_select_organization }}">
+                            <div class="dropdown-trigger"
+                                    aria-label="{{ i18n.aria_open_dropdown_organizations }}">
+                                <button class="button"
+                                        aria-haspopup="true"
+                                        aria-controls="dropdown-organizations">
+                                                <span class="selected-org" data-ubrid="{{ selectedOrganization ? selectedOrganization.ubrId : '' }}">{{ i18n.msg_organisations_with_licenses }}</span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div
+                                    class="dropdown-menu"
+                                    id="dropdown-organizations"
+                                    aria-label="{{ i18n.aria_dropdown_organizations }}"
+                                    role="menu">
+                                <div class="dropdown-content">
+                                    <div class="searchfield-container">
+                                        <input type="text"
+                                                placeholder="{{ i18n.hint_search_organization_by_name }}"
+                                                aria-label="{{ i18n.aria_dropdown_organizations_search}}"
+                                                class="searchfield input dropdown-item"/>
+                                    </div>
+                                    {% for organisation_with_license in organisations_with_license %}
+                                        <a value="{{ organisation_with_license.ubrId }}" class="select-organisation-with-license dropdown-item has-text-grey-dark" data-city="{{ organisation_with_license.city }}" onclick="event.preventDefault();">
+                                            {{ organisation_with_license.name }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        {% if isSuperAdmin %}
+                            <a id="link-to-org" data-resource-id="{{ resource_id }}" class="link-to button" target="_blank">{{ i18n.lbl_switch_to_organisation }}</a>
+                        {% else %}
+                            <a id="link-to-user" data-resource-id="{{ resource_id }}" class="link-to button" target="_blank">{{ i18n.lbl_switch_to_user_view }}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+    {% endblock %}
+{% endembed %}

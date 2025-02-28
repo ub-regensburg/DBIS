@@ -1,0 +1,86 @@
+{% embed "admin/base.twig" with { page: 'manage_drafts' } %}
+    {% block content %}
+        <section aria-labelledby="h-manage-drafts">
+            <form class="field"
+                  id="drafts-form"
+                  action=""
+                  method="get">
+                <h1 id="h-manage-drafts"
+                    class="title is-1">{{ i18n.lbl_drafts_manage }}</h1>
+                <div class="notification">
+                    Hier werden die heute angelegten Datenbanken angezeigt. Bis 20:00 Uhr können die Datenbanken <strong>gelöscht werden, falls sie fälschlicherweise erstellt worden sind</strong>.
+                    </br>
+                    </br>
+                    Ansonsten werden die neuen Datenbanken über Nacht indexiert und erscheinen am morgigen Tag ab ca. 07:00 Uhr in der Suche aller Einrichtungen.
+                </div>
+                <div class="">
+                    <table class="table is-hoverable org-table is-fullwidth">
+                        <thead>
+                        <tr>                         
+                            <th>
+                                {{ i18n.lbl_resource_title }}
+                            </th>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                {{ i18n.organization }}
+                            </th>
+                            <th>
+                                {{ i18n.lbl_edit }}
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% if resources|length < 1 %}
+                            <tr><td colspan="2">{{ i18n.msg_no_drafts }}</td></tr>
+                        {% endif %}
+
+                        {% for resource in resources %}
+                            {% if organization is defined %}
+                                {% set resourceUrl = url_for('manageResourceWithinOrganization', { 'ubrId': organization, 'id': resource.id }) %}
+                                {% set licenseUrl = url_for('manageLicensesWithinOrganization', { 'organizationId': organization, 'resourceId': resource.id }) %}
+                            {% else %}
+                                {% set resourceUrl = url_for('manageResource', { 'id': resource.id }) %}
+                                {% set licenseUrl = url_for('manageLicenses', { 'id': resource.id }) %}
+                            {% endif %}
+                            <tr>
+                                <td class="pt-4 pb-4">
+                                    <a class="has-text-primary" href="{{ resourceUrl }}">
+                                        {{ resource.title }}</a>
+                                </td>
+                                <td class="pt-4 pb-4">
+                                    <span class="tag is-light">{{ resource.id }}</span>
+                                </td>
+                                <td class="pt-4 pb-4">
+                                    {{ resource.created_by }}
+                                </td>
+                                <td class="pt-4 pb-4">
+                                    <span class="icon-text">
+                                        <span class="icon has-text-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </span>
+                                        <a href="{{ resourceUrl }}"
+                                                            class="has-text-primary">
+                                                            {{ i18n.lbl_edit_metadata}}
+                                        </a>
+                                    </span>
+                                    <span class="icon-text pl-2">
+                                        <span class="icon has-text-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </span>
+                                        <a href="{{ licenseUrl }}"
+                                                            class="has-text-primary">
+                                                            {{ i18n.lbl_edit_license }}
+                                        </a>
+                                    </span>
+                                </td>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </section>
+    {% endblock %}
+{% endembed %}

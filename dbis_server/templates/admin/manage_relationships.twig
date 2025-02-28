@@ -1,0 +1,118 @@
+{% embed "admin/base.twig" with { page: 'manage_relationships' } %}
+    {% block content %}
+        <section aria-labelledby="h-manage-relationships">
+            <form class="manage-relationships-form" method="POST">
+                <h1 id="h-manage-resources"
+                    class="title is-1">{{ i18n.lbl_menu_nav_superadministration_manage_relationships }}</h1>
+                
+                {% if is_updated_successfully %}
+                    <article class="message is-success">
+                        <div class="message-body">
+                            {{ i18n.msg_relationships_updated_successfully }}
+                        </div>
+                    </article>
+                {% endif %}
+
+                <div class="manage-relationships">
+                    <div id="search-database" class="box mb-6">
+                        <div class="c-search-database">
+                            <div class="field has-addons search-origin-database">
+                                <p class="control">
+                                    <a class="button is-static">
+                                        {{ i18n.lbl_search }}
+                                    </a>
+                                </p>
+                                <div class="control is-expanded">
+                                    <input class="search-database input" type="text" placeholder="">
+                                </div>
+                            </div>
+                            <ul class="p-2 autocomplete-results">
+                            </ul>
+                        </div>
+                        <div class="selected-database is-hidden">
+                            <div class="tags are-medium">
+                                <span class="tag is-white pl-0 ml-0">Ausgewählte Datenbank</span>
+                                <input type="hidden" name="database-id" value=""/>
+                                <span id="database-name" class="tag is-white"></span>
+                                <span id="database-id" class="tag is-white"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="related-databases" class="related-databases box">
+                        <h2 class="is-size-4">{{ i18n.msg_relationships_is_related }}</h2>
+                        <div class="c-search-database">
+                            <div class="field has-addons search-origin-database">
+                                <p class="control">
+                                    <a class="button is-static">
+                                        {{ i18n.lbl_search }}
+                                    </a>
+                                </p>
+                                <div class="control is-expanded">
+                                    <input class="search-database input" type="text" placeholder="" disabled>
+                                </div>
+                            </div>
+                            <ul class="p-2 autocomplete-results">
+                            </ul>
+                        </div>
+                        <ul class="related-databases">
+
+                        </ul>
+                    </div>
+
+                    <div id="sub-databases" class="sub-databases box">
+                        <h2 class="is-size-4">{{ i18n.msg_relationships_is_parent }}</h2>
+
+                        <div class="c-search-database">
+                            <div class="field has-addons search-origin-database">
+                                <p class="control">
+                                    <a class="button is-static">
+                                        {{ i18n.lbl_search }}
+                                    </a>
+                                </p>
+                                <div class="control is-expanded">
+                                    <input class="search-database input" type="text" placeholder="" disabled>
+                                </div>
+                            </div>
+                            <ul class="p-2 autocomplete-results">
+                            </ul>
+                        </div>
+                        <ul class="sub-databases">
+
+                        </ul>
+                    </div>
+
+                    <div id="top-databases" class="top-databases box">
+                        <h2 class="is-size-4">{{ i18n.msg_relationships_is_child }}</h2>
+
+                        <div class="c-search-database">
+                            <div class="field has-addons search-origin-database">
+                                <p class="control">
+                                    <a class="button is-static">
+                                        {{ i18n.lbl_search }}
+                                    </a>
+                                </p>
+                                <div class="control is-expanded">
+                                    <input class="search-database input" type="text" placeholder="" disabled>
+                                </div>
+                            </div>
+                            <ul class="p-2 autocomplete-results">
+                            </ul>
+                        </div>
+                        <ul class="top-databases">
+                            
+                        </ul>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary" type="submit" disabled
+                                    name="save">{{ i18n.create_orgaform_submit_save }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    {% endblock %}
+{% endembed %}

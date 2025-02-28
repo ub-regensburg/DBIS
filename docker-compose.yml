@@ -1,0 +1,114 @@
+version: "3.8"
+
+volumes:
+    dbis_database_postgresql_data:
+      name: dbis_database_postgresql_data
+    elasticsearch_data:
+      name: elasticsearch_data
+
+services:
+    dbis_server:
+        container_name: dbis_server
+        build:
+            context: ./dbis_server
+            network: host
+        mem_limit: 512m
+        ports:
+            - ${DBIS_SERVER_PORT}:80
+            - ${DBIS_SSL_PORT}:443
+        depends_on:
+          - dbis_database
+        env_file:
+            - .env
+        volumes:
+        - ./dbis_server/src:/var/www/src
+        - ./dbis_server/public:/var/www/public
+        - ./dbis_server/config:/var/www/config
+        - ./dbis_server/templates:/var/www/templates
+        - ./dbis_server/app:/var/www/app
+        - ./dbis_server/migrations:/var/www/migrations
+        - ./dbis_server/webpack.common.js:/var/www/webpack.common.js
+        - ./dbis_server/webpack.dev.js:/var/www/webpack.dev.js
+        - ./dbis_server/webpack.prod.js:/var/www/webpack.prod.js
+        - ./dbis_server/phinx.php:/var/www/phinx.php
+        - ./dbis_server/php.ini-development:/usr/local/etc/php/conf.d/php.ini
+        - ./dbis_server/resources/text:/var/www/locale/
+        - ./.env:/var/www/.env
+        - ./dbis_server/tests:/var/www/tests
+        command: [
+            "bash", "-c", "chmod -R 777 /var/www/public; 
+            service apache2 start && sleep 5 && npm run watch"]
+
+    dbis_database:
+        container_name: dbis_database
+        build:
+          context: ./dbis_database
+        environment:
+          - POSTGRESQL_PASSWORD=${DBIS_DB_ROOT_PASSWORD}
+          - POSTGRES_DB=${DBIS_DB_DBNAME}
+        ports:
+          - "127.0.0.1:${DBIS_DB_PORT}:5432"
+        volumes:
+            - dbis_database_postgresql_data:/var/lib/postgresql/data
+            - ./dbis_database/init.sql:/docker-entrypoint-initdb.d/init.sql
+            # Config leads to an error
+            # - ./dbis_database/postgresql.conf:/opt/bitnami/postgresql/conf/postgresql.conf
+
+    dbis_data:
+      container_name: dbis_data
+      build:
+        context: ./dbis_data
+      profiles: [full]
+      environment:
+        - ALLOW_EMPTY_PASSWORD=yes
+      ports:
+        - "127.0.0.1:3306:3306"
+      volumes:
+        - ./dbis_data/dumps:/dumps
+        - ./dbis_data/init.sql:/docker-entrypoint-initdb.d/init.sql
+        - ./dbis_data/import.sh:/import.sh
+
+    elasticsearch:
+      container_name: elasticsearch
+      image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+      environment:
+        - xpack.security.enabled=false
+        - discovery.type=single-node
+        - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      mem_limit: 512m
+      ulimits:
+        memlock:
+          soft: 65536
+          hard: 65536
+        nofile:
+          soft: 65536
+          hard: 65536
+      cap_add:
+        - IPC_LOCK
+      volumes:
+        - elasticsearch_data:/usr/share/elasticsearch/data
+      ports:
+        - "127.0.0.1:9200:9200"
+        - "127.0.0.1:9300:9300"
+
+    kibana:
+      container_name: kibana
+      image: docker.elastic.co/kibana/kibana:8.8.0
+      profiles: [full]
+      ports:
+        - "127.0.0.1:5601:5601"
+      depends_on:
+        - elasticsearch
+
+    logstash:
+      container_name: logstash
+      build:
+        context: ./logstash/
+      env_file:
+        - .env
+      volumes:
+        - ./.env:/app/.env
+        - ./logstash/app:/app
+      depends_on:
+        - elasticsearch
+        - dbis_database

@@ -1,0 +1,127 @@
+{% embed "admin/base.twig" with { page: 'select_subject' }%}
+    {% block content %}
+        <section aria-labelledby="h-main">
+            {% if is_updated_successfully %}
+                <article class="message is-success">
+                    <div class="message-body">
+                        {{ i18n.msg_top_database_updated_successfully }}
+
+                    </div>
+                </article>
+            {% endif %}
+
+            {% if selectedSubject %}
+
+                <ul class="breadcrumbs mb-1 is-size-7">
+                    <li><a href="../../../">{{ i18n.breadcrumb_admin }}</a></li>
+                    <li><a href="../../../subjects/top-resources/">{{ i18n.breadcrumb_subjects}}</a></li>
+                    <li>{{ selectedSubject.title }}</li>
+                    <li>{{ i18n.breadcrumb_subjects_top}}</li>
+                </ul>
+
+                <h1 id="h-main" class="title is-1">
+                    {{ i18n.h_topdbs }} |
+                    <span style="font-weight: normal;">{{
+                        selectedSubject.title|length > 100 ?
+                            selectedSubject.title|slice(0,100) ~ '...' :
+                            selectedSubject.title
+                        }}</span>
+                </h1>
+                <form method="POST"
+                      id="top-resource-form"
+                      class="picker-list">
+                    <input type="hidden" name="_METHOD" value="PUT"/>
+                    <div class="columns">
+                        <div class="column">
+                            <article id="resources-source-panel"
+                                aria-label="{{ i18n.lbl_databases_available }}"
+                                class="panel is-primary">
+                                <p class="panel-heading">
+                                    {{ i18n.lbl_databases_available }}
+                                </p>
+                                <div class="panel-block">
+                                    <div class="field has-addons">
+                                        <div class="control is-expanded">
+                                            <input id="resource-search-input"
+                                                   class="input is-fullwidth pickable-search-input"
+                                                   placeholder="{{ i18n.aria_search_entries }}"
+                                                   aria-label="{{ i18n.aria_search_entries }}"/>
+                                        </div>
+                                        <div class="control">
+                                            <a id="resource-search-button" class="pickable-search-button button is-info">
+                                                {{ i18n.lbl_search }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-block panel-block">
+                                    <div id="resources-source-list"
+                                         data-fetch-url="/api/v1/resources"
+                                         data-org-id="{{ organization.ubrId }}"
+                                         data-subject-id="{{ selectedSubject.id }}"
+                                         data-is-collection="{% if selectedSubject.is_collection %}true{% else %}false{% endif %}"
+                                         class="container source-list">
+                                            {% embed "shared/pickable-item.twig"
+                                                with {"disabled": "true", "searchable": "true", "name": "resources", "is_template": "true"} %}
+                                            {% endembed %}
+                                    </div>
+                                    <button type="button"
+                                            class="is-flex is-flex-wrap-wrap is-fullwidth button load-more-button">
+                                        {{ i18n.lbl_more }}
+                                    </button>
+                                </div>
+
+                            </article>
+                        </div>
+
+                        <div class="column">
+                            <article id="resources-target-panel"
+                                aria-label="{{ i18n.lbl_databases_selected }}"
+                                class="panel is-primary">
+                                <p class="panel-heading">
+                                    {{ i18n.lbl_databases_selected }}
+                                </p>
+                                <div class="panel-block">
+                                    <p><i>{{ i18n.hint_drag_sort }}</i></p>
+                                </div>
+                                <div class="list-block panel-block">
+                                    <div id="resources-target-list"
+                                         class="container picker-target-list">
+                                        {% for resource in topResources|sort((a, b) => (a.sortOrder < b.sortOrder) ? -1 : 1) %}
+                                            {% embed "shared/pickable-item.twig"
+                                                with {"searchable": "false", "name": "resources"}%}
+                                            {% endembed %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                                    <input type="submit"
+                                           class="button is-primary" value="{{ i18n.lbl_save }}"/>
+                </form>
+            {% else %}
+
+                <ul class="breadcrumbs mb-1 is-size-7">
+                    <li><a href="../../">{{ i18n.breadcrumb_admin }}</a></li>
+                    <li>{{ i18n.breadcrumb_subjects}}</li>
+                    <li>{{ i18n.breadcrumb_subjects_top}}</li>
+                </ul>
+
+                <h1 id="h-main" class="title is-1">
+                    {{ i18n.h_topdbs }}
+                </h1>
+
+                <h2 id="h-main" class="title is-2">
+                    {{ i18n.lbl_select_subject }}
+                </h2>
+
+                {% embed "admin/subjects/searchable_subject_list.twig" with {url: '../../subjects/:subjectId/top-resources/'}  %}
+                {% endembed %}
+
+            {% endif %}
+
+        </section>
+    {% endblock %}
+{% endembed %}

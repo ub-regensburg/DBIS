@@ -1,0 +1,19 @@
+.is-primary.is-light {
+    color: #06597A !important;
+}
+
+.pagination-ellipsis {
+    color: #363636 !important;
+}
+
+.checkbox.disabled {
+    color: #595959 !important;
+}
+
+a.navbar-item:focus, a.navbar-item:focus-within, a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:focus, .navbar-link:focus-within, .navbar-link:hover, .navbar-link.is-active {
+    color: hsl(229.3, 89.6%, 45.3%) !important;
+}
+
+.button.is-primary.is-inverted:hover {
+    color: #06597A !important;
+}

@@ -1,0 +1,12 @@
+<div class="is-fullwidth">
+    <div class="control">
+        <label class="checkbox">
+            <input id="top-databases-filter" type="checkbox"
+                    class="mr-2"
+                    name="top-databases-filter" 
+                    {% if filters['top-databases'] == true %} checked {% endif %}
+                    >
+            {{ i18n.top_databases_filter }}
+        </label>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+{# The pagination element uses the following variables.
+
+q [mandatory]               Search phrase (string)
+p [mandatory]               Current page (int)
+pagination_size [mandatory] Number of elements on one page
+resources [mandatory]       Current result list for page (array)
+total_nr [mandatory]        Total number of results
+pages_nr [mandatory]        Number of pages of the result
+search_url [mandatory]      Base URL of the search page (string)
+size [optional]             One of: is-small, is-medium, is-large
+alignment [optional]        One of: is-right, is-centered
+only_pages [optional]       If set to 'yes', the next & previous page buttons are not rendered
+sort_by [optional]          Sort order
+#}
+{% if ((q == "" or q) and (pages_nr > 1)) %}
+    <div class="">
+        <nav class="pagination {{ alignment }} {{ size }}" role="navigation" aria-label="pagination">
+
+            {% if not only_pages %}
+                {% if p > 1 %}
+                    <button class="pagination-previous" name="p" value="{{ p - 1 }}">
+                        {{ i18n.lbl_previous_page }}</button>
+                {% endif %}
+
+                {% if p < pages_nr %}
+                    <button class="pagination-next" name="p" value="{{ p + 1 }}">
+                        {{ i18n.lbl_next_page }}</button>
+                {% endif %}
+            {% endif %}
+
+            <ul class="pagination-list">
+                {% if p > 3 %}
+                    <li><button class="pagination-link"
+                               aria-label="{{ i18n.alt_goto_page }} 1"
+                               name="p"
+                               value="1">
+                                1
+                        </button></li>
+                    <li><span class="pagination-ellipsis">&hellip;</span></li>
+                    <li><button class="pagination-link"
+                               aria-label="{{ i18n.alt_goto_page }} {{ p - 1 }}"
+                               name="p"
+                               value="{{ p - 1 }}">
+                                {{ p - 1 }}
+                        </button></li>
+                {% else %}
+                    {% if p != 1 %}
+                        {% for i in 1..(p - 1) %}
+                            <li><button class="pagination-link"
+                                   aria-label="{{ i18n.alt_goto_page }} {{ i }}"
+                                   name="p"
+                                   value="{{ i }}">
+                                    {{ i }}
+                                </button></li>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+
+                <li><button class="pagination-link is-current" aria-label="{{ i18n.alt_goto_page }} {{ p }}">{{ p }}</button></li>
+
+                {% if p < (pages_nr - 2) %}
+                    <li><button class="pagination-link"
+                               aria-label="{{ i18n.alt_goto_page }} {{ p + 1 }}"
+                               name="p"
+                               value="{{ p + 1 }}">
+                                {{ p + 1 }}
+                        </button></li>
+                    <li><span class="pagination-ellipsis">&hellip;</span></li>
+                    <li><button class="pagination-link"
+                               aria-label="{{ i18n.alt_goto_page }} {{ pages_nr }}"
+                               name="p"
+                               value="{{ pages_nr }}">
+                                {{ pages_nr }}
+                        </button></li>
+                {% else %}
+                    {% if p != pages_nr %}
+                        {% for i in (p + 1)..pages_nr %}
+                            <li><button class="pagination-link"
+                                   aria-label="{{ i18n.alt_goto_page }} {{ i }}"
+                                   name="p"
+                                   value="{{ i }}">
+                                    {{ i }}
+                            </button></li>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            </ul>
+      </nav>
+    </div>
+{% endif %}

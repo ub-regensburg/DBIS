@@ -1,0 +1,133 @@
+{% if not resourceLocal.overwrite.instructions.de and resourceLocal.overwrite.instructions.de|length > 0 is empty or not resourceLocal.overwrite.instructions.en is empty and resourceLocal.overwrite.instructions.en|length > 0 %}
+    {% set isLocalized = true %}
+{% else %}
+    {% set isLocalized = false %}
+{% endif %}
+
+
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ i18n.lbl_instructions }}</h3>
+    {%  if selectedOrganization.ubrId is not empty %}
+    <div class="tags has-addons is-clickable is-unselectable localization-tag" data-id="field-instruction">
+        {% if resourceLocal.overwrite.instructions.de is empty and resourceLocal.overwrite.instructions.de|length < 1 and resourceLocal.overwrite.instructions.en is empty and resourceLocal.overwrite.instructions.en|length < 1 %}
+            <span class="tag global-tag">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light is-hidden">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-grey-lighter">&nbsp;</span>
+        {% else %}
+            <span class="tag global-tag is-hidden">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-info">&nbsp;</span>
+        {% endif %}
+        <input type="checkbox" name="instruction-local" class="localization-checkbox" hidden {% if isLocalized %} checked {% endif %}>
+    </div>
+    {% endif %}
+</div>
+<!-- GLOBAL -->
+<div class="columns field-instruction global c-translate
+     {% if isLocalized %}
+         is-hidden 
+     {% endif %}
+     ">
+    <div class="column is-45">
+        <div class="field">
+            <label class="label level-left">
+                    <span class="is-size-7 has-text-grey is-lowercase level-item">
+                                {{ i18n.lbl_german }}
+                    </span>
+            </label>
+            <div class="control">
+                <textarea id="instructions_global_de"
+                          name="instructions_global_de"
+                          class="input textarea translate language--german global"
+                          type="text"
+                          autocomplete="off"
+                          placeholder="{{ i18n.lbl_instructions_placeholder }}"
+                >{{ resourceGlobal.instructions.de }}</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="column is-auto">
+        <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+            <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+            </button>
+            <button class="icon button is-text translate language--english global pl-5 pr-5">
+                <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+            </button>
+        </div>
+    </div>
+    <div class="column is-45">
+        <div class="field">
+            <label class="label level-left">
+                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                            {{ i18n.lbl_english }}
+                </span>
+            </label>
+            <div class="control">
+                <textarea id="instructions_global_en"
+                          name="instructions_global_en"
+                          class="input textarea translate language--english global"
+                          type="text"
+                          autocomplete="off"
+                          placeholder="{{ i18n.lbl_instructions_placeholder }}"
+                >{{ resourceGlobal.instructions.en }}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+            
+            
+            
+<!-- LOCAL -->
+<div class="columns field-instruction local c-translate
+     {% if resourceLocal.overwrite.instructions.de is empty and resourceLocal.overwrite.instructions.de|length < 1 and resourceLocal.overwrite.instructions.en is empty and resourceLocal.overwrite.instructions.en|length < 1 %}
+         is-hidden 
+     {% endif %}
+     ">
+    <div class="column is-45">
+        <div class="field">
+            <label class="label level-left">
+                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                            {{ i18n.lbl_german }}
+                </span>
+            </label>
+            <div class="control">
+                <textarea id="instructions_local_de"
+                          name="instructions_local_de"
+                          class="input textarea translate language--german local"
+                          type="text"
+                          autocomplete="off"
+                          placeholder="{{ i18n.lbl_instructions_placeholder }}"
+                >{{ resourceLocal.overwrite.instructions.de }}</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="column is-auto">
+        <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+            <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+            </button>
+            <button class="icon button is-text translate language--english global pl-5 pr-5">
+                <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+            </button>
+        </div>
+    </div>
+    <div class="column  is-45">
+        <div class="field">
+            <label class="label level-left">
+                <span class="is-size-7 has-text-grey is-lowercase level-item">
+                            {{ i18n.lbl_english }}
+                </span>
+            </label>
+            <div class="control">
+                <textarea id="instructions_local_en"
+                          name="instructions_local_en"
+                          class="input textarea translate language--english local"
+                          type="text"
+                          autocomplete="off"
+                          placeholder="{{ i18n.lbl_instructions_placeholder }}"
+                >{{ resourceLocal.overwrite.instructions.en }}</textarea>
+            </div>
+        </div>
+    </div>
+</div>

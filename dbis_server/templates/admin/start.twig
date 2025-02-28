@@ -1,0 +1,83 @@
+{% embed "admin/base.twig" %}
+    {%  block content %}
+        <h1 class="title is-1">{{ i18n.login_welcome_back }}</h1>
+	{% if selectedOrganization.ubrId is not empty %}
+            <h2 class="title is-2">{{selectedOrganization.name}} ({{i18n.lbl_orgaform_ubrid}}: {{ selectedOrganization.ubrId }})</h2>
+        {% endif %}
+        <div class="container mt-6">
+            <h2 class="title is-2"></a></h2>
+            <div class="columns">
+                <div class="column">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-header-title">{{ i18n.dbis_admin_news }}</h3>
+                        </div>
+                        <div class="card-content">
+			{%  if lang=='de' %}
+            <p class="content">
+                Wir trauern um unsere EZB-DBIS-Beiratskollegin Irene Barbers: <a target="blank" href="https://ezb.ur.de/services/advisoryboard.phtml">https://ezb.ur.de/services/advisoryboard.phtml</a>
+            </p>
+            <p class="content">Rückblick auf die EZB-DBIS-Konferenz 2024: <a href="http://doi.org/10.5283/epub.59653" target="_blank">Vorträge</a></p>
+                        <p class="content"><a href="https://ezb.ur.de/services/advisoryboard#1" target="_blank">Bewerbungsaufruf für den EZB-DBIS-Beirat für die Amtsperiode Mai 2025 bis April 2028</a></p>
+			<p class="content">
+                        Erhalten Sie Infos über unsere DBIS-Mailinglisten. Hier können Sie sich dafür eintragen:<br> 
+			<a href="https://www.listserv.dfn.de/sympa/subscribe/ur-ub-dbis" target="_blank">Zur DBIS-Info-Mailingliste</a><br>
+			<a href="https://www.listserv.dfn.de/sympa/subscribe/ur-ub-dbis-update" target="_blank">Zur DBIS-Update-Mailingliste</a><br>
+            <a href="https://www.listserv.dfn.de/sympa/info/ur-ub-ezb-dbis-data" target="_blank">Zur EZB-DBIS-Mailingliste für Datenbezieher</a>
+            </p>
+            <p class="content">Einblicke in das DFG-Projekt, das für DBIS 2020-2024 durchgeführt wurde, erhalten Sie hier: <a href="https://dbis.ur.de/projekt/de/" target="_blank">https://dbis.ur.de/projekt/de/</a></p>
+			{% else %}
+            <p class="content">
+                We mourn the loss of our colleague Irene Barbers, who was member of the EZB-DBIS advisory board:  <a target="blank" href="https://ezb.ur.de/services/advisoryboard.phtml?lang=en">https://ezb.ur.de/services/advisoryboard.phtml?lang=en</a>
+            </p>
+            <p class="content">Review of the EZB-DBIS Conference 2024: <a href="http://doi.org/10.5283/epub.59653" target="_blank">Presentations (please note: the conference was held in German)</a></p>
+            <p class="content"><a href="https://ezb.ur.de/services/advisoryboard.phtml?lang=en#1" target="_blank">Call for applications for the EZB-DBIS Advisory Board for the term of office from May 2025 to April 2028</a></p>
+    			<p class="content">
+        		Get the information about our DBIS mailing lists. You can subscribe here:<br>
+        		<a href="https://www.listserv.dfn.de/sympa/subscribe/ur-ub-dbis" target="_blank">Subscribe to the DBIS Info Mailing List</a><br>
+        		<a href="https://www.listserv.dfn.de/sympa/subscribe/ur-ub-dbis-update" target="_blank">Subscribe to the DBIS Update Mailing List</a><br>
+                <a href="https://www.listserv.dfn.de/sympa/info/ur-ub-ezb-dbis-data" target="_blank">Subscribe to the EZB-DBIS Data List</a>
+    			</p>
+                <p class="content">Insights into the DFG project, which was carried out for DBIS 2020-2024, can be found here: <a href="https://dbis.ur.de/projekt/en/" target="_blank">https://dbis.ur.de/projekt/en/</a></p>
+			{% endif %}
+			</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section"></div>
+       {% if selectedOrganization.ubrId is not empty %}
+       {% if isAdmin or isSuperAdmin %} 
+        <div class="container">
+            <div class="columns m-3">
+                <div class="column">
+                    <div>
+                        <h2 class="title is-2 has-text-weight-bold">{{ i18n.dbis_admin_licenseadministration }}</h2>
+		<a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}resources/" class="button is-primary is-inverted has-text-weight-semibold">
+                <span class="icon mr-1">
+                    <i class="fas fa-arrow-right"></i>
+                </span>
+                {{ i18n.dbis_admin_editlicense }}
+            </a>
+                    </div>
+                </div>
+                <div class="column">
+                    <div>
+                        <h2 class="title is-2 has-text-weight-bold">{{ i18n.dbis_admin_databasetitle }}</h2>
+                         <a href="/admin/{% if selectedOrganization %}manage/{{ selectedOrganization.ubrId }}/{% endif %}resources/new/" class="button is-primary is-inverted has-text-weight-semibold">
+                <span class="icon mr-1">
+                    <i class="fas fa-arrow-right"></i>
+                </span>
+                {{ i18n.dbis_admin_entertitle }}
+            </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+       {% endif %}
+	<div class="section"></div>
+    {%  endblock %}
+{% endembed %}

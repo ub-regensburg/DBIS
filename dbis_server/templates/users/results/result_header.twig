@@ -1,0 +1,41 @@
+<div class="columns filter-options">
+    <div class="column is-two-thirds">
+        <div class="is-flex is-flex-direction-row is-flex-wrap-nowrap is-align-items-center">
+            <div class="mr-3">
+                <p class="field-label">
+                    <label class="label">{{ total_nr?:resources|length }} {{ i18n.lbl_results_found }}</label>
+                </p>
+            </div>
+            <div class="field is-horizontal mb-0">
+                <div class="field-label is-flex is-flex-wrap-nowrap is-align-items-center">
+                    <label class="label has-text-weight-normal" for="sort_by">{{ i18n.lbl_collection_sort_by }}</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-small">
+                                <select id="sort_by" name="sort_by" class="">
+                                    {% for sort_type in sort_types %}
+                                        {% if sort_type.id == sort_by %}
+                                            <option value="{{ sort_type.id }}" selected>{{ sort_type.title}}</option>
+                                        {% else %}
+                                            <option value="{{ sort_type.id }}">{{ sort_type.title}}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ml-5">
+                <p class="field-label">
+                    <button class="button is-small" name="csvoutput" value="1">CSV-Export</button>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        {{ include('/shared/pagination.twig', {size: 'is-small', alignment: 'is-right', only_pages: 'yes'}) }}
+    </div>
+</div>

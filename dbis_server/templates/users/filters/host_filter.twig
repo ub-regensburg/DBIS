@@ -1,0 +1,44 @@
+<!--<div>
+<div id="host-filter" >
+    {{ include('users/filters/components/autocomplete-filter-component.twig', {namespace: 'host', selectedItems: filteredHosts, no_tags: no_tags, no_apply: no_apply}) }}
+</div>
+<div id="host-selection" class="is-flex is-flex-wrap-wrap mt-2">
+    {% for filtered_host in filteredHosts %}
+        <div id="tag-{{ filtered_hosts.id }}" class="tags has-addons is-align-items-flex-start mr-2">
+            <span class="tag">{{ filtered_host.title }}</span>
+            <a class="tag is-delete"></a>
+            <input type="hidden" value="{{ filtered_host.id }}" name="filter-hosts[]" />
+        </div>
+    {% endfor %}
+</div>
+</div>-->
+
+
+<div id="host-filter" 
+    class="select is-multiple w-100">
+    
+    {% if not no_tags %}
+        <div id="resource-type-tags" class="tags is-fullwidth mt-2"></div>
+    {% endif %}
+    
+    <input class="input jsonly search-field"
+           placeholder="{{ i18n.lbl_search }}" aria-label="{{ i18n.aria_search_hots }}"/>
+    
+    <select name="filter-hosts[]" 
+            id="host-selection" 
+            class="is-small is-fullwidth"
+            multiple>
+        {% for host in hosts %}
+            <option value="{{ host.title }}"
+                {% if host.title in filteredHosts %}selected="true"{% endif %}>
+                {{ host.title }}
+            </option>
+        {% endfor %}
+    </select>
+    
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

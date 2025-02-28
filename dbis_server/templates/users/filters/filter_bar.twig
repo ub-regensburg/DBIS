@@ -1,0 +1,354 @@
+<div class="
+                         filter-bar
+                         column
+			 search-loading-element
+                         is-one-fifth">
+    {% if resources|length > 0  %}
+        <div class="container">
+            <div class="container">
+                <div class="filter mb-2 keep-open">
+                    <button
+                            class="button
+                                            mb-2
+                                            pb-4
+                                            pl-0
+                                            filter-activator
+                                            is-fullwidth
+                                            is-justify-content-flex-start"
+                            type="button">
+                        <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                        <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                        {{ i18n.availability }}
+                    </button>
+                    <div class="filter-body">
+                        {{ include('users/filters/availability_facet.twig', {global: aggregations.global.buckets, filter_global: filters.availability.free, local: aggregations.local, not_local: aggregations.not_local.buckets, no_tags: true, no_apply: true}) }}
+                    </div>
+                </div>
+
+                {% if hide_top_databases_filter is defined and hide_top_databases_filter == true %}
+                    <!-- Hide top databases filter -->
+                {% else %}
+                    {% if subject_page == true %}
+                        <div class="filter mb-2 keep-open">
+                                <button
+                                        class="button
+                                                    mb-2
+                                                    pb-4
+                                                    pl-0
+                                                    filter-activator
+                                                    is-fullwidth
+                                                    is-justify-content-flex-start"
+                                        type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.top_databases_filter }}
+                                </button>
+
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/top_databases_for_subject_page_facet.twig', {filters: filters}) }}
+                                </div>
+                            </div>
+                    {% else %}
+                        {% if aggregations.top_databases.doc_count > 0 %}
+                            <div class="filter mb-2 keep-open">
+                                <button
+                                        class="button
+                                                    mb-2
+                                                    pb-4
+                                                    pl-0
+                                                    filter-activator
+                                                    is-fullwidth
+                                                    is-justify-content-flex-start"
+                                        type="button">
+                                    <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                    <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                    {{ i18n.top_databases_filter }}
+                                </button>
+
+                                <div class="filter-body p-2">
+                                    {{ include('users/filters/top_databases_facet.twig', {filters: filters}) }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+                {% if route == 'subjects' or route == 'collections' %}
+                    {% if without_subjects == false and aggregations.subjects.buckets|length > 0  %}
+                        <div class="filter mb-2 {% if aggregations.subjects.buckets|length > 0 %}keep-open{% endif %} ">
+                            <button
+                                    class="button
+                                                mb-2
+                                                pb-4
+                                                pl-0
+                                                filter-activator
+                                                is-fullwidth
+                                                is-justify-content-flex-start"
+                                    type="button">
+                                <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                {{ i18n.lbl_database_subjects }} ({{aggregations.subjects.buckets|length}})
+                            </button>
+                            <div class="filter-body p-2">
+                                {{ include('users/filters/all_subjects_facet.twig', {allsubjects: aggregations.subjects.buckets, subjects_sorted: aggregations.subjects.buckets, filtered_subjects: filters.all_subjects, no_tags: true, no_apply: true}) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    {% if without_subjects == false and aggregations.all_subjects.subjects.buckets|length > 0  %}
+                        <div class="filter mb-2 {% if aggregations.all_subjects.subjects.buckets|length > 0 %}keep-open{% endif %} ">
+                            <button
+                                    class="button
+                                                mb-2
+                                                pb-4
+                                                pl-0
+                                                filter-activator
+                                                is-fullwidth
+                                                is-justify-content-flex-start"
+                                    type="button">
+                                <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                {{ i18n.lbl_database_subjects }} ({{aggregations.all_subjects.subjects.buckets|length}})
+                            </button>
+                            <div class="filter-body p-2">
+                                {{ include('users/filters/all_subjects_facet.twig', {allsubjects: aggregations.all_subjects.subjects.buckets, subjects_sorted: aggregations.all_subjects.subjects_sorted.subjects.buckets, filtered_subjects: filters.all_subjects, no_tags: true, no_apply: true}) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}                              
+
+                {% if aggregations.keywords.buckets|length > 0 %}
+                    <div class="filter mb-2 {% if aggregations.keywords.buckets|length > 0 %}keep-open{% endif %} ">
+                        <button
+                                class="button
+                                            mb-2
+                                            pb-4
+                                            pl-0
+                                            filter-activator
+                                            is-fullwidth
+                                            is-justify-content-flex-start"
+                                type="button">
+                            <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                            <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                            {{ i18n.lbl_database_keywords }} ({{aggregations.keywords.buckets|length}})
+                        </button>
+                        <div class="filter-body p-2">
+                            {{ include('users/filters/keywords_facet.twig', {keywords: aggregations.keywords.buckets, filtered_keywords: filters.keywords, no_tags: true, no_apply: true}) }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if route == 'subjects' or route == 'collections' %}
+                    {% if aggregations.resource_types.buckets|length > 0 %}
+                        <div class="filter mb-2 {% if aggregations.resource_types.buckets|length > 0 %}keep-open{% endif %}">
+                            <button
+                                    class="button
+                                                mb-2
+                                                pb-4
+                                                pl-0
+                                                filter-activator
+                                                is-fullwidth
+                                                is-justify-content-flex-start"
+                                    type="button">
+                                <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                {{ i18n.resource_type }} ({{aggregations.resource_types.buckets|length}})
+                            </button>
+                            <div class="filter-body
+                                            p-2">
+                                {{ include('users/filters/resource_type_facet.twig', {resource_types: aggregations.resource_types.buckets, types_sorted: aggregations.resource_types.buckets, filtered_resource_types: filters['resource-types'], no_tags: true, no_apply: true}) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    {% if aggregations.all_resource.resource_types.buckets|length > 0 %}
+                        <div class="filter mb-2 {% if aggregations.all_resource.resource_types.buckets|length > 0 %}keep-open{% endif %}">
+                            <button
+                                    class="button
+                                                mb-2
+                                                pb-4
+                                                pl-0
+                                                filter-activator
+                                                is-fullwidth
+                                                is-justify-content-flex-start"
+                                    type="button">
+                                <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                {{ i18n.resource_type }} ({{aggregations.all_resource.resource_types.buckets|length}})
+                            </button>
+                            <div class="filter-body
+                                            p-2">
+                                {{ include('users/filters/resource_type_facet.twig', {resource_types: aggregations.all_resource.resource_types.buckets, types_sorted: aggregations.all_resource.all_resources_sorted.resource_types.buckets, filtered_resource_types: filters['resource-types'], no_tags: true, no_apply: true}) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}     
+                
+                {% if route == 'subjects' or route == 'collections' %}
+                    {% if aggregations.license_types.buckets|length > 0 %}
+                        <div class="filter mb-2 {% if aggregations.license_types.buckets|length > 0 %}keep-open{% endif %}">
+                            <button
+                                    class="button
+                                                mb-2
+                                                pb-4
+                                                pl-0
+                                                filter-activator
+                                                is-fullwidth
+                                                is-justify-content-flex-start"
+                                    type="button">
+                                <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                {{ i18n.license_type }} ({{aggregations.license_types.buckets|length}})
+                            </button>
+                            <div class="filter-body
+                                            p-2">
+                                {{ include('users/filters/license_type_facet.twig', {license_types: aggregations.license_types.buckets, types_sorted: aggregations.license_types.buckets, license_types: filters['license_types'], no_tags: true, no_apply: true}) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    {% if aggregations.all_resource.license_types.buckets|length > 0 %}
+                        <div class="filter mb-2 {% if aggregations.all_resource.license_types.buckets|length > 0 %}keep-open{% endif %}">
+                            <button
+                                    class="button
+                                                mb-2
+                                                pb-4
+                                                pl-0
+                                                filter-activator
+                                                is-fullwidth
+                                                is-justify-content-flex-start"
+                                    type="button">
+                                <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                {{ i18n.license_type }} ({{aggregations.all_resource.license_types.buckets|length}})
+                            </button>
+                            <div class="filter-body
+                                            p-2">
+                                {{ include('users/filters/license_type_facet.twig', {license_types: aggregations.all_resource.license_types.buckets, types_sorted: aggregations.all_resource.all_resources_sorted.license_types.buckets, license_types: filters['license_types'], no_tags: true, no_apply: true}) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}  
+
+                {% if aggregations.countries.buckets|length > 0 %}
+                    <div class="filter mb-2 {% if aggregations.countries.buckets|length > 0 %}keep-open{% endif %}">
+                        <button
+                                class="button
+                                            mb-2
+                                            pb-4
+                                            pl-0
+                                            filter-activator
+                                            is-fullwidth
+                                            is-justify-content-flex-start"
+                                type="button">
+                            <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                            <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                            {{ i18n.lbl_countries }} ({{aggregations.countries.buckets|length}})
+                        </button>
+                        <div class="filter-body p-2">
+                            {{ include('users/filters/countries_facet.twig', {countries: aggregations.countries.buckets, filtered_countries: filters.countries, no_tags: true, no_apply: true}) }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if route == 'subjects' or route == 'collections' %}
+                    {% if aggregations.publication_forms.buckets|length > 0 %}
+                        <div class="filter mb-2 {% if aggregations.publication_forms.buckets|length > 0 %}keep-open{% endif %}">
+                            <button
+                                    class="button
+                                                mb-2
+                                                pb-4
+                                                pl-0
+                                                filter-activator
+                                                is-fullwidth
+                                                is-justify-content-flex-start"
+                                    type="button">
+                                <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                {{ i18n.lbl_publication_form }} ({{aggregations.publication_forms.buckets|length}})
+                            </button>
+                            <div class="filter-body
+                                            p-2">
+                                {{ include('users/filters/publication_form_facet.twig', {publication_forms: aggregations.publication_forms.buckets,  forms_sorted: aggregations.publication_forms.buckets, filtered_publication_forms: filters['publication-forms'], no_tags: true, no_apply: true}) }}
+                            </div>
+                        </div>
+                    {% endif %}                
+                {% else %}
+                    {% if aggregations.all_licenses.publication_forms.buckets|length > 0 %}
+                        <div class="filter mb-2 {% if aggregations.all_licenses.publication_forms.buckets|length > 0 %}keep-open{% endif %}">
+                            <button
+                                    class="button
+                                                mb-2
+                                                pb-4
+                                                pl-0
+                                                filter-activator
+                                                is-fullwidth
+                                                is-justify-content-flex-start"
+                                    type="button">
+                                <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                                <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                                {{ i18n.lbl_publication_form }} ({{aggregations.all_licenses.publication_forms.buckets|length}})
+                            </button>
+                            <div class="filter-body
+                                            p-2">
+                                {{ include('users/filters/publication_form_facet.twig', {publication_forms: aggregations.all_licenses.publication_forms.buckets,  forms_sorted: aggregations.all_licenses.publication_forms_sorted.publication_forms.buckets, filtered_publication_forms: filters['publication-forms'], no_tags: true, no_apply: true}) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if aggregations.publisher.buckets|length > 0 %}
+                    <div class="filter mb-2 {% if filters['publishers'] %}keep-open{% endif %}">
+                        <!--<button
+                                class="button
+                                            mb-2
+                                            pb-4
+                                            pl-0
+                                            filter-activator
+                                            is-fullwidth
+                                            is-justify-content-flex-start"
+                                type="button">
+                            <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+                            <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+                            {{ i18n.lbl_publisher }} ({{aggregations.publisher.buckets|length}})
+                        </button>-->
+                        {{ include('users/filters/components/filter-activator-button-component.twig', {title: i18n.lbl_publisher ~ ' (' ~ aggregations.publisher.buckets|length ~ ')'}) }}
+                        <div class="filter-body p-2">
+                            {{ include('users/filters/publisher_facet.twig', {publishers: aggregations.publisher.buckets, filtered_publishers: filters.publishers, no_tags: true, no_apply: true}) }}
+                        </div>
+                    </div>
+                {% endif %}                        
+
+                <div class="filter mb-2 
+                {% if
+                    filters['publication-time']['start'] or
+                    filters['publication-time']['end'] or
+                    filters['report-time']['start'] or
+                    filters['report-time']['end'] %}keep-open{% endif %}">
+                        {{ include('users/filters/components/filter-activator-button-component.twig', {title: i18n.lbl_time_filter }) }}
+                    <div class="filter-body p-2">
+                        {{ include('users/filters/time_facet.twig', {}) }}
+                    </div>
+                </div>
+
+                <div class="filter mb-2
+                {% if filters['entry-date']['start'] %} keep-open {% endif %}">
+                    {{ include('users/filters/components/filter-activator-button-component.twig', {title: i18n.lbl_database_entry_date }) }}
+                    <div class="filter-body p-2">
+                        {{ include('users/filters/entry_date_facet.twig', {}) }}
+                    </div>
+                </div>
+            </div>
+            <!-- 
+            <div class="container">
+                <button type="button"
+                        class="js-modal-trigger button has-text-grey-dark has-no-decoration has-text-left mt-4 p-0"
+                        data-target="access-modal">
+                    {{ i18n.lbl_access_legend }}
+                </button>
+            </div>
+            -->
+        </div>
+    {% endif %}
+    {# /Filter Bar #}
+</div>

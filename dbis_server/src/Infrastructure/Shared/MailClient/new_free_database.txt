@@ -1,0 +1,38 @@
+Die frei im Internet verfügbare Datenbank "{databaseTitle}" wurde gestern neu eingetragen. 
+
+Typ:  
+
+{databaseTypesGerman} 
+
+Fach/Fächer: 
+
+{databaseSubjectsGerman} 
+
+Die Titeldaten sollten unter  
+
+https://dbis.ur.de/resources/{databaseId}
+
+zu sehen sein. 
+
+
+Falls Sie frei verfügbare Datenbanken automatisch in Ihre Sicht übernehmen, ist diese Datenbank nun als neue freie Datenbank in Ihrer Sicht mit grüner Ampel such- und findbar. Falls Sie freie Datenbanken manuell bearbeiten, können Sie die Lizenz nachnutzen, damit die Datenbank mit grüner Ampel in Ihrer Sicht erscheint.   
+
+_________________________________________ 
+ 
+
+The freely available database "{databaseTitle}" has been newly registered yesterday.  
+
+Type:   
+
+{databaseTypesEnglish} 
+
+Subject/subjects :  
+
+{databaseSubjectsEnglish} 
+
+The title data should be available at   
+
+https://dbis.ur.de/resources/{databaseId} 
+
+
+If you automatically transfer freely available databases to your view, this database is now searchable and findable as a new free database in your view with a green traffic light. If you edit free databases manually, you can reuse the license so that the database appears in your view with a green traffic light.    

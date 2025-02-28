@@ -1,0 +1,37 @@
+#dragzone {
+    background-color: lightgrey;
+    min-height:57px;   
+    border: 2px dashed grey;
+    opacity: 0.25; 
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.pickable-title {
+    margin-left: 16px;    
+}
+
+.source-list .grip-icon {
+    display:none;
+}
+
+.grip-icon {
+    opacity: 0.25;
+}
+
+.pickable-item *:not(button) {
+    // this prevents childnodes from "stealing" focus on hover
+    // ... except for buttons - they should still get focus.
+    pointer-events: none;    
+}
+
+.is-rounded.move-down-button, .is-rounded.move-up-button {
+    padding: 16px;
+    border: none;
+}
+
+.is-rounded.move-down-button:hover, .is-rounded.move-up-button:hover {
+    opacity: 50%;
+}

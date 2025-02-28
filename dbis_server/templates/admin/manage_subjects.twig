@@ -1,0 +1,48 @@
+{% embed "admin/base.twig" with { page: 'manage_subjects' } %}
+    {% block content %}
+        <section aria-labelledby="h-manage-subjects">
+            <h1 id="h-manage-subjects"
+                class="title is-1">{{ i18n.lbl_menu_nav_superadministration_manage_subjects }}</h1>
+
+                {% if updated_successfully %}
+                <article class="message is-success">
+                    <div class="message-body">
+                        {{ i18n.msg_updated_successfully }}
+                    </div>
+                </article>
+            {% endif %}
+
+            <form method="POST">
+                <table class="table is-fullwidth is-hoverable">
+                    <thead>
+                        <tr>
+                            <th>{{ i18n.lbl_database_subjects }}</th>
+                            <th>{{ i18n.lbl_hide_subject }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for subject in subjects %}
+                        <tr>
+                            <td>
+                                {{ subject.title }}
+                            </td>
+                            <td>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="hide_subject[]" {% if not subject.is_visible %} checked {% endif %} value="{{ subject.id}}">
+                                </label>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary" type="submit" name="save">{{ i18n.create_orgaform_submit_save }}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    {% endblock %}
+{% endembed %}

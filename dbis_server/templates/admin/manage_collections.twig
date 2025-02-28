@@ -1,0 +1,75 @@
+{% embed "admin/base.twig" with { page: 'manage_collections' } %}
+    {% block content %}
+        <ul class="breadcrumbs mb-1 is-size-7">
+            <li><a href="../">{{ i18n.breadcrumb_admin }}</a></li>
+            <li>{{ i18n.lbl_menu_nav_administration_manage_collections }}</li>
+        </ul>
+        <h1 class="title is-1">{{ i18n.lbl_menu_nav_administration_manage_collections }}</h1>
+        {% if is_deleted_successfully %}
+            <article class="message is-success">
+                <div class="message-body">
+                    {{ i18n.msg_collection_deleted_successfully }}
+                </div>
+            </article>
+        {% endif %}
+        <section>
+            <div>
+                <table class="table is-hoverable org-table is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>
+                            {{ i18n.lbl_collection_title }}
+                        </th>
+                        <th>
+                            {{ i18n.lbl_collection_sort_by }}
+                        </th>
+                        <th>
+                            {{ i18n.lbl_collection_is_visible }}
+                        </th>
+                        <th>
+                            {{ i18n.lbl_collection_is_subject }}
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for collection in collections %}
+                    <tr>
+                        <td>
+                            {{ attribute(collection.title, lang) }}
+                        </td>
+                        <td>
+                            {{ attribute(collection.sortBy.title, lang) }}
+                        </td>
+                        <td>
+                            {% if collection.visible %}
+                                {{ i18n.lbl_yes}}
+                            {% else %}
+                                {{ i18n.lbl_no}}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if collection.subject %}
+                                {{ i18n.lbl_yes}}
+                            {% else %}
+                                {{ i18n.lbl_no}}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a
+                                    href="./{{ collection.id }}/"
+                                    class="button is-inverted is-primary is-pulled-right">
+                                <span class="icon">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                <span>{{ i18n.lbl_edit}}</span>
+                            </a>
+                        </td>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    {% endblock %}
+{% endembed %}

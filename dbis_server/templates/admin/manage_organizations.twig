@@ -1,0 +1,195 @@
+{% embed "admin/base.twig" with { page: 'manage_organizations' } %}
+    {%  block content %}     
+        {% if is_deleted_successfully %}
+            <article class="message is-success">
+                <div class="message-body">
+                    {{ i18n.msg_org_deleted_successfully }}
+                </div>
+            </article>
+        {% endif %}
+
+        <section aria-labelledby="h-manage-orgs">            
+        
+        <ul class="breadcrumbs mb-1 is-size-7">
+            <li><a href="/admin">{{ i18n.breadcrumb_admin }}</a></li>
+            <li>{{ i18n.breadcrumb_organizations}}</li> 
+        </ul>
+            <div class="columns">
+                <span class="column">
+                    <h1 id="h-manage-orgs"
+                        class="title is-1">{{ i18n.h1_manage_organizations }}</h1>
+                </span>
+
+                <span class="column columns is-vcentered is-4">
+                    <a class="button is-primary float-right" href="/superadmin/organizations/new/">{{ i18n.lbl_create_organization }}</a>
+                </span>
+            </div>
+            
+        <section>
+            <form id="search-form">
+                <div class="columns">
+                    <div class="field has-addons column" 
+                         action="/superadmin/organizations/"
+                         method="get">
+                        <div class="control is-expanded">
+                            <input id="search-field" 
+                                   class="input" 
+                                   type="text" 
+                                   name="q" 
+                                   placeholder="{{ i18n.lbl_manage_organizations_search }}" 
+                                   value="{{ queryParams.q }}">
+                            <!-- hidden fields for storing  sort params -->
+                            <input id="search-sortby" name="sortby" value="{{ queryParams.sortby }}" hidden>
+                            <input id="search-sortdirection" name="sortdirection" value="{{ queryParams.sortdirection }}" hidden>
+                        </div>               
+                        <div class="control">
+                            <button class="button is-outlined is-primary" type="submit">
+                                {{ i18n.lbl_search }}
+                            </button>            
+                        </div>
+                    </div>                
+                </div>                      
+         
+            </form> 
+        </section>
+        <section>
+            <table class="table is-hoverable org-table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>
+                            <a class="sort-criterion" data-sortby="city">{{ i18n.lbl_org_city }}
+                                {% if queryParams.sortby=="city"  %}
+                                    <span class="icon">
+                                        {% if queryParams.sortdirection=="asc" %}
+                                            <i class="fas fa-sort-up"></i>
+                                        {% else %}                                        
+                                            <i class="fas fa-sort-down"></i>
+                                        {% endif %}
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th>
+                            <a class="sort-criterion" data-sortby="ubrId">{{ i18n.lbl_ubr_id }}
+                                {% if queryParams.sortby=="ubrId"  %}
+                                    <span class="icon">
+                                        {% if queryParams.sortdirection=="asc" %}
+                                            <i class="fas fa-sort-up"></i>
+                                        {% else %}                                        
+                                            <i class="fas fa-sort-down"></i>
+                                        {% endif %}
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th>
+                            <a class="sort-criterion" data-sortby="name">{{ i18n.lbl_org_name}}
+                                {% if queryParams.sortby=="name"  %}
+                                    <span class="icon">
+                                        {% if queryParams.sortdirection=="asc" %}
+                                            <i class="fas fa-sort-up"></i>
+                                        {% else %}                                        
+                                            <i class="fas fa-sort-down"></i>
+                                        {% endif %}
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th>
+                            <a class="sort-criterion" data-sortby="dbisView">
+                                {{ i18n.lbl_dbis_active }}
+                                {% if queryParams.sortby=="dbisView"  %}
+                                    <span class="icon">
+                                        {% if queryParams.sortdirection=="asc" %}
+                                            <i class="fas fa-sort-up"></i>
+                                        {% else %}                                        
+                                            <i class="fas fa-sort-down"></i>
+                                        {% endif %}
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th>
+                            <span class="sort-criterion" data-sortby="ezbView">
+                                {{ i18n.lbl_ezb_active }}
+                            </span>
+                        </th>
+                        <th>
+                            <a class="sort-criterion" data-sortby="createdAtDate">{{ i18n.lbl_created_at}}
+                                {% if queryParams.sortby=="createdAtDate"  %}
+                                    <span class="icon">
+                                        {% if queryParams.sortdirection=="asc" %}
+                                            <i class="fas fa-sort-up"></i>
+                                        {% else %}                                        
+                                            <i class="fas fa-sort-down"></i>
+                                        {% endif %}
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for organization in organizations %}
+                        <tr>
+                            <td>
+                                {{ organization.city}} 
+                            </td>
+                            <td>
+                                {{ organization.ubrId}}
+                            </td>
+                            <td>
+                                {{ organization.name}}
+                            </td>
+                            <td>       
+                                    <div class="ubr-product-icon 
+                                        {% if organization.dbisView==null %}
+                                            disabled
+                                        {% endif %}
+                                        ">
+                                        {% if organization.dbisView is null or organization.dbisView is empty %}
+                                            {{ i18n.lbl_no }}
+                                        {% else %}
+                                            {{ i18n.lbl_yes }}
+                                        {% endif %}
+                                    </div>
+                            </td>
+                            <td>     
+                                    <div class="ubr-product-icon disabled">
+                                        <!-- TODO: check, whether EZB has view-->
+                                        {{ i18n.lbl_no }}
+                                    </div>
+                            </td>
+                            <td>
+                                {{ organization.createdAtDate }}
+                            </td>
+                            <td>
+                                <a 
+                                    href="/superadmin/organizations/{{ organization.ubrId }}/" 
+                                    class="button is-inverted is-primary is-pulled-right">
+                                    <span class="icon">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    <span>{{ i18n.lbl_edit}}</span>
+                                </a>
+                            </td>
+                        {% endfor %}               
+                </tbody>
+            </table>
+            <span class="has-text-weight-bold">
+            {% if organizations|length > 1 %}
+                {{ organizations|length }} {{ i18n.lbl_results_found }}
+            {% elseif organizations|length == 1 %}
+                {{ organizations|length }} {{ i18n.lbl_result_found }}
+            {% else  %}
+                {{ i18n.lbl_no_result_found }}                
+            {% endif %}
+            </span>
+        </section>
+    {%  endblock %}
+{% endembed %}
+{% block js %}
+    {%  webpack_entry_js 'admin_manage_organizations' %}
+{% endblock %}

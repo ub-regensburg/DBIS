@@ -1,0 +1,228 @@
+{% embed "users/base.twig" %}
+    {% block content %}
+        <div class="container">
+            <h1 class="title is-1">{{ i18n.h_xml_output }}</h1>
+             {% if language == "de" %}
+            {% endif %}
+            <div class="content">
+                <h3 class="is-3">Wozu dient das XML-Ausgabeformat von DBIS?</h3>
+                <p class="">
+                    Die UB Regensburg hat für DBIS ein XML-Ausgabeformat entwickelt, das es ermöglicht, das Angebot von DBIS auf eine beliebige Website einzubinden und die Inhalte im eigenen Layout darzustellen. 
+                </p>
+            </div>
+            <div class="content">
+                <h3 class="is-3">Grundsätzliches zum Aufruf der DBIS-Services</h3>
+                <p class="">
+                    
+                </p>
+                <h4 class="is-4">Fachgebiete</h4>
+                <table>
+                    <thead>
+                        <td>Alte ID</td>
+                        <td>Vorheriges Fachgebiet</td>
+                        <td>Neue ID</td>
+                        <td>Neues Fachgebiet</td>
+                    </thead>
+                    <tr>
+                        <td>48</td>
+                        <td>Land- und Forstwirtschaft, Gartenbau, Fischereiwirtschaft, Hauswirtschaft, Ernährung</td>
+                        <td>1</td>
+                        <td>Agrar- und Forstwissenschaft, Gartenbau, Ernährungs- und Haushaltswissenschaft</td>
+                    </tr>
+                    <tr>
+                        <td>50</td>
+                        <td>Allgemeine Naturwissenschaft</td>
+                        <td>2</td>
+                        <td>Allgemeine Naturwissenschaft</td>
+                    </tr>
+                    <tr>
+                        <td>28</td>
+                        <td>Allgemein / Fachübergreifend</td>
+                        <td>3</td>
+                        <td>Allgemeine und fachübergreifende Datenbanken</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Allgemeine und vergleichende Sprach- und Literaturwissenschaft</td>
+                        <td>4</td>
+                        <td>Allgemeine und vergleichende Sprach- und Literaturwissenschaft. Indogermanistik. Außereuropäische Sprachen und Literaturen</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Anglistik, Amerikanistik</td>
+                        <td>5</td>
+                        <td>Anglistik. Amerikanistik</td>
+                    </tr>
+                    <tr>
+                        <td>27</td>
+                        <td>Archäologie</td>
+                        <td>6</td>
+                        <td>Archäologie</td>
+                    </tr>
+                    <tr>
+                        <td>45</td>
+                        <td>Architektur, Bauingenieur- und Vermessungswesen</td>
+                        <td>7</td>
+                        <td>Architektur, Bauingenieur- und Vermessungswesen</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Biologie</td>
+                        <td>8</td>
+                        <td>Biologie, Biotechnologie</td>
+                    </tr>
+                    <tr>
+                        <td>52</td>
+                        <td>Verfahrenstechnik, Biotechnologie, Lebensmitteltechnologie</td>
+                        <td>8</td>
+                        <td>Biologie, Biotechnologie</td>
+                    </tr>
+                    <tr>
+                        <td>54</td>
+                        <td>Informations-, Buch- und Bibliothekswesen, Handschriftenkunde</td>
+                        <td>9</td>
+                        <td>Buch- und Bibliothekswesen, Informationswissenschaft</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Chemie</td>
+                        <td>10</td>
+                        <td>Chemie und Pharmazie</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Pharmazie</td>
+                        <td>10</td>
+                        <td>Chemie und Pharmazie</td>
+                    </tr>
+                    <tr>
+                        <td>46</td>
+                        <td>Elektrotechnik, Mess- und Regelungstechnik</td>
+                        <td>11</td>
+                        <td>Elektrotechnik, Elektronik, Nachrichtentechnik</td>
+                    </tr>
+                    <tr>
+                        <td>47</td>
+                        <td>Energie, Umweltschutz, Kerntechnik</td>
+                        <td>12</td>
+                        <td>Energietechnik</td>
+                    </tr>
+                    <tr>
+                        <td>29</td>
+                        <td>Ethnologie (Volks- und Völkerkunde)</td>
+                        <td>13</td>
+                        <td>Ethnologie</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Geographie</td>
+                        <td>14</td>
+                        <td>Geographie</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Geowissenschaften</td>
+                        <td>15</td>
+                        <td>Geowissenschaften</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Germanistik, Niederländische Philologie, Skandinavistik</td>
+                        <td>16</td>
+                        <td>Germanistik. Niederlandistik. Skandinavistik</td>
+                    </tr>
+                    <tr>
+                        <td>26</td>
+                        <td>Geschichte</td>
+                        <td>17</td>
+                        <td>Geschichte</td>
+                    </tr>
+                    <tr>
+                        <td>30</td>
+                        <td>Informatik</td>
+                        <td>20</td>
+                        <td>Informatik</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Klassische Philologie</td>
+                        <td>21</td>
+                        <td>Klassische Philologie. Byzantinistik. Mittellateinische und Neugriechische Philologie. Neulatein</td>
+                    </tr>
+                    <tr>
+                        <td>24</td>
+                        <td>Kunstgeschichte</td>
+                        <td>22</td>
+                        <td>Kunstgeschichte</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Mathematik</td>
+                        <td>24</td>
+                        <td>Mathematik</td>
+                    </tr>
+                    <tr>
+                        <td>53</td>
+                        <td>Medien- und Kommunikationswissenschaften, Publizistik, Film- und Theaterwissenschaft</td>
+                        <td>25</td>
+                        <td>Medien- und Kommunikationswissenschaften, Kommunikationsdesign</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Medizin</td>
+                        <td>26</td>
+                        <td>Medizin</td>
+                    </tr>
+                    <tr>
+                        <td>25</td>
+                        <td>Musikwissenschaft</td>
+                        <td>28</td>
+                        <td>Musikwissenschaft</td>
+                    </tr>
+                    <tr>
+                        <td>23</td>
+                        <td>Pädagogik</td>
+                        <td>30</td>
+                        <td>Pädagogik</td>
+                    </tr>
+                    <tr>
+                        <td>21</td>
+                        <td>Philosophie</td>
+                        <td>31</td>
+                        <td>Philosophie</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Philosophie</td>
+                        <td>32</td>
+                        <td>Physik</td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>Politologie</td>
+                        <td>33</td>
+                        <td>Politologie</td>
+                    </tr>
+                    <tr>
+                        <td>22</td>
+                        <td>Psychologie</td>
+                        <td>34</td>
+                        <td>Psychologie</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>Rechtswissenschaft</td>
+                        <td>35</td>
+                        <td>Rechtswissenschaft</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Romanistik</td>
+                        <td>36</td>
+                        <td>Romanistik</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}

@@ -1,0 +1,58 @@
+<div id="availability-filter"
+     class="select is-multiple is-fullwidth">
+
+    {% if not no_tags %}
+        <div id="availability-tags" class="tags is-fullwidth mt-2"></div>
+    {% endif %}
+
+    <div class="control">
+        <label class="checkbox">
+            <input type="checkbox"
+                   class="mr-2"
+                   name="availability-filter-free"
+                    {% if filtered_availability.free or search_start or free %}
+                   {{ "checked" }}
+                    {% endif %}>
+                    <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_green.svg" alt=""></span>
+            {{ i18n.availability_free }}
+        </label>
+    </div>
+
+    {%  if organization and organization.ubrId != 'ALL' %}
+    <div class="control">
+        <label class="checkbox">
+            <input type="checkbox"
+                    class="mr-2"
+                   name="availability-filter-local"
+            {% if filtered_availability.local or search_start or free %}
+                {{ "checked" }}
+            {% endif %}>
+            <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_yellow.svg" alt=""></span>
+            {{ i18n.availability_licensed }}
+        </label>
+    </div>
+    {% endif %}
+
+    <div class="control">
+        <label class="checkbox">
+            <input type="checkbox"
+                    class="mr-2"
+                   name="availability-filter-none"
+                {% if filtered_availability.none %}
+                    {{ "checked" }}
+                {% endif %}>
+                <span class="traffic-light-container"><img class="traffic-light" src="/img/icons/ampel_red.svg" alt=""></span>
+            {%  if organization.ubrId != 'ALL' %}
+                {{ i18n.availability_at_organization_none }}
+            {% else %}
+                {{ i18n.availability_none }}
+            {% endif %}
+        </label>
+    </div>
+
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>

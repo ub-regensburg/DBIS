@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+    <title>{{ pageTitle }}</title>
+    {% set asset = page|default('users_base') %}
+    {% block css %}
+        {% if asset == 'users_detail' %}
+            {% webpack_entry_css 'users_details' %}
+        {% else %}
+            {% webpack_entry_css 'users_base' %}
+        {% endif %}
+    {% endblock %}
+    <script>
+        var res = {
+            showmore: "{{ i18n.showmore }}",
+            showless: "{{ i18n.showless }}"
+        };
+        var config = {
+                org_id: "{{ organization.ubrId }}",
+                lang: "{{ language }}"
+        };
+    </script>
+</head>
+
+<body>
+{% block header %}
+    <nav class="navbar main-menu has-shadow pt-3 pb-3 pr-5 pl-5">
+        <div class="navbar-brand">
+            <a class="navbar-item is-size-4" href="{{ organization ? "/" ~ organization.ubrId ~ "/" : "/" }}">
+                    {% if language == "en" %}
+                        <img id="dbis-logo" src="/img/logo/logo_expanded_english.png" alt="{{ i18n.alt_dbis_logo }}">
+                    {% endif %}
+                    {% if language == "de" %}
+                        <img id="dbis-logo" src="/img/logo/logo_expanded.png" alt="{{ i18n.alt_dbis_logo }}">
+                    {% endif %}
+            </a>
+        </div>
+
+        <div class="navbar-start ml-3 has-text-weight-bold">
+            <a class="navbar-item"
+               href="{{ organization ? "/" ~ organization.ubrId : "" }}/search">
+              {{ i18n.lbl_search }}
+            </a>
+            <a class="navbar-item" href="{{ organization ? "/" ~ organization.ubrId : "" }}/browse/subjects/">
+              {{ i18n.lbl_database_subjects }}
+            </a>
+            {% if organization.ubrId is defined and organization.ubrId and doesOrganizationHasCollections == 1 %}
+                {% set collectionsUrl = url_for('collectionsWithinOrganization', {'organizationId': organization.ubrId}) %}
+                <a class="navbar-item" href=" {{ collectionsUrl }} ">
+                    {{ i18n.lbl_menu_nav_collections }}
+                </a>
+            {% endif %}
+
+            <form action="/user/language"
+                  id="switch-language" class="language"
+                  method="POST">
+                {% if language == "en" %}
+                    <button name="language"
+                            class="button language"
+                            value="de"
+                            type="submit">
+                        DE
+                    </button>
+                {% endif %}
+                {% if language == "de" %}
+                    <button name="language"
+                            value="en"
+                            class="button language"
+                            type="submit">
+                        EN
+                    </button>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="section org-chooser has-text-right has-text-grey-dark level p-1">
+            <div class="dropdown searchable is-right has-text-left level-item">
+                <div class="dropdown-trigger">
+                    <button class="is-inline is-inline--not-start-page has-text-grey-dark" aria-haspopup="true" aria-controls="dropdown-menu">
+                    <span class="icon-text">
+                        {% if organization %}
+                            {{ i18n.lbl_access_provided_by }}
+                        {% endif %}
+                    </span>
+                    <span class="icon-text icon-text-institution has-text-weight-bold">
+                        {% if organization %}
+                                {% if organization.homepage %}
+                            <a href="{{ organization.homepage  }}" target=_blank class="navbar-item" style="display: contents;">
+                                {% endif %}
+                            {% if organization.publicIconPath %}
+                                <img src="{{ organization.publicIconPath }}" alt="{{ organization.name }}" class="pl-1 pr-1">
+                            {% endif %}
+                                <span>{{ organization.name }}</span>
+{% if organization.homepage %}
+                                </a>
+                                {% endif %}
+
+                        {% else %}
+                            <span class="icon">
+                                <i class="fas fa-home"></i>
+                            </span>
+                            <span>
+                                {{ i18n.lbl_no_access }}
+			                </span>
+                        {% endif %}
+                    </span>
+                        <span class="icon is-small">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                    </button>
+                </div>
+
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                        <div class="searchfield-container">
+                            <input type="text" class="searchfield input dropdown-item has-text-grey-dark" title="{{ i18n.aria_search_databases }}" aria-label="{{ i18n.aria_search_databases }}">
+                            </input>
+                        </div>
+
+                        <form method="POST" action="/user/organization">
+                            <button name="ubrId" class="dropdown-item has-text-grey-dark" value="ALL" type="submit">
+                                {{ i18n.lbl_without_organization }}
+                            </button>
+
+                            <input type="hidden"
+                                   name="previousUbrId"
+                                   value="{{ organization.ubrId }}"/>
+
+                            <hr class="dropdown-divider">
+
+                            <div class="dropdown-items">
+                                {% for city, organizations in organizationsGroupedByCity %}
+                                <div class="city-group">
+                                    <p class="city has-text-grey-dark">
+                                        <strong>{{ city }}</strong>
+                                    </p>
+
+                                    {% for org in organizations %}
+                                        <button name="ubrId" value="{{ org.ubrId }}" data-city="{{org.city}}" class="dropdown-item has-text-grey-dark" type="submit" role="menuitem">
+                                            {{ org.name }}
+                                        </button>
+                                    {% endfor %}
+                                <div>
+                                {% endfor %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% if organization %}
+        {% set color = organization.color  %}
+    {% else %}
+        {% set color = "#ffffff" %}
+    {% endif %}
+    <div class="partner-container" style="background-color: {{ color }};">
+
+    </div>
+    {% if organization.links|length > 0 %}
+        <nav class="navbar sub-menu has-shadow pt-1 pb-3 pr-5 pl-5">
+            <div class="navbar-end">
+                {% for link in organization.links %}
+                    <a class="navbar-item"
+                       href="{{ link.url[language] }}" target="_blank">
+                        {{ link.text[language]|raw }}
+                    </a>
+                {% endfor %}
+            </div>
+        </nav>
+    {% endif  %}
+{% endblock %}
+
+<main class="section">
+        <!-- just a placeholder for content block -->
+        {% block content %}
+            PLACEHOLDER - PLEASE CHANGE
+        {% endblock %}
+        <!-- end placeholder -->
+</main>
+
+{% block footer %}
+    {{ include('users/footer.twig') }}
+{% endblock %}
+{% block js %}
+    {% if asset == 'users_browse_collections' %}
+        {% webpack_entry_js 'users_browse_collections' %}
+    {% elseif asset == 'users_browse_subjects' %}
+        {% webpack_entry_js 'users_browse_subjects' %}
+    {% elseif asset == 'users_resources_for_subject' %}
+        {% webpack_entry_js 'users_resources_for_subject' %}
+    {% elseif asset == 'users_detail' %}
+        {% webpack_entry_js 'users_details' %}
+    {% elseif asset == 'users_search' %}
+        {% webpack_entry_js 'users_search' %}
+    {% elseif asset == 'users_results' %}
+        {% webpack_entry_js 'users_results' %}
+    {% else %}
+        {% webpack_entry_js 'users_base' %}
+    {% endif  %}
+{% endblock %}
+
+</body>
+</html>

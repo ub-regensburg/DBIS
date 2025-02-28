@@ -1,0 +1,14 @@
+<div id="license-form-filter" 
+    class="">
+    {% for licenseForm in licenseForms %}
+        <div class="control">
+            <label class="checkbox">
+                <input type="checkbox"
+                    class="mr-2"
+                    name="filter-license-forms[]"
+                    value="{{ licenseForm.id }}" {% if licenseForm.id in selectedLicenseForms %}checked="true"{% endif %}>
+                {{ licenseForm.title }}
+            </label>
+        </div>
+    {% endfor %}
+</div>

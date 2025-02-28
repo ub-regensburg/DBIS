@@ -1,0 +1,23 @@
+{#
+Filter Activator Button Component
+
+Twig component for rendering a button to drop out a filter section.
+
+It has to be placed as a direct neighbor of the filter-body element to be activated.
+
+Arguments:
+- str title:    Title to be displayed
+#}
+<button 
+    class="button
+        mb-2
+        pb-4
+        pl-0
+        filter-activator
+        is-fullwidth
+        is-justify-content-flex-start"
+    type="button">
+     <span class="mr-2 symbol-arrow down jsonly">&#9660;</span>
+     <span class="mr-2 symbol-arrow up jsonly">&#9650;</span>
+    {{ title }}
+</button>

@@ -1,0 +1,1068 @@
+{% embed "admin/base.twig" with { page: 'edit_license' } %}
+    {% block content %}
+        {% if organization %}
+            {% set resource_link = "/" ~ organization.ubrId ~ "/resources/" ~ resource.id ~ "?direct-link=1" %}
+        {% else %}
+            {% set resource_link = "/resources/" ~ resource.id ~ "?direct-link=1" %}
+        {% endif %}
+
+        <script>
+            config.license_id = "{{ license.id }}";
+        </script>
+
+        {% if is_created_successfully %}
+            <article class="message is-success is-light">
+                <p class="message-body">
+                    {{ i18n.msg_license_created_successfully }}.
+                    <a href="{{ resource_link }}">{{ i18n.lbl_open_in_userview }}</a>
+                </p>
+            </article>
+        {% elseif is_updated_successfully %}
+            <article class="message is-success is-light">
+                <p class="message-body">
+                    {{ i18n.msg_license_updated_successfully }}.
+                    <a href="{{ resource_link }}">{{ i18n.lbl_open_in_userview }}</a>
+                </p>
+            </article>
+        {% endif %}
+
+        <ul class="breadcrumbs mb-1 is-size-7">
+            <li><a href="../../../..">{{ i18n.breadcrumb_admin }}</a></li>
+            <li><a href="../../..">{{ i18n.breadcrumb_resources }}</a></li>
+            <li><a href="../..">{{ resource.title }}</a></li>
+            <li><a href="..">{{ i18n.breadcrumb_licenses_access }}</a></li>
+
+            {% if license==null %}
+                <li><span>{{ i18n.breadcrumb_new }}</span></li>
+            {% else %}
+                <li>{{ licenseTypes|filter(l => l.id==license.type.id)|map(l=>l.title)|join(',') }}</li>
+            {% endif %}
+        </ul>
+
+        <fieldset aria-labelledby="h-main" class="h-edit-license" {% if not isAdmin and not isSuperAdmin %}disabled="disabled"{% endif %}>
+            <h1 id="h-main"
+                class="title is-1">
+                {% if license %}
+                    {{ i18n.h_edit_license_access }}
+                {% else %}
+                    {{ i18n.lbl_create_license_access_without_new }}
+                {% endif %}
+            </h1>
+
+
+            <form method="post" class="edit-license-form">
+                {% if license and license.id is not null %}
+                    <input type="hidden" name="_METHOD" value="PUT"/>
+                {% endif %}
+                {% if organization %}
+                    <input type="hidden" name="organizationId" value="{{ organization.ubrId }}"/>
+                {% endif %}
+
+                <section>
+                    {% if errors|length > 0 %}
+                        {% if errors.accesses %}
+                            {% if license.accesses|length < 1 %}
+                                <div class="notification is-danger is-size-6">
+                                    {{ i18n.msg_form_errors }}
+                                </div>
+                             {% endif %}
+                        {% else %}
+                            <div class="notification is-danger is-size-6">
+                                {{ i18n.msg_form_errors }}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </section>
+
+                <section aria-labelledby="h-lic-general">
+                    <h2 id="h-lic-general"
+                        class="title is-2">{{ i18n.h_license_general }}</h2>
+                    <div class="field">
+                        <label class="label"
+                               for="licenseType">
+                            {{ i18n.lbl_license_type }}*
+                        </label>
+                        <div class="select is-expanded stretch">
+                            <select id="license-type" id="licenseType"
+                                    class="stretch" name="licenseType" {% if license and (license.type.id == 3 and not(has_national_privileges) or license.type.id == 4 and not(is_fid) or license.type.id == 5 and not(has_consortial_privileges) or license.type.id == 6 and (not(isSuperAdmin) and not(isZbmed))) %}disabled{% endif %}>
+                                {% for type in licenseTypes %}
+                                    <option
+                                            value="{{ type.id }}"
+                                            {% if (license and license.type and license.type.id==type.id) or
+                                                (license == null and type.id == licenseTypes[0].id) or
+                                                (organization and license == null and type.id == 2) %}selected
+                                            {% endif %}
+
+                                            {% if type.id == 3 and not(has_national_privileges) %}disabled
+                                            {% endif %}
+
+                                            {% if type.id == 4 and not(is_fid) %}disabled
+                                            {% endif %}
+
+                                            {% if type.id == 5 and not(has_consortial_privileges) %}disabled
+                                            {% endif %}
+                                            {% if type.id == 6 and (not(isSuperAdmin) and not(isZbmed))%}disabled
+                                            {% endif %}
+                                        >
+                                        {{ type.title }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            {% if license and (license.type.id == 3 and not(has_national_privileges) or license.type.id == 4 and not(is_fid) or license.type.id == 5 and not(has_consortial_privileges) or license.type.id == 6 and (not(isSuperAdmin) and not(isZbmed))) %}<input type="hidden" name="licenseType" value="{{license.type.id}}" />{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">{{ i18n.lbl_license_form }}</label>
+                        <div class="select is-expanded stretch">
+                            <select id="license-form" class="stretch" name="licenseForm" autocomplete="off" {% if license and (license.form.id == 31 and not(has_national_privileges) or ((license.form.id == 41 or license.form.id == 42 or license.form.id == 43) and not(is_fid)) or license.form.id == 61 and (not(isSuperAdmin) and not(isZbmed))) %}disabled{% endif %}>
+                                {% for form in licenseForms %}
+                                    <option value="{{ form.id }}"
+                                            {% if license and license.form and license.form.id == form.id %}
+                                                selected
+                                            {% endif %}
+
+                                            {% if (form.id == 31) and not(has_national_privileges) %}disabled
+                                            {% endif %}
+
+                                            {% if (form.id == 41 or form.id == 42 or form.id == 43) and not(is_fid) %}disabled
+                                            {% endif %}
+
+                                            {% if (form.id == 61) and (not(isSuperAdmin) and not(isZbmed))%}disabled
+                                            {% endif %}
+                                        >
+                                        {{ form.title }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="fid-information" class="box field is-hidden mt-4 mb-5">
+                        <h4 class="title is-3">{{ i18n.h_fid_information }}</h4>
+                        <div class="field">
+                            <label class="label">{{ i18n.lbl_license_provided_by_fid }}</label>
+                            <div class="select is-expanded stretch">
+                                <select name="fid-institution" class="stretch">
+                                    <option value="">{{ i18n.lbl_please_select }}</option>
+                                    {% for fid in fids %}
+                                        <option value="{{ fid.ubrId }}" {% if license.fid == fid.ubrId %} selected {% endif %}>{{ fid.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ i18n.lbl_hosting_privileges_by_fid }}</label>
+                            <div class="control">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="fid-hosting-privilege" {% if (license and license.fidHostingPrivilege == true) %}checked{% endif %}>
+                                    {{ i18n.lbl_hosting_privilege }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# PUBLICATON FORM #}
+                    <div class="field">
+                        <label class="label">{{ i18n.lbl_publication_form }} *</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="publication_form"
+                                        class="input"
+                                        name="publication_form"
+                                        data-msg_required="{{ i18n.msg_required }}">
+                                    {% for publication_form in publication_forms %}
+                                        {% if publication_form.id == license.publicationForm.id %}
+                                            <option value="{{ publication_form.id }}" selected>{{ publication_form.title }}</option>
+                                        {% else %}
+                                            <option value="{{ publication_form.id }}">{{ publication_form.title }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                {% if errors.publication_form %}
+                                    <div class="err-required help is-danger is-size-6">{{ i18n.msg_required }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">{{ i18n.lbl_parallel_users }}</label>
+                        <div class="control">
+                            <input type="number"
+                                   class="input"
+                                   name="parallel_users" value="{{ license.numberOfConcurrentUsers }}">
+                        </div>
+                    </div>
+
+                    <!-- VENDORS -->
+                    <!--<div class="field vendor-container">
+                        <div class="vendor-select-group">
+                            <label class="label is-2">{{ i18n.lbl_vendor }}</label>
+
+                            <input autocomplete="off"
+                                   class="input vendor search jsonly"
+                                   name="vendor_searchfield"
+                                   placeholder="{{ i18n.hint_search_vendor }}"
+                                   value="{{ license.vendor ? license.vendor.title[language] : "" }}"
+                            >
+                            <select class="input select stretch vendor" size="4" name="vendor">
+                                <option selected value="" class="hidden">{{ i18n.hint_select_entry }}</option>
+                                {% for enterprise in enterprises|sort((a,b) => a.title >= b.title) %}
+                                    <option
+                                            value="{{ enterprise.id }}"
+                                            {% if license.vendor and license.vendor.id == enterprise.id %}
+                                                selected
+                                            {% endif %}
+                                    >
+                                        {{ enterprise.title }}
+                                    </option>
+                                {% endfor %}
+                                <option class="exclude-from-filter jsonly"
+                                        value="::createnewvendor">+ {{ i18n.lbl_create_vendor }}</option>
+                            </select>
+                        </div>
+
+                        <div class="vendor-create-group">
+                            <div class="columns">
+                                <div class="column">
+                                    <label class="label is-2">
+                                        {{ i18n.lbl_vendor_new }}
+                                        <span class="tag" aria-label=""></span>
+                                        <input class="input vendor-new"
+                                               name="vendor-new"></input>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button type="button"
+                                        class="button is-inverted is-pulled-right">
+                                    {{ i18n.lbl_return_to_vendor_selection }}
+                                </button>
+                            </div>
+
+                            <!~~ if js is disabled, simply show the field as is ~~>
+                            <noscript>
+                                <div class="host-create-group">
+                                    <div class="columns">
+                                        <div class="column">
+                                            <label class="label is-2"> 🇩🇪
+                                                {{ i18n.lbl_host_new }}
+                                                <span class="tag" aria-label=""></span>
+                                            </label>
+                                            <input class="input host-new"
+                                                   name="host-new"></input>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <button class="button is-inverted"
+                                                type="button">
+                                            {{ i18n.lbl_return_to_vendor_selection }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </noscript>
+                        </div>
+                    </div>-->
+                    <!-- /VENDORS -->
+
+                    <!-- PUBLISHERS -->
+                    <div class="field publisher-container">
+                        <div class="publisher-select-group">
+                            <label class="label is-2">{{ i18n.lbl_publisher }}</label>
+
+                            <input autocomplete="off"
+                                   class="input publisher search jsonly"
+                                   name="publisher_searchfield"
+                                   placeholder="{{ i18n.hint_search_publisher }}"
+                                   value="{{ license.publisher ? license.publisher.title[language] : "" }}"
+                            >
+                            <select class="input select stretch publisher" size="4" name="publisher">
+                                <option selected value="" class="hidden">{{ i18n.hint_select_entry }}</option>
+                                {% for enterprise in enterprises|sort((a,b) => a.title >= b.title) %}
+                                    <option
+                                            value="{{ enterprise.id }}"
+                                            {% if license.publisher and license.publisher.id == enterprise.id %}
+                                                selected
+                                            {% endif %}
+                                    >
+                                        {{ enterprise.title }}
+                                    </option>
+                                {% endfor %}
+                                <option class="exclude-from-filter jsonly"
+                                        value="::createnewpublisher">+ {{ i18n.lbl_create_publisher }}</option>
+                            </select>
+                        </div>
+
+                        <div class="publisher-create-group">
+                            <div class="columns">
+                                <div class="column">
+                                    <label class="label is-2">
+                                        {{ i18n.lbl_publisher_new }}
+                                        <input class="input publisher-new"
+                                               name="publisher-new"></input>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button type="button"
+                                        class="button is-inverted is-pulled-right">
+                                    {{ i18n.lbl_return_to_publisher_selection }}
+                                </button>
+                            </div>
+
+                            <!-- if js is disabled, simply show the field as is -->
+                            <noscript>
+                                <div class="publisher-create-group">
+                                    <div class="columns">
+                                        <div class="column">
+                                            <label class="label is-2"> 🇩🇪
+                                                {{ i18n.lbl_publisher_new }}
+                                                <span class="tag" aria-label=""></span>
+                                            </label>
+                                            <input class="input publisher-new"
+                                                   name="publisher-new"></input>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <button class="button is-inverted"
+                                                type="button">
+                                            {{ i18n.lbl_return_to_publisher_selection }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </noscript>
+                            <!-- -->
+                        </div>
+                    </div>
+                    <!-- /PUBLISHERS -->
+                    <div>
+                        <label class="label is-2">{{ i18n.lbl_further_license_information }}</label>
+
+                        <div class="field">
+                            <div class="control">
+                                <label class="checkbox">
+                                    <input name="isActive" type="checkbox" id="checkbox-licenseactive"
+                                           {% if ((license and license.isActive is same as(true)) or license is null) %}checked{% endif %}
+                                    >
+                                    {{ i18n.lbl_license_active }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <label class="checkbox"
+                                       for="is_allowing_data_mining">
+                                    <input id="is_allowing_data_mining"
+                                           name="is_allowing_data_mining"
+                                           type="checkbox"
+                                            {% if (license and license.textMiningAllowed==true) %}
+                                    checked
+                                            {% endif %}>
+                                    {{ i18n.lbl_text_mining }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="is-allowing-walking" class="field">
+                            <div class="control">
+                                <label class="checkbox">
+                                    <input name="is_allowing_walking" type="checkbox" id="is_allowing_walking"
+                                           {% if (license and license.isAllowingWalking == true) %}checked{% endif %}
+                                    >
+                                    {{ i18n.lbl_is_allowing_walking }}
+                                </label>
+                            </div>
+                        </div>
+                        <!-- 
+                        <div id="oa-field" class="field">
+                            <div class="control">
+                                <label class="checkbox">
+                                    <input name="is_oa" type="checkbox" id="is_oa"
+                                           {% if (license and license.isOA == true) %}checked{% endif %}
+                                    >
+                                    {{ i18n.lbl_is_oa }}
+                                </label>
+                            </div>
+                        </div>
+                        -->
+                    </div>
+                </section>
+
+                <section aria-labelledby="h-lic-accesses">
+                    <h2 id="h-lic-accesses"
+                        class="title is-2">{{ i18n.lbl_accesses }}</h2>
+
+                    {% if license.accesses|length < 1 %}
+                        {% if errors.accesses %}
+                            <div class="err-required help is-danger is-size-6 mb-2">{{ i18n.msg_required }}</div>
+                        {% endif %}
+                    {% else %}
+                        {% if errors.no_access_url %}
+                            <div class="err-required help is-danger is-size-6 mb-2">{{ i18n.msg_no_access_url }}</div>
+                        {% endif %}
+                    {% endif %}
+
+                    <!-- === List with access items === -->
+                    <div class="license-access-list extensible-list" data-namespace="accesses">
+
+                        <!-- === Accordion Template === -->
+                        {% embed "/admin/licenses/access_form_component.twig"
+                            with {'is_template': true, 'access': null} %}{% endembed %}
+                        <!-- === End of Accordion Template === -->
+
+                       
+                        {% for access in license.accesses %}
+                            {% embed "/admin/licenses/access_form_component.twig"
+                                with {'is_template': false, 'access': access} %}{% endembed %}
+                        {% endfor %}
+
+                        {% if isAdmin or isSuperAdmin %}
+                            <button class="add-item
+                                button
+                                is-primary
+                                is-outlined"
+                                    type="button">
+                                <span class="icon">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                <span>{{ i18n.lbl_access_create }}</span>
+                            </button>
+                        {% endif %}
+                    </div>
+                    <!-- ==== End of access item list ==== -->
+                     <div class="mt-5">
+                        {% if license.type.id == 3 %}
+                            {% if isAdmin and not has_national_privileges %}
+                                <input type="hidden" name="only-access" value="true"/>
+                                <button class="button is-primary save-local-access" type="submit">{{ i18n.lbl_save_accesses }}</button>
+                            {% endif %}
+                        {% endif %}
+                        {% if license.type.id == 5 %}
+                            {% if isAdmin and not has_consortial_privileges %}
+                                <input type="hidden" name="only-access" value="true"/>
+                                <button class="button is-primary save-local-access" type="submit">{{ i18n.lbl_save_accesses }}</button>
+                            {% endif %}
+                        {% endif %}
+                        {% if license.type.id == 4 %}
+                            {% if isAdmin and not is_fid %}
+                                <input type="hidden" name="only-access" value="true"/>
+                                <button class="button is-primary save-local-access" type="submit">{{ i18n.lbl_save_accesses }}</button>
+                            {% endif %}
+                        {% endif %}
+                        {% if license.type.id == 6 %}
+                            {% if isAdmin and not isZbmed %}
+                                <input type="hidden" name="only-access" value="true"/>
+                                <button class="button is-primary save-local-access" type="submit">{{ i18n.lbl_save_accesses }}</button>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </section>
+
+                <br aria-hidden="true">
+                <br aria-hidden="true">
+                <br aria-hidden="true">
+                <br aria-hidden="true">
+
+                {% if isFid is defined and isFid == true %}
+                <section aria-labelledby="h-external-identifiers">
+                    <h2 class="title is-2" id="h-misc">{{ i18n.h_external_identifiers }}</h2>
+                    <div class="">
+                            <div id="external-ids-block" class="mb-6">
+                                {% include 'admin/licenses/field_external_ids.twig' %}
+                            </div>
+                    </div>
+                </section>
+                {% endif %}
+
+                <section aria-labelledby="h-lic-notes">
+                    <h2 id="h-lic-notes"
+                        class="title is-2">
+                        {{ i18n.h_license_notes }}</h2>
+                    <div class="field columns c-translate">
+                        <div class="column is-45">
+                            <label class="label i18_de"
+                                   for="internal_notes_de">
+                                {{ i18n.lbl_internal_notes }}
+                                <span class="tag" aria-label="{{ i18n.aria_de }}">de</span></label>
+                            <div class="control">
+                                <textarea class="input textarea translate language--german"
+                                          id="internal_notes_de"
+                                          name="internal_notes_de"
+                                          type="text"
+                                >{{ license.internalNotes.de }}</textarea>
+                            </div>
+                        </div>
+                        <div class="column is-auto">
+                            <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                    <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                </button>
+                                <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                    <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="column is-45">
+                            <label for="internal_notes_en"
+                                   class="label i18_en">{{ i18n.lbl_internal_notes }}
+                                <span class="tag" aria-label="{{ i18n.aria_en }}">en</span></label>
+                            <div class="control">
+                                <textarea id="internal_notes_en"
+                                          class="input textarea translate language--english"
+                                          type="text"
+                                          name="internal_notes_en">{{ license.internalNotes.en }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field columns c-translate">
+                        <div class="column is-45">
+                            <label for="external_notes_de"
+                                   class="label i18_de">
+                                {{ i18n.lbl_external_notes }}
+                                <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                            </label>
+                            <div class="control">
+                                <textarea id="external_notes_de"
+                                          class="input textarea translate language--german"
+                                          type="text"
+                                          name="external_notes_de"
+                                >{{ license.externalNotes.de }}</textarea>
+                            </div>
+                        </div>
+                        <div class="column is-auto">
+                            <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                    <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                </button>
+                                <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                    <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="column is-45">
+                            <label class="label i18_en"
+                                   for="external_notes_en">
+                                {{ i18n.lbl_external_notes }}
+                                <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                            </label>
+                            <div class="control">
+                                <textarea id="external_notes_en"
+                                          class="input textarea translate language--english"
+                                          name="external_notes_en"
+                                          type="text"
+                                >{{ license.externalNotes.en }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="ajax-form-for-organisation" {% if license.type.id == 2 %}style="display:none;"{% endif %}>  
+                    <h2 id="h-lic-notes"
+                        class="title is-2">
+                        {{ i18n.h_license_local_data }}
+                    </h2>   
+                    <section class="notes-for-organisation">
+                        <div class="field columns c-translate">
+                            <div class="column is-45">
+                                <label for="internal_notes_for_org_de"
+                                    class="label i18_de">
+                                    {{ i18n.lbl_internal_notes_for_org }} {{ organization.ubrId }}
+                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                </label>
+                                <div class="control">
+                                    <textarea id="internal_notes_for_org_de"
+                                            class="input textarea translate language--german"
+                                            type="text"
+                                            name="internal_notes_for_org_de"
+                                    >{{ license.licenseLocalisation.internalNotes.de }}</textarea>
+                                </div>
+                            </div>
+                            <div class="column is-auto">
+                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                    </button>
+                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="column is-45">
+                                <label class="label i18_en"
+                                    for="internal_notes_for_org_en">
+                                    {{ i18n.lbl_internal_notes_for_org }} {{ organization.ubrId }}
+                                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                </label>
+                                <div class="control">
+                                    <textarea id="internal_notes_for_org_en"
+                                            class="input textarea translate language--english"
+                                            name="internal_notes_for_org_en"
+                                            type="text"
+                                    >{{ license.licenseLocalisation.internalNotes.en }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field columns c-translate">
+                            <div class="column is-45">
+                                <label for="external_notes_for_org_de"
+                                    class="label i18_de">
+                                    {{ i18n.lbl_external_notes_for_org }} {{ organization.ubrId }}
+                                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                                </label>
+                                <div class="control">
+                                    <textarea id="external_notes_for_org_de"
+                                            class="input textarea translate language--german"
+                                            type="text"
+                                            name="external_notes_for_org_de"
+                                    >{{ license.licenseLocalisation.externalNotes.de }}</textarea>
+                                </div>
+                            </div>
+                            <div class="column is-auto">
+                                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                                    </button>
+                                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="column is-45">
+                                <label class="label i18_en"
+                                    for="external_notes_for_org_en">
+                                    {{ i18n.lbl_external_notes_for_org }} {{ organization.ubrId }}
+                                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                                </label>
+                                <div class="control">
+                                    <textarea id="external_notes_for_org_en"
+                                            class="input textarea translate language--english"
+                                            name="external_notes_for_org_en"
+                                            type="text"
+                                    >{{ license.licenseLocalisation.externalNotes.en }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="dates-for-organisation mt-1">
+                        <div>
+                            <div class="field">
+                                <label class="label">{{ i18n.lbl_aquired }}</label>
+                                <div class="control">
+                                    <input 
+                                        id="aquired_by_organisation"
+                                        name="aquired_by_organisation"
+                                        class="input"
+                                        type="date"
+                                        value="{{ license.licenseLocalisation.aquired }}">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">{{ i18n.lbl_cancelled }}</label>
+                                <div class="control">
+                                    <input 
+                                        id="cancelled_by_organisation"
+                                        name="cancelled_by_organisation"
+                                        class="input"
+                                        type="date"
+                                        value="{{ license.licenseLocalisation.cancelled }}">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">{{ i18n.h_license_last_check }}</label>
+                                <div class="control">
+                                    <input 
+                                        id="last_check_by_organisation"
+                                        name="last_check_by_organisation"
+                                        class="input"
+                                        type="date"
+                                        value="{{ license.licenseLocalisation.lastCheck }}">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="mt-5">
+                        {% if license.type.id == 3 %}
+                            {% if isAdmin and not has_national_privileges %}
+                                <span class="save-local-data-container">
+                                    <span class="button is-primary save-local-data">{{ i18n.save_local_data }}</span>
+                                    <span class="save-local-data-tooltip is-size-5 has-text-light" style="display: none;">
+                                        Gespeichert!
+                                    </span>
+                                </span>
+                            {% endif %}
+                        {% endif %}
+                        {% if license.type.id == 5 %}
+                            {% if isAdmin and not has_consortial_privileges %}
+                                <span class="save-local-data-container">
+                                    <span class="button is-primary save-local-data">{{ i18n.save_local_data }}</span>
+                                    <span class="save-local-data-tooltip is-size-5 has-text-light" style="display: none;">
+                                        Gespeichert!
+                                    </span>
+                                </span>
+                            {% endif %}
+                        {% endif %}
+                        {% if license.type.id == 4 %}
+                            {% if isAdmin and not is_fid %}
+                                <span class="save-local-data-container">
+                                    <span class="button is-primary save-local-data">{{ i18n.save_local_data }}</span>
+                                    <span class="save-local-data-tooltip is-size-5 has-text-light" style="display: none;">
+                                        Gespeichert!
+                                    </span>
+                                </span>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </section>
+
+                <section class="dates">
+                    <h2 id="h-lic-dates" data-other-dates="{{ i18n.h_license_other_dates }}" data-other-dates-local="{{ i18n.h_license_other_dates_local }}"
+                        class="title is-2">
+                        {% if license.type.id == 2 %}{{ i18n.h_license_other_dates_local }}{% else %}{{ i18n.h_license_other_dates }}{% endif %}</h2>
+
+                    <div class="field">
+                        <label class="label">{{ i18n.lbl_aquired }}</label>
+                        <div class="control">
+                            <input name="aquired"
+                                   class="input"
+                                   type="date"
+                                   value="{{ license.aquired }}">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">{{ i18n.lbl_cancelled }}</label>
+                        <div class="control">
+                            <input name="cancelled"
+                                   class="input"
+                                   type="date"
+                                   value="{{ license.cancelled }}">
+                        </div>
+                    </div>
+                    <label class="label">
+                        {{ i18n.h_license_last_check }}</label>
+
+                    <div class="field">
+                        <div class="control">
+                            <input name="last_check"
+                                   class="input"
+                                   type="date"
+                                   value="{{ license.lastCheck }}">
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    {% if isAdmin and (isSuperAdmin or license.type.id == 2 or license.type.id == 1 or (license.type.id == 3 and has_national_privileges) or (license.type.id == 4 and is_fid) or (license.type.id == 5 and has_consortial_privileges) or (license.type.id == 6 and isZbmed) or license == null) %}
+                        <button type="submit"
+                                aria-label="{{ i18n.aria_label_save_license }}"
+                                class="button is-primary is-pulled-right">
+                            {% if license %}
+                                {{ i18n.lbl_save }}
+                            {% else %}
+                                {{ i18n.lbl_create_license_access }}
+                            {% endif %}
+                        </button>
+                     {% endif %}
+                </section>
+            </form>
+
+            {#
+            Buttons for creating modals
+            #}
+            {% if license and license.id is not null and (isAdmin or isSuperAdmin) %}
+            <div class="c-form-save-edit">
+                {% if license.type.id == 2 %}
+                    <form action="."
+                          method="GET">
+                        <input type="hidden" name="confirmDeleteForMyInstitution" value="1"/>
+                        <button type="submit"
+                                class="
+                                button
+                                is-warning
+                                is-pulled-left"
+                                aria-label="{{ i18n.lbl_delete_for_my_institution }}">
+                            {{ i18n.lbl_delete_for_my_institution }}
+                        </button>
+                    </form>
+                {% elseif license.type.id == 1 %}
+                    <form action="."
+                          method="GET">
+                        <input type="hidden" name="confirmDeleteForAll" value="1"/>
+                        <button type="submit"
+                                class="
+                                    button
+                                    is-danger
+                                    is-pulled-left"
+                                aria-label="{{ i18n.lbl_delete_for_all }}">
+                            {{ i18n.lbl_delete_for_all }}
+                        </button>
+                    </form>
+                    <form action="."
+                          method="GET">
+                        <input type="hidden" name="confirmDeleteForMyInstitution" value="1"/>
+                        <button type="submit"
+                                class="
+                                button
+                                is-warning
+                                is-pulled-left ml-2"
+                                aria-label="{{ i18n.lbl_delete_for_my_institution }}">
+                            {{ i18n.lbl_delete_for_my_institution }}
+                        </button>
+                    </form>
+                {% elseif license.type.id == 3 %}
+                    {% if isSuperAdmin or has_national_privileges %}
+                        <form action="."
+                            method="GET">
+                            <input type="hidden" name="confirmDeleteForAll" value="1"/>
+                            <button type="submit"
+                                    class="
+                                        button
+                                        is-danger
+                                        is-pulled-left"
+                                    aria-label="{{ i18n.lbl_delete_for_all }}">
+                                {{ i18n.lbl_delete_for_all }}
+                            </button>
+                        </form>
+                    {% endif %}
+                    <form action="."
+                          method="GET">
+                        <input type="hidden" name="confirmDeleteForMyInstitution" value="1"/>
+                        <button type="submit"
+                                class="
+                                button
+                                is-warning
+                                is-pulled-left {% if isSuperAdmin or has_national_privileges %}ml-2{% endif %}"
+                                aria-label="{{ i18n.lbl_delete_for_my_institution }}">
+                            {{ i18n.lbl_delete_for_my_institution }}
+                        </button>
+                    </form>
+                {% elseif license.type.id == 5 %}
+                    {% if isSuperAdmin or has_consortial_privileges %}
+                        <form action="."
+                            method="GET">
+                            <input type="hidden" name="confirmDeleteForAll" value="1"/>
+                            <button type="submit"
+                                    class="
+                                        button
+                                        is-danger
+                                        is-pulled-left"
+                                    aria-label="{{ i18n.lbl_delete_for_all }}">
+                                {{ i18n.lbl_delete_for_all }}
+                            </button>
+                        </form>
+                    {% endif %}
+                    <form action="."
+                          method="GET">
+                        <input type="hidden" name="confirmDeleteForMyInstitution" value="1"/>
+                        <button type="submit"
+                                class="
+                                button
+                                is-warning
+                                is-pulled-left {% if isSuperAdmin or has_consortial_privileges %}ml-2{% endif %}"
+                                aria-label="{{ i18n.lbl_delete_for_my_institution }}">
+                            {{ i18n.lbl_delete_for_my_institution }}
+                        </button>
+                    </form>
+                {% elseif license.type.id == 4 %}
+                    {% if isSuperAdmin or is_fid %}
+                        <form action="."
+                                method="GET">
+                            <input type="hidden" name="confirmDeleteForAll" value="1"/>
+                            <button type="submit"
+                                    class="
+                                    button
+                                    is-danger
+                                    is-pulled-left"
+                                    aria-label="{{ i18n.lbl_delete_for_all }}">
+                                {{ i18n.lbl_delete_for_all }}
+                            </button>
+                        </form>
+                    {% endif %}   
+                    <form action="."
+                          method="GET">
+                        <input type="hidden" name="confirmDeleteForMyInstitution" value="1"/>
+                        <button type="submit"
+                                class="
+                                button
+                                is-warning
+                                is-pulled-left {% if isSuperAdmin or is_fid %}ml-2{% endif %}"
+                                aria-label="{{ i18n.lbl_delete_for_my_institution }}">
+                            {{ i18n.lbl_delete_for_my_institution }}
+                        </button>
+                    </form>    
+                {% elseif license.type.id == 6 %}
+                    {% if isSuperAdmin or isZbmed %}
+                        <form action="."
+                                method="GET">
+                            <input type="hidden" name="confirmDeleteForAll" value="1"/>
+                            <button type="submit"
+                                    class="
+                                    button
+                                    is-danger
+                                    is-pulled-left"
+                                    aria-label="{{ i18n.lbl_delete_for_all }}">
+                                {{ i18n.lbl_delete_for_all }}
+                            </button>
+                        </form>
+                    {% endif %}   
+                    <form action="."
+                          method="GET">
+                        <input type="hidden" name="confirmDeleteForMyInstitution" value="1"/>
+                        <button type="submit"
+                                class="
+                                button
+                                is-warning
+                                is-pulled-left {% if isSuperAdmin or isZbmed %}ml-2{% endif %}"
+                                aria-label="{{ i18n.lbl_delete_for_my_institution }}">
+                            {{ i18n.lbl_delete_for_my_institution }}
+                        </button>
+                    </form>  
+                {% else %}
+                    
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {#
+            Modal for confirming deletion
+            #}
+            <!-- Modal dialog for confirming deletion of organization -->
+            <section aria-hidden="{{ queryParams.confirmDeleteForAll or queryParams.confirmDeleteForMyInstitution ? "false" : "true" }}"
+                     tabindex="0"
+                     aria-labelledby="confirm-delete-title">
+                <div id="confirm-delete-modal"
+                     class="modal
+                     {% if queryParams.confirmDeleteForAll or queryParams.confirmDeleteForMyInstitution %} is-active{% endif %}">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p id="confirm-delete-title"
+                               class="modal-card-title">{{ i18n.lbl_delete_license }}</p>
+                            <a
+                                    class="delete"
+                                    aria-label="close"
+                                    href="./"></a>
+                        </header>
+                        <section class="modal-card-body">
+                            {{ i18n.lbl_delete_license_hint }}
+                        </section>
+                        <footer class="modal-card-foot">
+                            <form
+                                    method="POST">
+                                <input type="hidden" name="_METHOD" value="DELETE"/>
+                                {% if queryParams.confirmDeleteForAll %}
+                                    <input type="hidden" name="deleteWhat" value="forAll"/>
+                                {% elseif queryParams.confirmDeleteForMyInstitution %}
+                                    <input type="hidden" name="deleteWhat" value="onlyMyInstitution"/>
+                                {% endif %}
+                                <button
+                                        class="button is-danger submit"
+                                        type="submit">{{ i18n.lbl_delete }}</button>
+                            </form>
+                            <a
+                                    class="button cancel ml-2"
+                                    href="./"
+                            >{{ i18n.lbl_cancel }}</a>
+                        </footer>
+                    </div>
+                </div>
+            </section>
+        </fieldset>
+            <!----------------------------------------------------------->
+            <div id="labels-modal" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">{{ i18n.lbl_default_labels_for_accesses }}</p>
+                        <button class="delete" aria-label="close"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        {% for label in labels %}
+                        <div class="container">
+                            <h5 class="tag is-white is-uppercase mt-2 mb-2">Default-Label der eigenen Einrichtung {{ loop.index }}</h5>
+                            <div class="label-container" data-label-id="{{ label.id }}">
+                                <div class="columns">
+                                    <div class="column atuo">
+                                        <span class="button is-primary is-light add-default-label is-small">{{ i18n.lbl_add_default_label_for_access }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'en' %}is-hidden{% endif %}">
+                                        <span class="label-de-{{ label.id }}">{{ label.label.de }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'de' %}is-hidden{% endif %}">
+                                        <span class="label-en-{{ label.id }}">{{ label.label.en }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'en' %}is-hidden{% endif %}">
+                                        <span class="label-long-de-{{ label.id }}">{{ label.label_long.de }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'de' %}is-hidden{% endif %}">
+                                        <span class="label-long-en-{{ label.id }}">{{ label.label_long.en }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'en' %}is-hidden{% endif %}">
+                                        <span class="label-longest-de-{{ label.id }}">{{ label.label_longest.de }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'de' %}is-hidden{% endif %}">
+                                        <span class="label-longest-en-{{ label.id }}">{{ label.label_longest.en }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% for label in labels_global %}
+                        <div class="container">
+                            <h5 class="tag is-white is-uppercase mt-2 mb-2">Default-Label nachnutzbarer Lizenzen {{ loop.index }}</h5>
+                            <div class="label-container" data-label-id="{{ label.id }}">
+                                <div class="columns">
+                                    <div class="column atuo">
+                                        <span class="button is-primary is-light add-default-label is-small">{{ i18n.lbl_add_default_label_for_access }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'en' %}is-hidden{% endif %}">
+                                        <span class="label-de-{{ label.id }}">{{ label.label.de }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'de' %}is-hidden{% endif %}">
+                                        <span class="label-en-{{ label.id }}">{{ label.label.en }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'en' %}is-hidden{% endif %}">
+                                        <span class="label-long-de-{{ label.id }}">{{ label.label_long.de }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'de' %}is-hidden{% endif %}">
+                                        <span class="label-long-en-{{ label.id }}">{{ label.label_long.en }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'en' %}is-hidden{% endif %}">
+                                        <span class="label-longest-de-{{ label.id }}">{{ label.label_longest.de }}</span>
+                                    </div>
+                                    <div class="column is-3 {% if language == 'de' %}is-hidden{% endif %}">
+                                        <span class="label-longest-en-{{ label.id }}">{{ label.label_longest.en }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        {% if license and license.id is not null %}
+        <div class="mt-6">
+            <div class="box">
+                {% set created_at_global = license.created_at|split('.')[0] %}
+                <p>{{ i18n.lbl_resource_created_at }}: {{ created_at_global|date("Y-m-d H:i") }}</p>
+                
+                {% set modified_at_global = license.modified_at|split('.')[0] %}
+                <p>{{ i18n.lbl_modified_at_global }}: {{ modified_at_global|date("Y-m-d H:i") }}</p>
+
+                {% set modified_at_local = license.licenseLocalisation.modified_at|split('.')[0] %}
+                <p>{{ i18n.lbl_modified_at_local }}: {{ modified_at_local|date("Y-m-d H:i") }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+    {% endblock %}
+{% endembed %}

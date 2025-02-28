@@ -1,0 +1,49 @@
+{% embed "users/base.twig" with { page: 'users_browse_subjects' } %}
+    {% block content %}
+        <div class="container">
+            
+            <h1 class="title is-1">{{ i18n.h_browse_subjects }}</h1>
+
+            <!--<div class="field is-grouped jsonly">
+                <div class="control is-expanded">
+                    <input id="subject-name-search" class="input" placeholder="{{ i18n.field_hint_subject_search }}"/>
+                </div>
+            </div>-->
+            <table class="table is-fullwidth is-hoverable">
+                <thead>
+                <tr>
+                    <td>{{ i18n.th_subject_name }}</td>
+                    <td class="has-text-right">{{ i18n.th_entries }}</td>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for subject in subjects %}
+                    {% if subject.is_visible == true %}
+                    <tr class="subject-row">
+                        <td>
+                            {% if subject.type == "Collection" %}
+                                <a
+                                        class="subject-name-field"
+                                        href="../collections/{{ subject.id }}/?availability-filter-free=on&availability-filter-local=on">
+                                    {{ subject.title }}
+                                </a>
+                            {% elseif subject.type=="Subject" %}
+                                <a
+                                        class="subject-name-field"
+                                        href="{{ subject.id }}/?availability-filter-free=on&availability-filter-local=on">
+                                    {{ subject.title }}
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td class="has-text-right">
+                            {{ subject.total_nr }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+{% endembed %}

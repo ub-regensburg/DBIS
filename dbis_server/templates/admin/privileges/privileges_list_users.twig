@@ -1,0 +1,72 @@
+{% embed "admin/base.twig" with {'page': 'superadmin_manage_privileges_user_select'} %}
+    {%  block content %}
+        <ul class="breadcrumbs mb-1 is-size-7">
+            <li><a href="/admin">{{ i18n.breadcrumb_admin }}</a></li>
+            <li>{{ i18n.h_privileges_select_users }}</li>
+        </ul>
+        <h1 class="title is-1">{{ i18n.h_privileges_select_users }}</h1>
+        <input id="search-field" 
+            class="input" 
+            type="text"
+            placeholder="{{ i18n.hint_enter_id_or_name }}">
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th>
+                        {{ i18n.lbl_name_and_id }}
+                    </th>
+                    <th class="has-text-right">
+                        {{ i18n.lbl_privileges }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr class="user-item">
+                        <td>
+                            <a href="./{{ user.id }}/">
+                                <span class="prename">{{ user.surname }}</span>, 
+                                <span class="surname">{{ user.prename }}</span> 
+                                <i>(<span class="user-id">{{ user.id }}</span>)</i>
+                            </a>
+                        </td>
+                        <td class="has-text-right">
+                            {% for privilege in user.privileges %}
+                                {% if privilege.type.id == 1000 %}
+                                    <span class="tag is-primary"><b>super</b></span>
+                                {% elseif privilege.type.id == 1 %}
+                                    <span 
+                                        class="tag privilege"
+                                        data-organization="{{ privilege.organization|json_encode() }}"
+                                        ><b>admin</b>|{{ privilege.organizationId }}
+                                        
+                                        <i>({{ privilege.organization.city }}, {{ privilege.organization.countryCode }})</i>
+                                    </span>
+                                {% elseif privilege.type.id == 2 %}
+                                    <span 
+                                        class="tag privilege"
+                                        data-organization="{{ privilege.organization|json_encode() }}"
+                                        ><b>fachreferent*in</b>|{{ privilege.organizationId }}
+                                        
+                                        <i>({{ privilege.organization.city }}, {{ privilege.organization.countryCode }})</i>
+                                    </span>
+                                {% endif %}
+                                {% if privilege.addons|length > 0 %}
+                                    <span>
+                                        <span class="tag is-white">{{ i18n.lbl_privilege_addon }}: </span>
+                                        {% for addon in privilege.addons %}
+                                            <span class="tag is-white">{{ addon.name }}</span>
+                                        {% endfor %}
+                                    </span>
+                                {% endif %}
+                            {% endfor %}
+                            {% if user.privileges|length == 0 %}
+                                <span class="has-text-grey">({{ i18n.lbl_no_privileges }})</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {%  endblock %}
+{% endembed %}

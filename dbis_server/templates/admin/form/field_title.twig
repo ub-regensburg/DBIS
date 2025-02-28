@@ -1,0 +1,62 @@
+{% if not resourceLocal.overwrite.title is empty and resourceLocal.overwrite.title|length > 0 %}
+    {% set isLocalized = true %}
+{% else %}
+    {% set isLocalized = false %}
+{% endif %}
+
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ i18n.lbl_database_title }} *</h3>
+    {%  if selectedOrganization.ubrId is not empty %}
+    <div class="tags has-addons is-clickable is-unselectable localization-tag" data-id="field-title">
+        {% if resourceLocal.overwrite.title is empty and resourceLocal.overwrite.title|length < 1 %}
+            <span class="tag global-tag">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light is-hidden">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-grey-lighter">&nbsp;</span>
+        {% else %}
+            <span class="tag global-tag is-hidden">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-info">&nbsp;</span>
+        {% endif %}
+        <input type="checkbox" name="title-local" class="localization-checkbox" hidden {% if isLocalized %} checked {% endif %}>
+    </div>
+    {% endif %}
+</div>
+<!-- GLOBAL -->
+<div class="field field-title global
+     {% if isLocalized %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="columns">
+        <div class="column">
+            <div class="control">
+                <input id="title_global" name="title_global" class="input" type="text"
+                       autocomplete="off" placeholder="{{ i18n.lbl_database_title_placeholder }}"
+                       data-msg_required="{{ i18n.msg_required }}" value="{{ resourceGlobal.title }}">
+                {% if errors.title %}
+                    <div class="err-required help is-danger is-size-6">{{ i18n.msg_required }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LOCAL -->
+<div class="field field-title local
+     {% if resourceLocal.overwrite.title is empty and resourceLocal.overwrite.title|length < 1 %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="columns">
+        <div class="column">
+            <div class="control">
+                <input id="title_local" name="title_local" class="input" type="text"
+                       autocomplete="off" placeholder="{{ i18n.lbl_database_title_placeholder }}"
+                       data-msg_required="{{ i18n.msg_required }}" value="{{ resourceLocal.overwrite.title }}">
+                {% if errors.title %}
+                    <div class="err-required help is-danger is-size-6">{{ i18n.msg_required }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

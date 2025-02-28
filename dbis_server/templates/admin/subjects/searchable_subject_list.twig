@@ -1,0 +1,35 @@
+<div class="field is-grouped jsonly">
+    <div class="control is-expanded">
+        <input id="subject-name-search" class="input" placeholder="{{ i18n.field_hint_subject_search }}"/>
+    </div>
+</div>
+
+<table class="table is-fullwidth is-hoverable">
+    <thead>
+        <tr>
+            <td>{{ i18n.th_subject_name }}</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for subject in subjects %}
+            <tr class="subject-row">
+                <td>
+                    {% if subject.is_collection == true %}
+                    <a
+                        class="subject-name-field"
+                        href="{{ url|replace({':subjectId': subject.id, 'subjects': 'collections' }) }}">
+                        {{ subject.title }}
+                    </a>
+                    {% else %}
+                    <a
+                        class="subject-name-field"
+                        href="{{ url|replace({':subjectId': subject.id }) }}">
+                        {{ subject.title }}
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

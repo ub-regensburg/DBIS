@@ -1,0 +1,30 @@
+@import "app/scss/admin_base.scss";
+
+#resources-source-list button.unpick-button {
+    display: none;
+}
+
+#resources-target-list button.pick-button {
+    display: none;
+}
+
+#resources-target-panel, #resources-source-panel {
+    display: flex;
+    flex-direction: column;
+    max-height: 550px;
+}
+
+.list-block {
+    flex: 1;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+#resources-target-list, #resources-source-list {
+    width:100%;
+}
+
+.field.has-addons {
+    flex-basis: 100%;
+}

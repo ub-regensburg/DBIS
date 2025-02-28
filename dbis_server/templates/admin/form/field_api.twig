@@ -1,0 +1,66 @@
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ i18n.lbl_api_url }}</h3>
+</div>
+
+<div class="columns">
+    <div class="column">
+        <!-- GLOBAL -->
+        <div class="field field-api-url global">
+        {# ENTRIES #}
+            <div class="api-url-entries">
+                {% if resourceGlobal is not null and resourceGlobal is defined and resourceGlobal.api_urls|length > 0 %}
+
+                {% for api in resourceGlobal.api_urls %}
+                    <div class="columns api-url-entry">
+                        <div class="column">
+                            <div class="api-url-list">
+                                <div class="field">
+                                    <div class="level">
+                                        <div class="control is-flex-grow-1">
+                                            <input name="api_url_global[]" class="input" type="text" placeholder=""
+                                                   autocomplete="off" value="{{ api.url }}">
+                                        </div>
+                                        <btn class="delete ml-3"></btn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% else %}
+
+                    <div class="columns api-url-entry">
+                        <div class="column">
+                            <div class="api-url-list">
+                                <div class="field">
+                                    <div class="level">
+                                        <div class="control is-flex-grow-1">
+                                            <input name="api_url_global[]" class="input" type="text" placeholder="{{ i18n.lbl_api_url_placeholder }}"
+                                                   autocomplete="off" value="">
+                                        </div>
+                                        <btn class="delete ml-3"></btn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="columns field-api-url-add-button-container global">
+    <div class="column">
+        <button id="btn_add_database_api_url_global"
+                class="button is-primary is-inverted has-text-weight-semibold is-small"
+                aria-label="{{ i18n.aria_add_api_url }}"
+                type="button">
+            <span class="icon mr-1">
+                <i class="fas fa-plus"></i>
+            </span>
+            {{ i18n.lbl_btn_add }}
+        </button>
+    </div>
+</div>

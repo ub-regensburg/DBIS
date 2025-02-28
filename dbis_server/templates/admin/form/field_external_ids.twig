@@ -1,0 +1,118 @@
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">ZDB</h3>
+</div>
+
+<div class="columns field-zdb global">
+    <div class="column">
+        <label>{{ i18n.external_id_zdb_id }}</label>
+        <div class="field">
+            <div class="control">
+                <input type="hidden" name="external_id_namespace[]" value="ZDB">
+                <input type="hidden" name="external_id_name[]" value="ID">
+                {% set id = '' %}
+                {% for external_id in selectedExternalIds %}
+                    {% if external_id.namespace == 'ZDB' and external_id.id_name == 'ID' %}
+                        {% set id = external_id.id %}
+                    {% endif %}
+                {% endfor %}
+                <input name="external_id_global[]" class="input" type="text"
+                       autocomplete="off" placeholder="{{ i18n.external_id_zdb_id_placeholder }}"
+                       value="{{ id }}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="columns field-zdb global">
+    <div class="column">
+        <label>{{ i18n.external_id_zdb_produktsigel }}</label>
+        <div class="field">
+            <div class="control">
+                <input type="hidden" name="external_id_namespace[]" value="ZDB">
+                <input type="hidden" name="external_id_name[]" value="PRODUKTSIGEL">
+                {% set id = '' %}
+                {% for external_id in selectedExternalIds %}
+                    {% if external_id.namespace == 'ZDB' and external_id.id_name == 'PRODUKTSIGEL' %}
+                        {% set id = external_id.id %}
+                    {% endif %}
+                {% endfor %}
+                <input name="external_id_global[]" class="input" type="text"
+                       autocomplete="off" placeholder="{{ i18n.external_id_zdb_produktsigel_placeholder}}"
+                       value="{{ id }}">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if isFid is defined and isFid == true %}
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">FIDELIO</h3>
+</div>
+
+<div class="columns field-fidelio global">
+    <div class="column">
+        <label>{{ i18n.external_id_fidelio_ppn }}</label>
+        <div class="field">
+            <div class="control">
+                <input type="hidden" name="external_id_namespace[]" value="FIDELIO">
+                <input type="hidden" name="external_id_name[]" value="PPN">
+                {% set id = '' %}
+                {% for external_id in selectedExternalIds %}
+                    {% if external_id.namespace == 'FIDELIO' and external_id.id_name == 'PPN' %}
+                        {% set id = external_id.id %}
+                    {% endif %}
+                {% endfor %}
+                <input name="external_id_global[]" class="input" type="text"
+                       autocomplete="off" placeholder="{{ i18n.external_id_fidelio_ppn_placeholder }}"
+                       value="{{ id }}">
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">EZB</h3>
+</div>
+
+<div class="columns field-ezb global">
+    <div class="column">
+        <label>{{ i18n.external_id_ezb_paket_id }}</label>
+        <div class="field">
+            <div class="control">
+                <input type="hidden" name="external_id_namespace[]" value="EZB">
+                <input type="hidden" name="external_id_name[]" value="PAKET-ID">
+                {% set id = '' %}
+                {% for external_id in selectedExternalIds %}
+                    {% if external_id.namespace == 'EZB' and external_id.id_name == 'PAKET-ID' %}
+                        {% set id = external_id.id %}
+                    {% endif %}
+                {% endfor %}
+                <input name="external_id_global[]" class="input" type="text"
+                       autocomplete="off" pattern="[A-Z0-9]{2,6}" placeholder="{{ i18n.external_id_ezb_paket_id_placeholder }}"
+                       value="{{ id }}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="columns field-ezb global">
+    <div class="column">
+        <label>{{ i18n.external_id_ezb_kollektions_id }}</label>
+        <div class="field">
+            <div class="control">
+                <input type="hidden" name="external_id_namespace[]" value="EZB">
+                <input type="hidden" name="external_id_name[]" value="KOLLEKTIONS-ID">
+                {% set id = '' %}
+                {% for external_id in selectedExternalIds %}
+                    {% if external_id.namespace == 'EZB' and external_id.id_name == 'KOLLEKTIONS-ID' %}
+                        {% set id = external_id.id %}
+                    {% endif %}
+                {% endfor %}
+                <input name="external_id_global[]" class="input" type="text"
+                       autocomplete="off" pattern="EZB-[A-Z0-9]{2,6}-\d{5}" placeholder="{{ i18n.external_id_ezb_kollektions_id_placeholder }}"
+                       value="{{ id }}">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+{% embed "users/base.twig" with { page: 'users_browse_collections' } %}
+    {% block content %}
+        <div class="container">
+
+            <h1 class="title is-1">{{ i18n.h_browse_collections }}</h1>
+
+            <table class="table is-fullwidth is-hoverable">
+                <thead>
+                <tr>
+                    <td>{{ i18n.th_collection_name }}</td>
+                    <td class="has-text-right">{{ i18n.th_entries }}</td>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for collection in collections %}
+                    <tr class="collection-row">
+                        <td>
+                            {% set collectionUrl = url_for('collectionWithinOrganization',
+                                { 'organizationId': organizationId, 'collectionId': collection.id }) %}
+                            <a class="collection-name-field" href=" {{ collectionUrl }}?availability-filter-free=on&availability-filter-local=on">
+                                {{ collection.title }}
+                            </a>
+                        </td>
+                        <td class="has-text-right">
+                            {{ collection.total_nr }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+{% endembed %}

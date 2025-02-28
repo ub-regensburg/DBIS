@@ -1,0 +1,69 @@
+{% embed "admin/base.twig" %}
+    {%  block content %}
+    <h1 class="title is-1">{{ i18n.lbl_daily_statistics }}</h1>
+    <div class="">
+        <form method="GET">
+            <div class="field has-addons has-addons-right is-grouped is-grouped-centered">
+                <p class="control">
+                    <input class="input" name="days" type="number" value="{% if days %}{{days}}{% else %}7{%endif%}" min="1" max="99">
+                </p>
+                <p class="control">
+                    <button class="button is-primary submit">
+                    {{ i18n.lbl_generate_statistics }}
+                    </button>
+                </p>
+            </div>
+        </form>
+        <div class="columns">
+        {% if statistics_all|length > 0 %}
+            <div class="column is-half">
+                <table class="table is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>
+                                {{ i18n.lbl_days }}
+                            </th>
+                            <th>
+                                {{ i18n.lbl_total_inventory }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for day in statistics_all %}
+                        <tr>
+                            <td>{{ day.access_day|date('d.m.Y') }}</td>
+                            <td>{{ day.total_hits }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        {% if statistics_org|length > 0 %}
+            <div class="column is-half">
+                <table class="table is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>
+                                {{ i18n.lbl_days }}
+                            </th>
+                            <th>
+                                {{ ubrId }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for day in statistics_org %}
+                        <tr>
+                            <td>{{ day.access_day|date('d.m.Y') }}</td>
+                            <td>{{ day.hits }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+    {%  endblock %}
+{% endembed %}

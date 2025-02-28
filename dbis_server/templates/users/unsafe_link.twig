@@ -1,0 +1,20 @@
+{% embed "users/base.twig" %}
+    {% block content %}
+        <div class="container">
+            
+            <h1 class="title is-1">{{ i18n.h_unsafe_link }}</h1>
+
+            <div>
+                {% if language == "de" %}
+                <p class="notification">
+                    Diese URL ist nicht in DBIS enthalten und <strong>kann schadhaft sein.</strong><br><br>Kontaktieren Sie uns gern dazu via <a href='mailto:info.dbis@ur.de'>info.dbis@ur.de</a>
+                </p>
+                {% else %}
+                <p class="notification">
+                    This URL is not included in DBIS and <strong>may be malicious.</strong><br><br>Please feel free to contact us via <a href='mailto:info.dbis@ur.de'>info.dbis@ur.de</a>
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}

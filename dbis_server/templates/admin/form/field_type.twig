@@ -1,0 +1,88 @@
+{% if not selectedTypesLocal is empty %}
+    {% set isLocalized = true %}
+{% else %}
+    {% set isLocalized = false %}
+{% endif %}
+
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ i18n.lbl_database_type }} *</h3>
+    {%  if selectedOrganization.ubrId is not empty %}
+    <div class="tags has-addons is-clickable is-unselectable localization-tag" data-id="field-type">
+        {% if selectedTypesLocal is empty %}
+            <span class="tag global-tag">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light is-hidden">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-grey-lighter">&nbsp;</span>
+        {% else %}
+            <span class="tag global-tag is-hidden">{{ i18n.lbl_change_to_local }}</span><!--
+            --><span class="tag local-tag is-info is-light">{{ i18n.lbl_change_to_global }}</span><!--
+            --><span class="tag has-background-info">&nbsp;</span>
+        {% endif %}
+        <input type="checkbox" name="type-local" class="localization-checkbox" hidden {% if isLocalized %} checked {% endif %}>
+    </div>
+    {% endif %}
+</div>
+<!-- GLOBAL -->
+<div class="columns field-type global
+     {% if isLocalized %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <div class="field">
+            <div class="control">
+                <div class="select is-multiple is-fullwidth">
+                    <select id="type_global" 
+                            class="input" 
+                            name="type_global[]" 
+                            multiple data-msg_required="{{ i18n.msg_required }}"
+                            data-placeholder="{{ i18n.lbl_please_select }}">
+                        {% for type in types %}
+                            {% if type.id in selectedTypesGlobal %}
+                                <option value="{{ type.id }}" selected>{{ type.title }}</option>
+                            {% else %}
+                                <option value="{{ type.id }}">{{ type.title }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    {% if errors.type %}
+                        <div class="err-required help is-danger is-size-6">{{ i18n.msg_required }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                
+                
+                
+<!-- LOCAL -->
+<div class="columns field-type local
+     {% if selectedTypesLocal is empty %}
+         is-hidden
+     {% endif %}
+     ">
+    <div class="column">
+        <div class="field">
+            <div class="control">
+                <div class="select is-multiple is-fullwidth">
+                    <select id="type_local" 
+                            class="input" 
+                            name="type_local[]" 
+                            multiple data-msg_required="{{ i18n.msg_required }}"
+                            data-placeholder="{{ i18n.lbl_please_select }}">
+                        {% for type in types %}
+                            {% if type.id in selectedTypesLocal %}
+                                <option value="{{ type.id }}" selected>{{ type.title }}</option>
+                            {% else %}
+                                <option value="{{ type.id }}">{{ type.title }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    {% if errors.type %}
+                        <div class="err-required help is-danger is-size-6">{{ i18n.msg_required }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

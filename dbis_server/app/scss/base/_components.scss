@@ -1,0 +1,29 @@
+/*
+Tooltip showing when copying the resource id
+ */
+.copy-id-tooltip, .save-local-data-tooltip {
+  position: absolute;
+  top: -28px;
+  width: auto;
+  background-color: #7a7a7a;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+}
+
+.save-local-data-tooltip {
+  left: 40px;
+}
+
+.resource-id.tag, .save-local-data-container {
+  position: relative;
+}
+
+/*
+Dropdown of typeahead
+ */
+.dropdown-list ul {
+  list-style: none !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}

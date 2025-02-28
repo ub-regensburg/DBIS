@@ -1,0 +1,160 @@
+{% embed "admin/base.twig" with { page: 'selectable_statistics' }%}
+    {%  block content %}
+    <h1 class="title is-1">{{ i18n.lbl_selectable_statistics }}</h1>
+    <div class="">
+        <form method="GET">
+            <label class="label">{{ i18n.lbl_timeframe }}</label>
+            <div class="field has-addons has-addons-right is-grouped is-grouped-centered">
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        <select name="from-month">
+                            {% for month in months %}
+                                <option value="{{ month.value }}" {% if month.value == from_month %}selected{% endif %}>{{ attribute(month, lang) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        <select name="from-year">
+                            {% for year in years %}
+                                <option value="{{ year }}" {% if year == from_year %}selected{% endif %}>{{ year }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <p class="strong has-text-centered has-text-weight-bold mr-3">{{ i18n.lbl_to }}</p>
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        <select name="to-month">
+                            {% for month in months %}
+                                <option value="{{ month.value }}" {% if month.value == to_month %}selected{% endif %}>{{ attribute(month, lang) }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                        <select name="to-year">
+                            {% for year in years %}
+                                <option value="{{ year }}" {% if year == to_year %}selected{% endif %}>{{ year }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">{{ i18n.th_subject_name }}</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select name="subjects[]" multiple size="4">
+                            {% for subject in subjects %}
+                                {% if subject.is_collection %}
+                                    {% set value = 'collection_' ~ subject.id %}
+                                {% else %}
+                                    {% set value = 'subject_' ~ subject.id %}
+                                {% endif %}
+                                <option value="{{ value }}" {% for selectedSubject in selectedSubjects %}{% if subject.id == selectedSubject.id and (subject.is_collection and selectedSubject.is_collection or subject.is_collection is not same as(true) and selectedSubject.is_collection is not same as(true)) %}selected {% endif %}{% endfor %}>
+                                    {{ subject.title }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">{{ i18n.lbl_license_types }}</label>
+                <div class="checkboxes">
+                    {% for licenseType in licenseTypes %}
+                        <label class="checkbox ml-2">
+                            <input type="checkbox" value="{{ licenseType.id }}" name="license-types[]" {% if licenseType.id in selectedLicenseTypes %}checked="true"{% endif %} />
+                            {{ licenseType.title }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if ubrId == "UBR" %}
+                <div class="field">
+                    <label class="label">{{ i18n.lbl_all_organisations }}</label>
+                    <div class="checkboxes">
+                        <label class="checkbox ml-2">
+                            <input type="checkbox" name="all-organisations" {% if allOrganisationsSelected == true %}checked="true"{% endif %} />
+                            {{ i18n.lbl_all_organisations }}
+                        </label>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div>
+                <div class="notification is-light mt-4">
+                    <p>
+                        {{ i18n.msg_only_licensed_data_for_statistic }}
+                    </p>
+                </div>
+            </div>
+            <div class="field mt-5">
+                <div class="notification is-warning is-light mt-4">
+                    <p>{{ i18n.msg_lost_statistics }}</p>
+                </div>
+            </div>
+            <div class="field mt-6">
+                <p class="control">
+                    <button class="button is-primary submit">
+                    {{ i18n.lbl_generate_statistics }}
+                    </button>
+                    {% if statistics|length > 0 %}
+                        <button class="button submit" name="csvoutput" value="1" type="submit">CSV-Export</button>
+                    {% endif %}
+                </p>
+            </div>
+        </form>
+        {% if statistics|length > 0 %}
+        <div>
+            <div class="content mt-4">
+                <p>Insgesamt gab es im gewählten Zeitraum {{ total_hits }} Zugriffe.</p>
+                <ul>
+                    <li>Genutzte Datenbanken: {{ used_resources }}</li>
+                    <li>Nicht genutzte Datenbanken: {{ no_hits }}</li>
+                    <li>Datenbanken Insgesamt: {{ total_resources }}</li>
+                </ul>
+                <p class="has-text-grey">{{ i18n.msg_hint_for_incorrect_numbers }}</p>
+            </div>
+            <table class="table is-fullwidth mt-5 table-sort table-arrows">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                     <th>
+                        {{ i18n.lbl_search_title }}
+                    </th>
+                    <th class="disable-sort">
+                        {{ i18n.lbl_license_type }}
+                    </th>
+                    <th>
+                        {{ i18n.lbl_hits }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resourceAccessed in statistics %}
+                    <tr>
+                        <td><a target="_blank" href='{{ "/" ~ ubrId ~ "/resources/" ~ resourceAccessed.resource ~ "?direct-link=1" }}'>{{ resourceAccessed.resource }}</a></td>
+                        <td>{{ resourceAccessed.title }}</td>
+                        <td>{{ attribute(resourceAccessed.license_type_title, lang) }}</td>
+                        <td>{{ resourceAccessed.hits }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        {% else %}
+            {% if from_year %}
+        <div class="notification mt-4">Insgesamt gab es im gewählten Zeitraum über die Sicht Ihrer Organisation keine Zugriffe.</div>
+            {% endif %}
+        {% endif %}
+    </div>
+    {%  endblock %}
+{% endembed %}

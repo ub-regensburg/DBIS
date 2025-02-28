@@ -1,0 +1,435 @@
+<div class="access-form 
+     accordion
+     {% if is_template %}template template--access{% endif %}
+     is-active
+     extensible-list-item">
+    <!-- IDENTIFIERS -->
+    <input hidden name="access_id[]" value="{{ access ? access.id : null}}">
+    <input hidden name="accesses[]"  value="{{ access ? access.id : null }}">
+    <!-- /IDENTIFIERS -->
+    {% if is_template %}
+        <input hidden class="is-access-template" name="is_access_template[]" value="1">
+    {% else %}
+        <input hidden class="is-access-template" name="is_access_template[]" value="0">
+    {% endif %}
+
+    {% set should_be_disabled = (access.organization is not defined or access.organization|length < 1) and access is defined and access.id is defined and not isSuperAdmin ? true : false %}
+
+    {% set should_global_be_disabled = (access.organization is not defined or access.organization|length < 1) or (access is defined and access.id is defined) ? true : false %}
+
+    {% set should_global_template_be_disabled = true %}
+
+    {% if license.type.id == 3 and has_national_privileges == true %}
+        {% set should_be_disabled = false %}
+        {% set should_global_be_disabled = false %}
+        {% set should_global_template_be_disabled = false %}
+    {% endif %}
+    {% if license.type.id == 5 and has_consortial_privileges == true %}
+        {% set should_be_disabled = false %}
+        {% set should_global_be_disabled = false %}
+        {% set should_global_template_be_disabled = false %}
+    {% endif %}
+    {% if license.type.id == 4 and is_fid == true%}
+        {% set should_be_disabled = false %}
+        {% set should_global_be_disabled = false %}
+        {% set should_global_template_be_disabled = false %}
+    {% endif %}
+    {% if license.type.id == 6 and isZbmed == true%}
+        {% set should_be_disabled = false %}
+        {% set should_global_be_disabled = false %}
+        {% set should_global_template_be_disabled = false %}
+    {% endif %}
+    {% if license.type.id == 1 and isAdmin == true %}
+        {% set should_be_disabled = false %}
+        {% set should_global_be_disabled = false %}
+        {% set should_global_template_be_disabled = false %}
+    {% endif %}
+    <h3 
+        class="accordion-header">
+        
+        <button type="button"
+            aria-expanded="true">
+            {% if access.type == null%}
+                {{ i18n.lbl_access }}
+            {% else %}
+                {{ i18n.lbl_access_via }} {{ accessTypes
+                    |filter(at => at.id == access.type.id)
+                    |map(at => at.title)
+                    |join(',') }}
+            {% endif %}
+        </button>
+    </h3>   
+
+    <div class="accordion-body">
+        <div class="field c-is-global">
+            <div class="">
+                <label class="checkbox">
+                    <input type="checkbox" class="is-global" name="is_global[]" {% if is_template %} {% if should_global_template_be_disabled %} disabled {% endif %} {% elseif (access.organization is not defined or access.organization|length < 1) %} checked="checked" {% else %}{% endif %} {% if should_global_be_disabled %} disabled {% endif %} />
+                    {{ i18n.lbl_global_access }}
+                </label>
+            </div>
+        </div>
+
+        <div class="field c-is-hidden">
+            <div class="">
+                <label class="checkbox">
+                    <input type="checkbox" class="is-access-hidden" name="is_hidden[]" {% if not is_template and (access and access.is_visible == false) %} checked="checked" {% endif %} />
+                    {{ i18n.lbl_is_visible }}
+                </label>
+            </div>
+        </div>
+
+        <div class="field c-is-main">
+            <div class="">
+                <label class="checkbox">
+                    <input type="checkbox" class="is-main" name="is_main[]" {% if not is_template and (access and access.isMainAccess == true) %} checked="checked" {% endif %} />
+                    {{ i18n.lbl_main_access }}
+                </label>
+            </div>
+        </div>
+
+        <!-- ACCESS TYPE -->
+        <div class="field">
+            <label
+                class="label is-2">
+                {{ i18n.lbl_access_type }}
+                <div class="select stretch is-expanded">
+                    <select name="accesstype[]" 
+                            id="accesstype"
+                            class="stretch accesstype-select" {% if should_be_disabled %} disabled {% endif %}>
+                            <option value="">
+                                {{ i18n.lbl_please_select_value_if_necessary }}
+                            </option>
+                        {% for accessType in accessTypes %}
+                            <option class="accesstype-option" 
+                                    value="{{ accessType.id }}"
+                                    {# select the correct access type #}
+                                    {% if (access and access.type.id==accessType.id)%}selected{% endif %}                                
+                                    >
+                                {{ accessType.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </label>
+        </div>
+        <!-- /ACCESS TYPE -->
+
+        <!-- ACCESS FORM -->
+        <div class="field">
+            <label
+                class="label is-2">
+                {{ i18n.lbl_access_form }}
+                <div class="select stretch is-expanded">
+                    <select name="accessform[]" 
+                            id="accessform"
+                            class="stretch accessform-select" {% if should_be_disabled %} disabled {% endif %}>
+                        <option value="">
+                            {{ i18n.lbl_please_select_value_if_necessary }}
+                        </option>
+                        {% for accessForm in accessForms %}
+                            <option class="accessform-option" 
+                                    value="{{ accessForm.id }}"
+                                    {% if (access and access.form.id==accessForm.id)%}selected{% endif %}                                
+                                    >
+                                {{ accessForm.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </label>
+        </div>
+        <!-- /ACCESS FORM -->
+
+        <!-- ACCESS LINK -->
+        <div class="field">
+            <label class="label is-2">
+                {{ i18n.lbl_access_link }}
+                <input 
+                    data-msg_invalid_url="{{ i18n.msg_invalid_url }}"
+                    class="validate-url
+                    input" 
+                    name="accesslink[]"
+                    value="{{ access ? access.accessUrl : null}}" {% if should_be_disabled %} disabled {% endif %}></input>
+            </label>
+        </div>     
+        <!-- /ACCESS LINK -->
+        <input name="label_id[]" type="hidden" class="label-id" value="{{ access.label_id }}" />
+        {% if not should_be_disabled %}
+        <div class="field mt-5">
+            <span class="button open-labels-modal is-secondary" data-target="labels-modal">{{ i18n.lbl_default_labels_for_accesses }}</span>
+            <span class="button empty-labels is-secondary ml-2">{{ i18n.lbl_empty_labels_for_accesses }}</span>
+        </div>
+         {% endif %}
+        <!-- ACCESS LABEL -->
+        <div class="field columns c-translate">
+            <div class="column is-50">
+                <label class="label is-2 i18_de">
+                    {{ i18n.lbl_access_label }}
+                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                    <div class="control">
+                        <input class="access-label-de input translate language--german"
+                        name="label_de[]"
+                        type="text"
+                        value="{{ access.label.de }}"
+                        >
+                    </div>
+                </label>
+            </div>
+            <div class="column is-50">
+                <label class="label is-2 i18_en">
+                    {{ i18n.lbl_access_label }}
+                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                    <div class="control">
+                        <input class="access-label-en input translate language--english"
+                                name="label_en[]"
+                                type="text"
+                                value="{{ access.label.en }}"
+                        >
+                    </div>
+                </label>
+            </div>
+        </div>
+        <!-- /ACCESS LABEL -->
+        <!-- ACCESS LABEL LONG -->
+        <div class="field columns c-translate">
+            <div class="column is-50">
+                <label class="label is-2 i18_de">
+                    {{ i18n.lbl_access_label_long }}
+                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                    <div class="control">
+                        <textarea class="access-label-long-de input translate language--german" 
+                            name="label_long_de[]" type="text">{{ access.labelLong.de }}</textarea>
+                    </div>
+                </label>
+            </div>
+            <div class="column is-50">
+                <label class="label is-2 i18_en">
+                    {{ i18n.lbl_access_label_long }}
+                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                    <div class="control">
+                        <textarea class="access-label-long-en input translate language--english"
+                                name="label_long_en[]" type="text">{{ access.labelLong.en }}</textarea>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <!-- /ACCESS LABEL LONG -->
+        <!-- ACCESS LABEL LONGEST -->
+        <div class="field columns c-translate">
+            <div class="column is-50">
+                <label class="label is-2 i18_de">
+                    {{ i18n.lbl_access_label_longest }}
+                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                    <div class="control">
+                        <textarea class="access-label-longest-de input translate language--german" 
+                            name="label_longest_de[]" type="text">{{ access.labelLongest.de }}</textarea>
+                    </div>
+                </label>
+            </div>
+            <div class="column is-50">
+                <label class="label is-2 i18_en">
+                    {{ i18n.lbl_access_label_longest }}
+                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                    <div class="control">
+                        <textarea class="access-label-longest-en input translate language--english"
+                                name="label_longest_en[]" type="text">{{ access.labelLongest.en }}</textarea>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <!-- /ACCESS LABEL LONGEST -->
+        <!-- HOSTS -->
+        <div class="field">
+            <div class="host-select-group">
+                <label class="label is-2">{{ i18n.lbl_host }}</label>
+                <!--<input 
+                    type="text"
+                    list="hosts"
+                    {% if access and access.host %}value="{{ access.host.title }}"{% endif %}
+                    class="input host-select" name="host[]"/>-->
+                    
+                <input autocomplete="off"
+                       class="input host search jsonly" 
+                       name="host_searchfield[]" 
+                       placeholder="{{ i18n.hint_search_host }}"
+                       value="{{ access.host ? access.host.title : '' }}"
+                       >
+                <select class="input select stretch host" size="4" name="host[]" {% if should_be_disabled %} disabled {% endif %}>
+                    <option selected value="" class="hidden">{{ i18n.hint_select_entry }}</option>
+                    {% for host in hosts|sort((a,b) => a.title >= b.title) %}
+                        <option 
+                            value="{{ host.id }}" 
+                            {% if access.host and access.host.id == host.id %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ host.title }}
+                        </option>
+                    {% endfor %}
+                    <option class="exclude-from-filter jsonly"
+                            value="::createnewhost">+ {{ i18n.lbl_create_host }}</option>
+                </select>
+            </div>
+
+            <div class="host-create-group">
+                <div class="columns">
+                    <div class="column">
+                        <label class="label is-2">
+                            {{ i18n.lbl_host_new }}
+                            <input class="input host-new" 
+                                   name="host-new[]"></input>
+                        </label>
+                    </div>
+                </div>
+                            
+                <div>
+                    <button type="button"
+                            class="button is-inverted is-pulled-right">
+                        {{ i18n.lbl_return_to_host_selection }}
+                    </button>
+                </div>
+
+                <!-- if js is disabled, simply show the field as is -->
+                <noscript>
+                    <div class="host-create-group">
+                        <div class="columns">
+                            <div class="column">
+                                <label class="label is-2">
+                                    {{ i18n.lbl_host_new }}
+                                </label>
+                                    <input class="input host-new" 
+                                       name="host-new[]"></input>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button class="button is-inverted"
+                                    type="button"> 
+                                {{ i18n.lbl_return_to_host_selection }}
+                            </button>
+                        </div>
+                    </div>
+                </noscript>
+                <!-- -->
+            </div>
+        </div>
+        <!-- /HOSTS -->
+
+        <!-- MANUAL LINK -->
+        <div class="field">
+            <label class="label is-2">
+                {{ i18n.lbl_manual_link }}
+                <input 
+                    data-msg_invalid_url="{{ i18n.msg_invalid_url }}"
+                    class="
+                    validate-url
+                    input" 
+                    name="manuallink[]"
+                    value="{{ access ? access.manualUrl : null }}" {% if should_be_disabled %} disabled {% endif %}></input>
+            </label>
+        </div>
+        <!-- /MANUAL LINK -->
+
+        <!-- ACCESS DESCRIPTION -->
+        <div class="field columns c-translate">
+            <div class="column is-45">
+                <label class="label is-2 i18_de">
+                    {{ i18n.lbl_database_description }}
+                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                    <div class="control">
+                        <textarea class="input textarea translate language--german" 
+                        name="description_de[]"
+                        type="text" {% if should_be_disabled %} disabled {% endif %}>{{ access.description.de }}</textarea>
+                    </div>
+                </label>
+            </div>
+            <div class="column is-auto">
+                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                    </button>
+                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="column is-45">
+                <label class="label is-2 i18_en">
+                    {{ i18n.lbl_database_description }}
+                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                    <div class="control">
+                        <textarea class="input textarea translate language--english"
+                                name="description_en[]"
+                                type="text" {% if should_be_disabled %} disabled {% endif %}>{{ access.description.en }}</textarea>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <!-- /ACCESS DESCRIPTION -->
+
+        <!-- ACCESS REQUIREMENTS -->
+        <div class="field columns c-translate">
+            <div class="column is-45">
+                <label class="label is-2 i18_de">
+                    {{ i18n.lbl_resource_requirements }}
+                    <span class="tag" aria-label="{{ i18n.aria_de }}">de</span>
+                    <div class="control">
+                        <textarea class="input textarea translate language--german" 
+                                name="requirements_de[]"
+                                type="text" {% if should_be_disabled %} disabled {% endif %}>{{ access ? access.requirements.de : null }}</textarea>
+                    </div>
+                </label>
+            </div>
+            <div class="column is-auto">
+                <div class="is-flex h-100 is-flex-direction-column is-justify-content-space-evenly is-align-content-center is-align-items-center">
+                    <button class="level-item icon button is-text translate language--german global pl-5 pr-5">
+                        <i class="fas fa-language"></i><i class="ml-1 fas fa-arrow-right"></i>
+                    </button>
+                    <button class="icon button is-text translate language--english global pl-5 pr-5">
+                        <i class="fas fa-arrow-left"></i><i class="ml-1 fas fa-language"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="column is-45">
+                <label class="label is-2 i18_en">
+                    {{ i18n.lbl_resource_requirements }}
+                    <span class="tag" aria-label="{{ i18n.aria_en }}">en</span>
+                    <div class="control">
+                        <textarea class="input textarea translate language--english" 
+                                name="requirements_en[]"
+                                type="text" {% if should_be_disabled %} disabled {% endif %}>{{ access ? access.requirements.en : null }}</textarea>
+                    </div>
+                </label>
+
+            </div>
+        </div>
+        <!-- /ACCESS REQUIREMENTS -->
+
+        <!-- SHELFMARK -->
+        <div class="field">
+            <label class="label is-2">
+                {{ i18n.lbl_shelfmark_access }}
+                <input 
+                    class="input" 
+                    name="shelfmark[]"
+                    value="{{ access ? access.shelfmark : null }}" {% if should_be_disabled %} disabled {% endif %}></input>
+            </label>
+        </div>
+        <!-- /SHELFMARK -->
+
+        {% if (isAdmin or isSuperAdmin) and not should_be_disabled %}
+            <button 
+                type="button"
+                class="
+                button 
+                extensible-list-delete-btn
+                is-danger
+                is-inverted
+                is-pulled-right">
+                {{ i18n.lbl_delete }}      
+            </button>      
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" type="image/x-icon" href="/img/favicon.png">
+        <title>{{ pageTitle }}</title>
+        {% set asset = page|default('admin_base') %}
+        {% block css %}
+            {% webpack_entry_css 'admin_login' %}
+        {% endblock %}
+        <script>
+            var config = {
+                org_id: "{{ selectedOrganization.ubrId }}",
+                lang: "{{ lang }}"
+            };
+        </script>
+    </head>
+
+    <body>
+        <nav class="navbar p-5">
+            <div class="navbar-brand">
+                <a class="navbar-item is-size-4" href="/">
+                    <img id="dbis-logo" src="/img/logo/logo_expanded.png" alt="{{ i18n.alt_dbis_logo }}">
+                </a>
+            </div>
+        </nav>
+
+
+
+        <div class="section container mt-6">
+            <div class="columns is-vcentered mt-6">
+                <div class="column is-three-fifths p-6">
+                    <h1 class="title is-1 has-text-primary">{{ i18n.login_welcome_back }}</h1>
+                    <h2 class="subtitle mb-6">{{ i18n.login_go }}</h2>
+                    <p>{{ i18n.login_info }}</p>
+                    {% if lang == 'de' %}
+                        {% set register_link = 'https://url.ur.de' %}
+                    {% else %}
+                        {% set register_link = 'https://url.ur.de?lang=en' %}
+                    {% endif %}
+                    <a href="{{register_link}}" target="_blank" class="button mt-3 is-primary is-inverted
+                            has-text-weight-semibold" type="button">
+                        <span class="icon mr-1">
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
+                        {{ i18n.login_register_info }}
+                    </a>
+                </div>
+                <div class="column pl-6 pr-6">
+                    <div class="panel" id="login-dialog">
+                        <h2 class="panel-heading">Login</h2>
+                        <div class="panel-block has-background-white">
+                            <form class="form p-6"
+                                  id="login-form"
+                                  action="/admin/login?redirect_to={{redirect_to}}"
+                                  method="POST">
+                                <div class="control field mb-5 has-icons-left">
+                                    <input
+                                        required
+                                        id="login"
+                                        class="input validate-required"
+                                        data-msg_required="{{ i18n.msg_err_enter_login }}"
+                                        name="login"
+                                        placeholder="{{ i18n.lbl_email_or_uid }}"
+                                        aria-label=" {{ i18n.lbl_email_or_uid }} "
+                                        value="{{ login }}"/>
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                </div>
+                                <div class="control field has-icons-left">
+                                    <input
+                                        required
+                                        id="password"
+                                        class="input validate-required"
+                                        data-msg_required="{{ i18n.msg_err_enter_password }}"
+                                        type="password"
+                                        placeholder="{{ i18n.lbl_password }}"
+                                        aria-label=" {{ i18n.lbl_password }} "
+                                        name="password"/>
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                </div>
+                                {% if is_login_failed %}
+                                    <p class="has-text-danger mt-3">
+                                        {{ i18n.msg_error_login }}
+                                    </p>
+                                {% endif %}
+                                <div>
+                                    <button id="submit-login"
+                                        type="submit"
+                                        class="button is-primary is-fullwidth mt-5">
+                                        Login
+                                    </button>
+                                </div>
+                                <div>
+                                    <p class="p-2 has-text-centered">
+                                        <a target="_blank" href="https://url.ur.de/reset-password.php" class="has-text-grey-dark is-size-7 is-underlined">{{ i18n.lbl_forgot_password }}</a>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-footer"></div>
+        </div>
+
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+
+        {{ include('admin/footer.twig') }}
+    </body>
+</html>

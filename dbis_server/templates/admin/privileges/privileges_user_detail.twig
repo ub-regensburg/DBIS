@@ -1,0 +1,218 @@
+{% embed "admin/base.twig" with { page: 'superadmin_manage_privileges' } %}
+    {%  block content %}
+        <ul class="breadcrumbs mb-1 is-size-7">
+            <li><a href="/admin">{{ i18n.breadcrumb_admin }}</a></li>
+            <li><a href="..">{{ i18n.h_privileges_select_users }}</a></li>
+            <li>{{ selectedUser.surname }}, {{ selectedUser.prename }}</li>
+        </ul>
+        <h1 class="title is-1">{{ i18n.h_privileges_select_users }}</h1>
+
+        <div class="field">
+            <div class="label">
+                <label>
+                    {{ i18n.lbl_user }}
+                </label>                
+            </div>
+            <div>
+                {{ selectedUser.surname }}, {{ selectedUser.prename }}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="label">
+                <label>
+                    {{ i18n.lbl_granted_privileges }}
+                </label>                
+            </div>
+        </div>
+
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th>
+                        {{ i18n.lbl_privilege_type }}
+                    </th>
+                    <th></th>
+                    <th>
+                        {{ i18n.lbl_privilege_addon }}
+                    </th>
+                    <th>
+                        {{ i18n.organization }}
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for privilege in privileges %}
+                    <tr class="privilege-item"
+                        data-privilegetype-description="{{ privilege.type.help }}"
+                        data-privilegetype-name="{{ privilege.type.title}}">
+                        <td class="pt-4">
+                            <span>{{ privilege.type.title }}</span>
+                        </td>
+                        <td>                        
+                            <button class="button is-inverted is-black is-rounded btn-info"
+                                    aria-label="{{ i18n.aria_info_privilege_type }}">
+                                <span class="icon is-small">
+                                    <i class="fas fa-info"></i>
+                                </span>
+                            </button>
+                        </td>
+                        <td>
+                            {% if privilege.addons|length > 0 %}
+                                {% for privilegeAddon in privilege.addons %}
+                                    <span>{{ privilegeAddon.title }}</span></br>
+                                {% endfor %}
+                            {% else %}
+                                <span>-</span>
+                            {% endif %}
+                        </td>
+                        <td class="pt-4">{{ privilege.organization.name }}</td>
+                        <td class="has-text-right">
+                            <form method="POST" action="./privileges/{{ privilege.id }}/">
+                                <input type="hidden" name="_METHOD" value="DELETE"/>
+                                <input type="hidden" name="id" value="{{ privilege.id }}"/>
+                                <button class="button is-danger is-inverted is-rounded"
+                                        aria-label="{{ i18n.aria_delete_privilege }}">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <form method="GET">
+            <input type="hidden" name="add-privilege" value="1"/>
+            <button class="button is-primary" id="btn-add-privilege">
+                {{ i18n.btn_new_privilege }}
+            </button>
+        </form>
+            
+            
+            
+            
+        {# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            MODAL INFO PRIVILEGE
+           ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::#}
+        <div id="modal-info-privilege-type" class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p id="modal-info-privilege-type-name"
+                       class="modal-card-title">
+                        {{ i18n.label_new_privilege }}
+                    </p>
+                    <button aria-label="close" class="delete" type="button">
+                    </button>
+                </header>
+                <div class="modal-card-body content">
+                    <p id="modal-info-privilege-type-description">
+
+                    </p>
+
+
+                    <button class="button mt-4 close-dialog is-right">
+                        {{ i18n.close }}
+                    </button>
+                </div>
+            </div>
+        </div>
+        {# ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            !MODAL INFO PRIVILEGE
+           ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::#}
+
+
+
+        <div id="modal-add-privilege" class="modal {% if addPrivilege %}is-active{% endif%}">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">
+                        {{ i18n.label_new_privilege }}
+                    </p>
+                    <form method="get">
+                        <button id="add-priv-modal-close" aria-label="close" class="delete">
+                        </button>
+                    </form>
+                </header>
+                <div class="modal-card-body content">
+                    <form class="form" method="POST" autocomplete="off">
+                        <div class="field">
+                            <label class="label" for="privilege_type">
+                                {{ i18n.lbl_privilege_type }}
+                            </label>
+                            <div class="control is-expanded">
+                                <div class="select is-fullwidth">
+                                    <select class="is-fullwidth" 
+                                            id="privilege-type"
+                                            name="privilege_type">
+                                        {% for privilegeType in privilegeTypes %}
+                                            <option value="{{ privilegeType.id }}">{{ privilegeType.title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="privilege_addon">
+                                {{ i18n.lbl_privilege_addon }}
+                            </label>
+                            <div>
+                                {% for privilegeAddon in privilegeAddons %}
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="privilge_addons[]" value="{{ privilegeAddon.id }}"/>
+                                        {{ privilegeAddon.title }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="organization">
+                                {{ i18n.organization }}
+                            </label>
+
+                            <input name="organization-id" 
+                                   id="organization-id" 
+                                   type="hidden"/>
+
+                            <div class="dropdown searchable is-fullwidth"
+                                id="dropdown-orgs"
+                                 aria-label="{{ i18n.aria_select_organization }}">
+                                <div class="dropdown-trigger"
+                                     aria-label="{{ i18n.aria_open_dropdown_organizations }}">
+                                    <input id="organization"
+                                           class="input"
+                                            aria-haspopup="true"
+                                            aria-controls="dropdown-organizations"/>
+                                </div>
+                                <div
+                                    class="dropdown-menu"
+                                    aria-label="{{ i18n.aria_dropdown_organizations }}"
+                                    role="menu">
+                                    <div class="dropdown-content">
+                                        {% for org in administrableOrganizations %}
+                                            <button class="dropdown-item button" 
+                                                    type="button"
+                                                    value="{{ org.ubrId }}">
+                                                {{ org.name }}
+                                            </button>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="button is-primary mt-4" id="btn-new-priv">
+                            {{ i18n.label_new_privilege }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {%  endblock %}
+{% endembed %}

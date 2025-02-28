@@ -1,0 +1,41 @@
+<div class="level mb-2">
+    <h3 class="title is-3 mb-2">{{ i18n.lbl_database_costs }} *</h3>
+</div>
+<!-- GLOBAL -->
+<div class="columns field-is-free global">
+    <div class="column">
+        <div class="level">
+            <div class="level-left">
+                <div class="field mb-0 mr-4">
+                    <div class="control">
+                        <input id="is_free"
+                               name="pricetype"
+                               type="radio"
+                               value="1"
+                               {% if resourceGlobal and resourceGlobal.is_free is not null and resourceGlobal.is_free == true %}
+                                   checked
+                               {% endif %}
+                               >
+                        <label for="is_free" class="mr-2">
+                            {{ i18n.lbl_database_is_free }}
+                        </label>
+                        <input id="is_not_free"
+                               name="pricetype"
+                               type="radio"
+                               value="0"
+                               {% if resourceGlobal and resourceGlobal.is_free is not null and resourceGlobal.is_free == false %}
+                                   checked
+                               {% endif %}
+                               >
+                        <label for="is_not_free" class="mr-2">
+                            {{ i18n.lbl_database_is_not_free }}
+                        </label>
+                        {% if errors.pricetype %}
+                            <div class="err-required help is-danger is-size-6">{{ i18n.msg_required }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    

@@ -1,0 +1,14 @@
+<div>
+    <div id="publishers-filter">
+        {{ include('users/filters/components/autocomplete-filter-component.twig', {namespace: 'publisher', selectedItems: filteredPublishers, no_tags: no_tags, no_apply: no_apply}) }}
+    </div>
+    <div id="publisher-selection" class="is-flex is-flex-wrap-wrap mt-2">
+        {% for filtered_publisher in filteredPublishers %}
+            <div id="tag-{{ filtered_publisher.id }}" class="tags has-addons is-align-items-flex-start mr-2">
+                <span class="tag">{{ filtered_publisher }}</span>
+                <a class="tag is-delete"></a>
+                <input type="hidden" value="{{ filtered_publisher.id }}" name="filter-publishers[]" aria-hidden="true" />
+            </div>
+        {% endfor %}
+    </div>
+</div>

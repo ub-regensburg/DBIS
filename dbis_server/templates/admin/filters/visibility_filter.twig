@@ -1,0 +1,23 @@
+<div id="visibility-filter"
+     class="select is-multiple is-fullwidth">
+
+    {% if not no_tags %}
+        <div id="visibility-tags" class="tags is-fullwidth mt-2"></div>
+    {% endif %}
+
+    <div class="control">
+        <label class="checkbox">
+            <input type="checkbox"
+                    class="mr-2"
+                   name="show-hidden-entries"
+                   {{ filters['show-hidden-entries'] ? "checked" }}>
+            {{ i18n.visibility_hidden }}
+        </label>
+    </div>
+
+    {% if not no_apply %}
+        <button class="button is-outlined is-fullwidth mt-4">
+            {{ i18n.apply_filter }}
+        </button>
+    {% endif %}
+</div>
